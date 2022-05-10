@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRequerimentoInscricaosTable extends Migration
+class CreateDocRequerimentoInscricaosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRequerimentoInscricaosTable extends Migration
      */
     public function up()
     {
-        Schema::create('documento_requerimentoinscricao', function (Blueprint $table) {
+        Schema::create('doc_requerimento_inscricao', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('cadastro_id')->unsigned();
 
@@ -31,6 +31,6 @@ class CreateRequerimentoInscricaosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documento_requerimentoinscricao');
+        Schema::dropIfExists('doc_requerimento_inscricao');
     }
 }

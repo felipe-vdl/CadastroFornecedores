@@ -36,8 +36,7 @@ class HomeController extends Controller
     { 
     
         $usuario = Auth::user();
-        $dados = Cadastro::with('doc_requerimentoinscricao')->find($id);
-
+        $dados = Cadastro::with('doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
         /* dd($dados); */
         return view ('show',compact('dados','usuario'));
     }

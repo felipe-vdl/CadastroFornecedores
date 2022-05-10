@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container">
+	<div class="container" style="padding-bottom: 150px;">
 		<form method="POST" action="{{url('/cadastro')}}" enctype="multipart/form-data" id="form_cadastro">
 			{{ csrf_field() }}
 			<div class="card bg-light">
@@ -9,6 +9,12 @@
 					<h2 class="card-title m-0 text-center">Cadastro de Fornecedores</h2>
 				</div>
 				<div class="card-body">
+					@if(session()->get('error'))
+					<div class="alert alert-danger m-0">
+						<h5 class="alert-heading">Erro ao criar o cadastro.</h5>
+						{{ session()->get('error') }}
+					</div><br/>
+					@endif
 					<div class="row">
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold">Razão Social:</label>
@@ -83,8 +89,306 @@
 							</span>
 						</p>
 					</div>
+					{{-- Fim 1 --}}
 					{{-- 2) Ato Constitutivo (Contrato Social, Estatuto, Ata de Reunião) --}}
-					{{-- Em Construção --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">2. Ato Constitutivo (Contrato Social, Estatuto, Ata de Reunião):</label>
+						<p class="mb-2">
+							<label for="ato_constitutivo">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="ato_constitutivo" class="form-control" name="ato_constitutivo[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-atoconstitutivo" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="atoconstitutivo-invalido"></span></p>
+						</div>
+						<div id="erro-atoconstitutivo-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="atoconstitutivo-grande"></span></p>
+						</div>
+						<p id="atoconstitutivo-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="atoconstitutivo-area">
+							<span id="atoconstitutivo-list">
+								<span id="atoconstitutivo-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 2 --}}
+					{{-- 3) Procuração ou Carta de Credenciamento--}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">3. Procuração ou Carta de Credenciamento:</label>
+						<p class="mb-2">
+							<label for="procuracao_carta">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="procuracao_carta" class="form-control" name="procuracao_carta[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-procuracaocarta" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="procuracaocarta-invalido"></span></p>
+						</div>
+						<div id="erro-procuracaocarta-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="procuracaocarta-grande"></span></p>
+						</div>
+						<p id="procuracaocarta-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="procuracaocarta-area">
+							<span id="procuracaocarta-list">
+								<span id="procuracaocarta-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 3 --}}
+					{{-- 4) Cédula de Identidade (RG) e CPF dos Reprentantes Legais --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">4. Cédula de Identidade (RG) e CPF dos Reprentantes Legais:</label>
+						<p class="mb-2">
+							<label for="cedula_identidade">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="cedula_identidade" class="form-control" name="cedula_identidade[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-cedulaidentidade" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="cedulaidentidade-invalido"></span></p>
+						</div>
+						<div id="erro-cedulaidentidade-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="cedulaidentidade-grande"></span></p>
+						</div>
+						<p id="cedulaidentidade-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="cedulaidentidade-area">
+							<span id="cedulaidentidade-list">
+								<span id="cedulaidentidade-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 4 --}}
+					{{-- 5) Registro ou Inscrição na Entidade Profissional Competente: --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">5. Registro ou Inscrição na Entidade Profissional Competente:</label>
+						<p class="mb-2">
+							<label for="registro_entidade">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="registro_entidade" class="form-control" name="registro_entidade[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-registroentidade" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="registroentidade-invalido"></span></p>
+						</div>
+						<div id="erro-registroentidade-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="registroentidade-grande"></span></p>
+						</div>
+						<p id="registroentidade-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="registroentidade-area">
+							<span id="registroentidade-list">
+								<span id="registroentidade-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 5 --}}
+					{{-- 6) Registro ou Inscrição na Entidade Profissional Competente: --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">6. Documentação de Inscrição do CNPJ, Inscrição no Cadastro de Contribuinte Estadual e/ou Municipal: <a target="_blank" href="https://www.receita.fazenda.gov.br">* www.receita.fazenda.gov.br</a></label>
+						<p class="mb-2">
+							<label for="inscricao_cnpj">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="inscricao_cnpj" class="form-control" name="inscricao_cnpj[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-inscricaocnpj" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="inscricaocnpj-invalido"></span></p>
+						</div>
+						<div id="erro-inscricaocnpj-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="inscricaocnpj-grande"></span></p>
+						</div>
+						<p id="inscricaocnpj-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="inscricaocnpj-area">
+							<span id="inscricaocnpj-list">
+								<span id="inscricaocnpj-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 6 --}}
+					{{-- 7) Balanço Patrimonial: --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">7. Balanço Patrimonial e Demonstrativo do Último Exercício Social, Registrado na Forma Lei e Demonstrativo de Índice de Liquidez:</label>
+						<p class="mb-2">
+							<label for="balanco_patrimonial">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="balanco_patrimonial" class="form-control" name="balanco_patrimonial[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-balancopatrimonial" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="balancopatrimonial-invalido"></span></p>
+						</div>
+						<div id="erro-balancopatrimonial-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="balancopatrimonial-grande"></span></p>
+						</div>
+						<p id="balancopatrimonial-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="balancopatrimonial-area">
+							<span id="balancopatrimonial-list">
+								<span id="balancopatrimonial-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 7 --}}
+					{{-- 8) Regularidade Fiscal: --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">8. Certidão de Regularidade Fiscal do FGTS: <a target="_blank" href="https://www.caixa.gov.br">* www.caixa.gov.br</a></label>
+						<p class="mb-2">
+							<label for="regularidade_fiscal">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="regularidade_fiscal" class="form-control" name="regularidade_fiscal[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-regularidadefiscal" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="regularidadefiscal-invalido"></span></p>
+						</div>
+						<div id="erro-regularidadefiscal-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="regularidadefiscal-grande"></span></p>
+						</div>
+						<p id="regularidadefiscal-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="regularidadefiscal-area">
+							<span id="regularidadefiscal-list">
+								<span id="regularidadefiscal-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 8 --}}
+					{{-- 9) Crédito Tributário: --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">9. Certidão de Débitos Relativos a Créditos Tributários Federais e a Dívida Ativa da União (Incluindo contribuições previdenciárias):</label>
+						<p class="mb-2">
+							<label for="credito_tributario">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="credito_tributario" class="form-control" name="credito_tributario[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-creditotributario" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="creditotributario-invalido"></span></p>
+						</div>
+						<div id="erro-creditotributario-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="creditotributario-grande"></span></p>
+						</div>
+						<p id="creditotributario-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="creditotributario-area">
+							<span id="creditotributario-list">
+								<span id="creditotributario-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 9 --}}
+					{{-- 10) Debito Estadual: --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">10. Certidão Negativa de Débito com a Fazenda Estadual (ICMS) em conjunto com a Certidão de Dívida Ativa da Procuradoria Geral do Estado (PGE):</label>
+						<p class="mb-2">
+							<label for="debito_estadual">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="debito_estadual" class="form-control" name="debito_estadual[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-debitoestadual" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="debitoestadual-invalido"></span></p>
+						</div>
+						<div id="erro-debitoestadual-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="debitoestadual-grande"></span></p>
+						</div>
+						<p id="debitoestadual-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="debitoestadual-area">
+							<span id="debitoestadual-list">
+								<span id="debitoestadual-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 10 --}}
+					{{-- 11) Debito Municipal: --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">11. Certidão Negativa de Débito com a Fazenda Municipal (ISSQN):</label>
+						<p class="mb-2">
+							<label for="debito_municipal">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="debito_municipal" class="form-control" name="debito_municipal[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-debitomunicipal" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="debitomunicipal-invalido"></span></p>
+						</div>
+						<div id="erro-debitomunicipal-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="debitomunicipal-grande"></span></p>
+						</div>
+						<p id="debitomunicipal-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="debitomunicipal-area">
+							<span id="debitomunicipal-list">
+								<span id="debitomunicipal-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 11 --}}
+					{{-- 12) Debito Municipal: --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">12. Certidão Negativa de Falência e Concordatas e dos Distribuidores de Cartório:</label>
+						<p class="mb-2">
+							<label for="falencia_concordata">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="falencia_concordata" class="form-control" name="falencia_concordata[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-falenciaconcordata" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="falenciaconcordata-invalido"></span></p>
+						</div>
+						<div id="erro-falenciaconcordata-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="falenciaconcordata-grande"></span></p>
+						</div>
+						<p id="falenciaconcordata-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="falenciaconcordata-area">
+							<span id="falenciaconcordata-list">
+								<span id="falenciaconcordata-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 12 --}}
+					{{-- 13) Debito Trabalhista: --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">13. Certidão Negativa de Débitos Trabalhistas (CNDT): <a target="_blank" href="http://www.tst.just.br">* www.tst.jus.br</a></label>
+						<p class="mb-2">
+							<label for="debito_trabalhista">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="debito_trabalhista" class="form-control" name="debito_trabalhista[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-debitotrabalhista" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="debitotrabalhista-invalido"></span></p>
+						</div>
+						<div id="erro-debitotrabalhista-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="debitotrabalhista-grande"></span></p>
+						</div>
+						<p id="debitotrabalhista-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="debitotrabalhista-area">
+							<span id="debitotrabalhista-list">
+								<span id="debitotrabalhista-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 13 --}}
+					{{-- 14) Capacidade Técnica: --}}
+					<div class="col-12 mt-3">
+						<label class="form-label font-weight-bold">14. 01 (Um) Atestado de Capacidade Ténica:</label>
+						<p class="mb-2">
+							<label for="capacidade_tecnica">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="capacidade_tecnica" class="form-control" name="capacidade_tecnica[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-capacidadetecnica" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="capacidadetecnica-invalido"></span></p>
+						</div>
+						<div id="erro-capacidadetecnica-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="capacidadetecnica-grande"></span></p>
+						</div>
+						<p id="capacidadetecnica-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="capacidadetecnica-area">
+							<span id="capacidadetecnica-list">
+								<span id="capacidadetecnica-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 14 --}}
 				</div>
 				<div class="card-footer">
 					<center>

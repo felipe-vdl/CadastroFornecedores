@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RequerimentoInscricao extends Model
+class DocDebitoMunicipal extends Model
 {
-    protected $table = "documento_requerimentoinscricao";
+    protected $table = "doc_debito_municipal";
 
     public $timestamps = false;
 
