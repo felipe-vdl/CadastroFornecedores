@@ -97,10 +97,13 @@
                      <!-- VAZIO -->
                   @else    
                      <div class="caralhodown">
-                        <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown" style="color: #000000; font-weight: bold;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #000000; font-weight: bold;">
                            <i class="fa fa-cog" aria-hidden="true"></i>
                         </a>
                         <div class="caralhodown-content">
+                           <a href="{{ url('/register') }}" style="color:black;">
+                              <i class="fa fa-fw fa-user-plus"></i>Registrar Usuário
+                           </a>
                            <a href="{{ url('/alterasenha') }}" >
                               <i class="fas fa-lock"></i> Alterar Senha
                            </a>

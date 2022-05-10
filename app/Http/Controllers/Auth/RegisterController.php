@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
+use App\Models\Funcionario;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -37,9 +39,14 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
+    public function register()
+    {
+        return view('auth.register');
+    }
+    
     /**
      * Get a validator for an incoming registration request.
      *
@@ -59,14 +66,18 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\Funcionario
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $user = new Funcionario;
+        $user->name 		= $request->name;
+        $user->email 		= $request->email;
+        /* $senha          	= 'pmm12345';
+        $user->password =  bcrypt($senha); */
+        $user->password =  'pmm12345';
+        
+        $user->save();
+        return redirect('/home')->with('sucesso_usuario_criado','Usuário criado com sucesso.');
     }
 }

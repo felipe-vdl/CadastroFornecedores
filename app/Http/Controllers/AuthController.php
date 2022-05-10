@@ -21,7 +21,7 @@ class AuthController extends Controller
         if(Auth::attempt($credentials)){
             $usuario_logado = Auth::user();
             return redirect()->intended('home');
-        }else{
+        } else {
             return redirect()->back()->with('msg','Acesso Negado, Email ou senha invalida');
         }
     }

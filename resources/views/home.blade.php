@@ -39,7 +39,7 @@
           <div class="user-info ">
             <a data-toggle="collapse" class="username" >
               <span>
-                {{$usuario->nome}}
+                {{$usuario->name}}
               </span>
             </a>
           </div>
@@ -59,13 +59,22 @@
       <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Dashboard</a>
+            <a class="navbar-brand" href="/home">Dashboard</a>
           </div>
-
+          @if(session()->get('sucesso_usuario_criado'))
+            <div class="alert alert-success m-0">
+              {{ session()->get('sucesso_usuario_criado') }}
+            </div>
+          @endif
+          @if(session()->get('sucesso_alteracao_senha'))
+            <div class="alert alert-success m-0">
+              {{ session()->get('sucesso_alteracao_senha') }}
+            </div>
+          @endif
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
-                <a class="nav-link" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
                   <p>
                     <span class="d-lg-none d-md-block">Some Actions
@@ -75,6 +84,9 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <a href="{{ url('/register') }}" style="color:black;">
+                    <i class="fa fa-fw fa-user-plus"></i>Registrar Usuário
+                 </a>
                   <a href="{{ url('/alterasenha') }}" style="color:black;">
                      <i class="material-icons">lock</i>Alterar a Senha<br>  
                   </a>

@@ -13,8 +13,6 @@ class CadastroController extends Controller
 {
     public function index()
     {
-        /* $passw = bcrypt('pmm12345');
-        dd($passw); */
         return view('user.index');
     }
 

@@ -39,7 +39,7 @@
           <div class="user-info ">
             <a data-toggle="collapse" class="username" >
               <span>
-                {{$usuario->nome}}
+                {{$usuario->name}}
               </span>
             </a>
           </div>
@@ -59,13 +59,13 @@
       <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Dashboard</a>
+            <a class="navbar-brand" href="/home">Dashboard</a>
           </div>
 
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
-                <a class="nav-link" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
                   <p>
                     <span class="d-lg-none d-md-block">Some Actions
@@ -150,8 +150,10 @@
                                         <h4><strong>Dia do cadastro  :</strong><small> {{$dados->created_at}}</></h4>
                                       </div>
                                   </div>
-                                  <div class="row">
-                                    <div style="display: flex; justify-content: space-evenly; align-items: center;">
+                                  <hr>
+                                  <h4 class="font-weight-bold">1. Requerimento de Inscrição</h4>
+                                  <div class="container">
+                                    <div style="display: flex; justify-content: space-evenly; align-items: start;">
                                       @foreach ($dados->doc_requerimentoinscricao as $doc)
                                           @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                           <figure>

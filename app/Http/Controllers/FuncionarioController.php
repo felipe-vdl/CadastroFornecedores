@@ -17,7 +17,7 @@ class FuncionarioController extends Controller
         // todas as rotas aqui serão antes autenticadas
         //$this->middleware('auth');
     	}
-
+    
 	public function AlteraSenha()
    	{
         //dd("aqui");
