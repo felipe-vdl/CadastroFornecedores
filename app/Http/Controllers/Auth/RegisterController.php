@@ -73,6 +73,7 @@ class RegisterController extends Controller
         $user = new Funcionario;
         $user->name 		= $request->name;
         $user->email 		= $request->email;
+        $user->nivel        = $request->nivel;
         /* $senha          	= 'pmm12345';
         $user->password =  bcrypt($senha); */
         $user->password =  'pmm12345';

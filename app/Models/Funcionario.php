@@ -11,7 +11,7 @@ class Funcionario extends Authenticatable
     protected $connection = "mysql2";
 
      protected $fillable = [
-        'password'
+        'password', 'nivel'
     ];
 
     /**

@@ -101,9 +101,11 @@
                            <i class="fa fa-cog" aria-hidden="true"></i>
                         </a>
                         <div class="caralhodown-content">
-                           <a href="{{ url('/register') }}" style="color:black;">
-                              <i class="fa fa-fw fa-user-plus"></i>Registrar Usuário
-                           </a>
+                           @if (Auth::user()->nivel == "Super-Admin")
+                              <a href="{{ url('/register') }}" style="color:black;">
+                                 <i class="fa fa-fw fa-user-plus"></i>Registrar Usuário
+                              </a>
+                           @endif
                            <a href="{{ url('/alterasenha') }}" >
                               <i class="fas fa-lock"></i> Alterar Senha
                            </a>

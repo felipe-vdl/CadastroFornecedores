@@ -39,5 +39,6 @@ Route::get('/sucesso', 'CadastroController@sucesso');
 Route::get('/register', 'Auth\RegisterController@register')->name('register');
 Route::post('/register', 'Auth\RegisterController@create')->name('register');
 
+Route::get 	('/usuarios',			'FuncionarioController@index');
 Route::get 	('/alterasenha',			'FuncionarioController@AlteraSenha');
 Route::post	('/salvasenha',   		'FuncionarioController@SalvarSenha');

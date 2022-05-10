@@ -18,6 +18,13 @@ class FuncionarioController extends Controller
         //$this->middleware('auth');
     	}
     
+    public function index ()
+    {
+        $usuario = Funcionario::find(Auth::user()->id);
+        $funcionarios = Funcionario::all();
+        return view('usuarios.index', compact('funcionarios', 'usuario'));
+    }
+
 	public function AlteraSenha()
    	{
         //dd("aqui");
@@ -49,5 +56,4 @@ class FuncionarioController extends Controller
             return back()->withErrors('Senha atual não confere');
         }
     }
-
 }

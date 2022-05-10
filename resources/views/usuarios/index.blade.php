@@ -45,14 +45,14 @@
           </div>
         </div>
         <ul class="nav">
-          <li class="nav-item active">
+          <li class="nav-item ">
             <a class="nav-link" href="/home">
               <i class="material-icons">dashboard</i>
               <p> Empresas </p>
             </a>
           </li>
           @if (Auth::user()->nivel == "Super-Admin")
-          <li class="nav-item ">
+          <li class="nav-item active">
             <a class="nav-link" href="/usuarios">
               <i class="material-icons">person</i>
               <p> Usuários </p>
@@ -69,16 +69,6 @@
           <div class="navbar-wrapper">
             <a class="navbar-brand" href="/home">Cadastro de Fornecedores</a>
           </div>
-          @if(session()->get('sucesso_usuario_criado'))
-            <div class="alert alert-success m-0">
-              {{ session()->get('sucesso_usuario_criado') }}
-            </div>
-          @endif
-          @if(session()->get('sucesso_alteracao_senha'))
-            <div class="alert alert-success m-0">
-              {{ session()->get('sucesso_alteracao_senha') }}
-            </div>
-          @endif
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
@@ -120,20 +110,31 @@
                         <div class="card-icon">
                            <i class="material-icons"></i>
                         </div>
-                        <h4 class="card-title">Empresas Cadastradas</h4>
+                        <h4 class="card-title">Usuários</h4>
                      </div>
                      <div class="card-body ">
                         <div class="material-datatables">
                            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                              <thead>
                                <tr>
-                                 <th>Razão Social</th>
-                                 <th>CNPJ</th>
-                                 <th>Produtos e Serviços</th>
-                                 <th>Porte Da Empresa</th>
+                                 <th>ID</th>
+                                 <th>Nome</th>
+                                 <th>E-mail</th>
+                                 <th>Nível</th>
                                  <th class="disabled-sorting text-right">Ações</th>
                                </tr>
                              </thead>
+                             <tbody>
+                                @foreach ($funcionarios as $funcionario)
+                                   <tr>
+                                      <td>{{$funcionario->id}}</td>
+                                      <td>{{$funcionario->name}}</td>
+                                      <td>{{$funcionario->email}}</td>
+                                      <td>{{$funcionario->nivel}}</td>
+                                      <td></td>
+                                   </tr>    
+                                @endforeach
+                            </tbody>
                              <tfoot>
                                <tr>
                                  <th>Razão Social</th>
@@ -143,17 +144,6 @@
                                  <th class="text-right">Ações</th>
                                </tr>
                              </tfoot>
-                             {{-- <tbody>
-                                 @foreach ($dados as $dado)
-                                    <tr>
-                                       <td>{{$dado->razao_social}}</td>   
-                                       <td>{{$dado->cnpj}}</td>   
-                                       <td>{{$dado->produtos}}</td>   
-                                       <td>{{$dado->porte_empresa}}</td>   
-                                       <td></td>   
-                                    </tr>    
-                                 @endforeach
-                             </tbody> --}}
                            </table>
                          </div>
                      </div>
@@ -222,26 +212,7 @@
 <script src="../assets/js/plugins/demo.js"></script>
 <!-- Sweet Alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript">
-  $(document).ready(function() {
 
-    //init wizard
-
-    demo.initMaterialWizard();
-
-    // Javascript method's body can be found in assets/js/demos.js
-    demo.initDashboardPageCharts();
-
-    demo.initCharts();
-
-  });
-</script>
-<script type="text/javascript">
-  $(document).ready(function() {
-
-    demo.initVectorMap();
-  });
-</script>
 <script type="text/javascript">
    $(document).ready(function() {
       $('#datatables').DataTable({
@@ -256,15 +227,13 @@
 			deferRender: true,
 			compact: true,
 			processing: true,
-			serverSide: true,
-			ajax: "{{ url('/home/datatables') }}",
-			columns: [
-				{ data : 'razao_social',   name : 'razao_social' },
-				{ data : 'cnpj',        	name : 'cnpj' },
-				{ data : 'produtos',       name : 'produtos' },
-				{ data : 'porte_empresa',  name : 'porte_empresa' },
+			/* columns: [
+				{ data : 'id',   name : 'id' },
+				{ data : 'name',        	name : 'name' },
+				{ data : 'email',       name : 'email' },
+				{ data : 'nivel',  name : 'nivel' },
 				{ data : 'acoes',        	name : 'acoes' },
-			],
+			], */
 			"columnDefs": [
     			{ "width": "15%", "targets": 4 },
     			{ className: "text-center", "targets": [4] },

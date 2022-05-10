@@ -39,6 +39,17 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="nivel" class="col-md-4 col-form-label text-md-right">Nível de Usuário:</label>
+
+                            <div class="col-md-6">
+                                <select name="nivel" id="nivel" class="form-control">
+                                    <option value="Admin">Administrador</option>
+                                    <option value="Super-Admin">Super-Administrador</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
