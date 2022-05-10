@@ -13,6 +13,8 @@ class CadastroController extends Controller
 {
     public function index()
     {
+        /* $passw = bcrypt('pmm12345');
+        dd($passw); */
         return view('user.index');
     }
 
@@ -24,7 +26,9 @@ class CadastroController extends Controller
             $this->validate($request,[
                 'razao_social' => 'required',
                 'cnpj' => 'required',
+                'porte_empresa' => 'required',
                 'cnae' => 'nullable',
+                'produtos' => 'required',
                 'endereco' => 'required',
                 'email' => 'required',
                 'telefone' => 'required',
@@ -35,24 +39,23 @@ class CadastroController extends Controller
             // Documentos Necessários:
             $documentosEnviados = [];
             // 1) Requerimento de Inscrição
-            foreach ($request->requerimento_inscricao as $arquivo) {
-                $filename = $arquivo->store('public/documentos');
+            foreach ($request->requerimento_inscricao as $requerimento) {
+                $filename = $requerimento->store('public/documentos');
                 array_push($documentosEnviados, substr($filename, 18));
                 RequerimentoInscricao::create([
                     'cadastro_id' => $cadastro->id,
-                    'filename' => $filename,
-                    'extensao' => $arquivo->extension()
+                    'filename' => substr($filename, 18),
+                    'extensao' => $requerimento->extension()
                 ]);
             }
 
         } catch (\Throwable $th) {
             DB::rollback();
+            dd($th);
             // Deletar arquivos.
             foreach($documentosEnviados as $documento) {
                 unlink(storage_path('app/public/documentos/'.$documento));
             }
-
-            dd($th);
         }
 
         DB::commit();

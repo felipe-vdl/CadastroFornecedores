@@ -13,7 +13,7 @@ class CreateRequerimentoInscricaosTable extends Migration
      */
     public function up()
     {
-        Schema::create('requerimento_inscricaos', function (Blueprint $table) {
+        Schema::create('documento_requerimentoinscricao', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('cadastro_id')->unsigned();
 
@@ -31,6 +31,6 @@ class CreateRequerimentoInscricaosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requerimento_inscricaos');
+        Schema::dropIfExists('documento_requerimentoinscricao');
     }
 }

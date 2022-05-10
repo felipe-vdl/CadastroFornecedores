@@ -130,8 +130,8 @@
                                        <td>{{$dado->porte_empresa}}</td>   
                                        <td></td>   
                                     </tr>    
-                                 @endforeach --}}
-                             </tbody>
+                                 @endforeach
+                             </tbody> --}}
                            </table>
                          </div>
                      </div>

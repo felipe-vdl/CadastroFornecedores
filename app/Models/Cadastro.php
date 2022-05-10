@@ -19,9 +19,9 @@ class Cadastro extends Model
         'telefone',
     ];
 
-    public function arquivos()
+    public function doc_requerimentoinscricao()
 {
-   return $this->hasMany(Arquivo::class);
+   return $this->hasMany(RequerimentoInscricao::class);
 }
 
 }

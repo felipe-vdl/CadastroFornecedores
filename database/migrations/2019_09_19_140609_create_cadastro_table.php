@@ -17,7 +17,9 @@ class CreateCadastroTable extends Migration
             $table->increments('id');
             $table->string('razao_social');
             $table->string('cnpj',20);
+            $table->string('porte_empresa');
             $table->string('cnae')->nullable();
+            $table->string('produtos');
             $table->string('endereco');
             $table->string('email');
             $table->string('telefone');

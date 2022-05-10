@@ -103,146 +103,69 @@
                      <div class="card-body ">
                         <div class="content">
                            <div class="container-fluid">
-                             <div class="card card-plain">
+                             <div class="card card-plain mb-0">
                                <div class="card-body">
-                                    <div class="row">
-                                       <div class="col-sm-6 col-lg-12">
-                                          <h4><strong>Razão Social :</strong><small> {{$dados->razao_social}}</></h4>
-                                       </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-sm-6 col-lg-12">
-                                          <h4><strong>CNPJ :</strong><small> {{$dados->cnpj}}</></h4>
-                                       </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-sm-6 col-lg-12">
-                                          <h4><strong>Porte da empresa :</strong><small> {{$dados->porte_empresa}}</></h4>
-                                       </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-sm-6 col-lg-12">
-                                          <h4><strong>CNAE :</strong><small> {{$dados->cnae}}</></h4>
-                                       </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-sm-6 col-lg-12">
-                                          <h4><strong>Produtos e Serviços  :</strong><small> {{$dados->produtos}}</></h4>
-                                       </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-sm-6 col-lg-12">
-                                          <h4><strong>Endereço  :</strong><small> {{$dados->endereco}}</></h4>
-                                       </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-sm-6 col-lg-12">
-                                          <h4><strong>Email  :</strong><small> {{$dados->email}}</></h4>
-                                       </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-sm-6 col-lg-12">
-                                          <h4><strong>Telefone  :</strong><small> {{$dados->telefone}}</></h4>
-                                       </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="col-sm-6 col-lg-12">
-                                          <h4><strong>Dia do cadastro  :</strong><small> {{$dados->created_at}}</></h4>
-                                       </div>
-                                    </div>
-                                    @if( count($dados->arquivos)>0 )
-                                       @foreach( $dados->arquivos as $foto )
-                                          @if($foto->extensao == "png")
-                                              <img src="{{ asset('storage/'.$foto->filename) }}"><p>
-                                          @elseif($foto->extensao == "pdf") 
-                                              <h5><p>PDF                               
-                                              <a href="{{ asset('storage/'.$foto->filename) }}" target="_blank">Clique aqui</a></h5>
-                                          @elseif($foto->extensao == "txt")
-                                              <h5><p>TXT                                
-                                              <a href="{{ asset('storage/'.$foto->filename) }}" target="_blank" >Clique aqui</a></h5>
+                                  <div class="row">
+                                      <div class="col-sm-6 col-lg-12">
+                                        <h4><strong>Razão Social :</strong><small> {{$dados->razao_social}}</></h4>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-6 col-lg-12">
+                                        <h4><strong>CNPJ :</strong><small> {{$dados->cnpj}}</></h4>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-6 col-lg-12">
+                                        <h4><strong>Porte da empresa :</strong><small> {{$dados->porte_empresa}}</></h4>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-6 col-lg-12">
+                                        <h4><strong>CNAE :</strong><small> {{$dados->cnae}}</></h4>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-6 col-lg-12">
+                                        <h4><strong>Produtos e Serviços  :</strong><small> {{$dados->produtos}}</></h4>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-6 col-lg-12">
+                                        <h4><strong>Endereço  :</strong><small> {{$dados->endereco}}</></h4>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-6 col-lg-12">
+                                        <h4><strong>Email  :</strong><small> {{$dados->email}}</></h4>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-6 col-lg-12">
+                                        <h4><strong>Telefone  :</strong><small> {{$dados->telefone}}</></h4>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-sm-6 col-lg-12">
+                                        <h4><strong>Dia do cadastro  :</strong><small> {{$dados->created_at}}</></h4>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                    <div style="display: flex; justify-content: space-evenly; align-items: center;">
+                                      @foreach ($dados->doc_requerimentoinscricao as $doc)
+                                          @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                          <figure>
+                                              <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                              <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="Atestado">
+                                          </figure>
+                                          @else
+                                              <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
                                           @endif
-                                       @endforeach
-                                     @endif
-                                 {{-- <h4 class="card-title pl-3">Mixed Grid
-                                   <small>Showing different sizes on different screens</small>
-                                 </h4>
-                                 <div class="row">
-                                   <div class="col-sm-6 col-lg-3">
-                                     <div class="card">
-                                       <div class="card-body text-center">
-                                         <code>col-sm-6 col-lg-3</code>
-                                       </div>
-                                     </div>
-                                   </div>
-                                   <div class="col-sm-6 col-lg-3">
-                                     <div class="card">
-                                       <div class="card-body text-center">
-                                         <code>col-sm-6 col-lg-3</code>
-                                       </div>
-                                     </div>
-                                   </div>
-                                   <div class="col-sm-6 col-lg-3">
-                                     <div class="card">
-                                       <div class="card-body text-center">
-                                         <code>col-sm-6 col-lg-3</code>
-                                       </div>
-                                     </div>
-                                   </div>
-                                   <div class="col-sm-6 col-lg-3">
-                                     <div class="card">
-                                       <div class="card-body text-center">
-                                         <code>col-sm-6 col-lg-3</code>
-                                       </div>
-                                     </div>
-                                   </div>
-                                 </div> --}}
-                                 {{-- <h4 class="card-title pl-3">Offset Grid
-                                   <small>Adding some space when needed</small>
-                                 </h4>
-                                 <div class="row">
-                                   <div class="col-md-3">
-                                     <div class="card">
-                                       <div class="card-body text-center">
-                                         <code>col-md-3</code>
-                                       </div>
-                                     </div>
-                                   </div>
-                                   <div class="col-md-3 ml-auto">
-                                     <div class="card">
-                                       <div class="card-body text-center">
-                                         <code>col-md-3 ml-auto</code>
-                                       </div>
-                                     </div>
-                                   </div>
-                                 </div> --}}
-                                 {{-- <div class="row">
-                                   <div class="col-md-4 ml-auto mr-auto">
-                                     <div class="card">
-                                       <div class="card-body text-center">
-                                         <code>col-md-4 ml-auto mr-auto</code>
-                                       </div>
-                                     </div>
-                                   </div>
-                                   <div class="col-md-4 ml-auto mr-auto">
-                                     <div class="card">
-                                       <div class="card-body text-center">
-                                         <code>col-md-4 ml-auto mr-auto</code>
-                                       </div>
-                                     </div>
-                                   </div>
-                                 </div> --}}
-                                 {{-- <div class="row">
-                                   <div class="col-md-6 ml-auto mr-auto">
-                                     <div class="card">
-                                       <div class="card-body text-center">
-                                         <code>col-md-6 ml-auto mr-auto</code>
-                                       </div>
-                                     </div>
-                                   </div>
-                                 </div> --}}
+                                      @endforeach
+                                    </div>
+                                  </div>
                                </div>
-                             </div>    
-                             <!--  end card -->
+                             </div>
                            </div>
                          </div>
                      </div>

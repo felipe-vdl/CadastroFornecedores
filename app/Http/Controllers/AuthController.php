@@ -17,16 +17,10 @@ class AuthController extends Controller
     public function entrar(Request $request)
     {
         $credentials = ['email'=>$request->email,'password'=>$request->password];
-        //dd($credentials);
+        
         if(Auth::attempt($credentials)){
             $usuario_logado = Auth::user();
-            $retorno = DB::connection('mysql2')->select("select consulta_role($usuario_logado->id , 'CADFOR', 'LOGIN') as retorno");
-            //dd($retorno[0]->retorno);
-            if($retorno[0]->retorno){
-                return redirect()->intended('home');
-            }else{
-                return redirect()->back()->with('msg','Voce não tem acesso ao sistema');
-            }
+            return redirect()->intended('home');
         }else{
             return redirect()->back()->with('msg','Acesso Negado, Email ou senha invalida');
         }

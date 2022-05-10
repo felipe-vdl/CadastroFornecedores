@@ -37,15 +37,10 @@ class HomeController extends Controller
     { 
     
         $usuario = Auth::user();
+        $dados = Cadastro::with('doc_requerimentoinscricao')->find($id);
 
-        $dados = Cadastro::with('arquivos')->find($id);
-
-        $a = $dados->arquivos;
-        //dd($a);
-        
-
-        //dd($dados);
-        return view ('show',compact('dados','usuario','extensao'));
+        /* dd($dados); */
+        return view ('show',compact('dados','usuario'));
     }
 
     public function dados()

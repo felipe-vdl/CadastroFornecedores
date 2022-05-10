@@ -85,47 +85,43 @@
 
 </head>
 <body>
-    <div id="app">
-         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container-fluid">
-               <img src="{{ asset('img/logo.png')}}" height="55"/>
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <!-- Right Side Of Navbar -->
-                  <ul class="navbar-nav ml-auto">
-                     <!-- Authentication Links -->
-                     @guest
-                        <!-- VAZIO -->
-                     @else    
-                        <div class="caralhodown">
-                           <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown" style="color: #000000; font-weight: bold;">
-                              <i class="fa fa-cog" aria-hidden="true"></i>
+   <div id="app">
+      <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+         <div class="container-fluid">
+            <img src="{{ asset('img/logo.png')}}" height="55"/>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <!-- Right Side Of Navbar -->
+               <ul class="navbar-nav ml-auto">
+                  <!-- Authentication Links -->
+                  @guest
+                     <!-- VAZIO -->
+                  @else    
+                     <div class="caralhodown">
+                        <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown" style="color: #000000; font-weight: bold;">
+                           <i class="fa fa-cog" aria-hidden="true"></i>
+                        </a>
+                        <div class="caralhodown-content">
+                           <a href="{{ url('/alterasenha') }}" >
+                              <i class="fas fa-lock"></i> Alterar Senha
                            </a>
-                           <div class="caralhodown-content">
-                              <a href="{{ url('/alterasenha') }}" >
-                                 <i class="fas fa-lock"></i> Alterar Senha
-                              </a>
-                              <a href="{{ url('/logout') }}" style="color:black;">
-                                 <i class="fa fa-fw fa-power-off"></i>Sair
-                              </a>
-                           </div>
+                           <a href="{{ url('/logout') }}" style="color:black;">
+                              <i class="fa fa-fw fa-power-off"></i>Sair
+                           </a>
                         </div>
-                     @endguest
-                  </ul>
-               </div>
+                     </div>
+                  @endguest
+               </ul>
             </div>
-         </nav>
+         </div>
+      </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
-    {{-- Vanilla Masker --}}
-      <script src="{{ asset('js/vanillaMasker.min.js') }}"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/dropzone.js"></script>
-    @stack('scripts')
-
-    
+      <main class="py-4">
+         @yield('content')
+      </main>
+   </div>
+   {{-- Vanilla Masker --}}
+   <script src="{{ asset('js/vanillaMasker.min.js') }}"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/dropzone.js"></script>
+   @stack('scripts')
 </body>
 </html>
-
-
