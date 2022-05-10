@@ -65,6 +65,7 @@
 							<li><span class="font-weight-bold">Tamanho limite por arquivo:</span> 10MB.</li>
 							<li><span class="font-weight-bold">Certifique-se de que as fotos/documentos são legíveis.</span></li>
 							<li><span class="font-weight-bold">Insira os documentos de acordo com a categoria.</span></li>
+							<li><span class="font-weight-bold">Todos os documentos devem estar devidamente autenticados em cartório, ou ainda, caso necessário, conferidos na própria CPL, por servidor habilitado.</span></li>
 						</ul>
 					</div>
 					{{-- 1) Requerimento de Inscrição --}}
