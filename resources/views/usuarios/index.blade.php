@@ -69,6 +69,11 @@
           <div class="navbar-wrapper">
             <a class="navbar-brand" href="/home">Cadastro de Fornecedores</a>
           </div>
+          @if(session()->get('sucesso_usuario_criado'))
+            <div class="alert alert-success m-0">
+              {{ session()->get('sucesso_usuario_criado') }}
+            </div>
+          @endif
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
               <li class="nav-item dropdown">

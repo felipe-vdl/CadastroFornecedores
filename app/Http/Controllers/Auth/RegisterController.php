@@ -79,6 +79,6 @@ class RegisterController extends Controller
         $user->password =  'pmm12345';
         
         $user->save();
-        return redirect('/home')->with('sucesso_usuario_criado','Usuário criado com sucesso.');
+        return redirect('/usuarios')->with('sucesso_usuario_criado','Usuário criado com sucesso.');
     }
 }
