@@ -20,9 +20,33 @@ class FuncionarioController extends Controller
     
     public function index ()
     {
-        $usuario = Funcionario::find(Auth::user()->id);
         $funcionarios = Funcionario::all();
-        return view('usuarios.index', compact('funcionarios', 'usuario'));
+
+        return view('funcionarios.index', compact('funcionarios'));
+    }
+
+    public function edit ($id)
+    {
+        $funcionario = Funcionario::findOrFail($id);
+
+        return view('funcionarios.edit', compact('funcionario'));
+    }
+
+    public function update (Request $request, $id)
+    {
+        $funcionario = Funcionario::findOrFail($id);
+        
+        $funcionario->name   = $request->name;
+        $funcionario->email  = $request->email;
+        $funcionario->nivel  = $request->nivel;
+        
+        if($request->resetarsenha == 1) {
+            $funcionario->password = 'pmm12345';
+        }
+
+        $funcionario->update();
+
+        return redirect('/usuarios')->with('sucesso_edicao_usuario', 'Usuário editado com sucesso.');
     }
 
 	public function AlteraSenha()
@@ -30,7 +54,7 @@ class FuncionarioController extends Controller
         //dd("aqui");
       	$funcionario = Funcionario::find(Auth::user()->id);
     
-      	return view('altera_senha',compact('funcionario'));
+      	return view('funcionarios.altera_senha',compact('funcionario'));
 		}
 
 	public function SalvarSenha(Request $request)

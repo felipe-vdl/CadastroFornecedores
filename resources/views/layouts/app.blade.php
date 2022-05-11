@@ -96,7 +96,7 @@
                   @guest
                      <!-- VAZIO -->
                   @else    
-                     <div class="caralhodown">
+                     {{-- <div class="caralhodown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #000000; font-weight: bold;">
                            <i class="fa fa-cog" aria-hidden="true"></i>
                         </a>
@@ -113,7 +113,7 @@
                               <i class="fa fa-fw fa-power-off"></i>Sair
                            </a>
                         </div>
-                     </div>
+                     </div> --}}
                   @endguest
                </ul>
             </div>

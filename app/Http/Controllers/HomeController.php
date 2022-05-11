@@ -28,17 +28,14 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        $usuario = Auth::user();
-        return view('home',compact('usuario'));
+        return view('cadastro.home');
     }
 
     public function show(Request $request, $id)
     { 
     
-        $usuario = Auth::user();
         $dados = Cadastro::with('doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
-        /* dd($dados); */
-        return view ('show',compact('dados','usuario'));
+        return view ('cadastro.show',compact('dados'));
     }
 
     public function dados()
@@ -53,8 +50,9 @@ class HomeController extends Controller
 
             $acoes .= "<td style='width: 16%;'>
                         <a  href='".url("/home/$dados->id")."' 
-                            class='btn btn-link btn-info btn-just-icon like'>
-                            <i class='material-icons'>pageview</i>
+                            class='btn btn-info btn-sm'
+                            title='Detalhar cadastro.'>
+                            <i class='material-icons'>search</i>
                         </a>
                     </td>";
 

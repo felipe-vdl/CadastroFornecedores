@@ -24,9 +24,9 @@ use App\Models\DocCapacidadeTecnica;
 
 class CadastroController extends Controller
 {
-    public function index()
+    public function create()
     {
-        return view('user.index');
+        return view('cadastro.create');
     }
 
     public function store(Request $request)
@@ -213,7 +213,7 @@ class CadastroController extends Controller
 
     public function sucesso()
     {
-        return view('user.sucesso');
+        return view('cadastro.sucesso');
     }
 
 }
