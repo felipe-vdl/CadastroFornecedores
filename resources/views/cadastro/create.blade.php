@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="container" style="padding-bottom: 150px;">
-		<form method="POST" action="{{url('/cadastro')}}" enctype="multipart/form-data" id="form_cadastro">
+		<form method="POST" action="{{url('/')}}" enctype="multipart/form-data" id="form_cadastro">
 			{{ csrf_field() }}
 			<div class="card bg-light">
 				<div class="card-header">
@@ -32,7 +32,7 @@
 						</div>
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold">CNAE (Atividade Econômica):</label>
-							<input id="cnae" name="cnae" class="form-control form-control-sm" type="text" placeholder="1111-1/11" minlength="9" required>
+							<input id="cnae" name="cnae" class="form-control form-control-sm" type="text" placeholder="Código ou Atividade">
 						</div>
 					</div>
 					<div class="row">
@@ -415,7 +415,6 @@
 		$(document).ready(function(){
 			VMasker ($("#cnpj")).maskPattern("99.999.999/9999-99");
 			VMasker ($("#telefone")).maskPattern("(99)9999-99999");
-			VMasker ($("#cnae")).maskPattern("9999-9/99");
 		});
 	</script>
 	<script>

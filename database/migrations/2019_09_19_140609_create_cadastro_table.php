@@ -13,7 +13,7 @@ class CreateCadastroTable extends Migration
      */
     public function up()
     {
-        Schema::create('cadastro', function (Blueprint $table) {
+        Schema::create('cadastros', function (Blueprint $table) {
             $table->increments('id');
             $table->string('razao_social');
             $table->string('cnpj',20);
@@ -23,7 +23,17 @@ class CreateCadastroTable extends Migration
             $table->string('endereco');
             $table->string('email');
             $table->string('telefone');
+            $table->string('chave');
+            $table->tinyInteger('status');
+            $table->string('justificativa')->nullable();
+            $table->string('avaliador')->nullable();
+            $table->date('data_avaliacao')->nullable();
+            $table->tinyInteger('envio_create')->nullable();
+            $table->tinyInteger('envio_avaliacao')->nullable();
             $table->timestamps();
+
+            $table->integer('avaliador_id')->nullable()->unsigned();
+            $table->foreign('avaliador_id')->references('id')->on('funcionarios');
         });
     }
 
@@ -34,6 +44,6 @@ class CreateCadastroTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cadastro');
+        Schema::dropIfExists('cadastros');
     }
 }

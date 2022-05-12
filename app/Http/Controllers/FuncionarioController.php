@@ -16,7 +16,7 @@ class FuncionarioController extends Controller
         $this->funcionario = $funcionario; 
         // todas as rotas aqui serão antes autenticadas
         //$this->middleware('auth');
-    	}
+    }
     
     public function index ()
     {
@@ -75,7 +75,7 @@ class FuncionarioController extends Controller
 
            $funcionario->update(['password' => ($request->password)]);
 
-            return redirect('/home')->with('sucesso_alteracao_senha','Senha alterada com sucesso.');
+            return redirect('/cadastros')->with('sucesso_alteracao_senha','Senha alterada com sucesso.');
         }else{
             return back()->withErrors('Senha atual não confere');
         }

@@ -20,7 +20,7 @@ class CreateDocCreditoTributariosTable extends Migration
             $table->string('filename');
             $table->string('extensao', 16);
 
-            $table->foreign('cadastro_id')->references('id')->on('cadastro')->onDelete('cascade');
+            $table->foreign('cadastro_id')->references('id')->on('cadastros')->onDelete('cascade');
         });
     }
 

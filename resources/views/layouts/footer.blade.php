@@ -21,6 +21,12 @@
            <b>Rua Arthur Oliveira Vecchi, 120 -  Centro - Mesquita - RJ - CEP: 26553-080</b>
          </a>
        </li>
+
+       <li>
+        <a href="https://lgpd.mesquita.rj.gov.br/?page_id=43" target="_blank">
+          <b>POLÍTICA DE PRIVACIDADE</b>
+        </a>
+       </li>
      </ul>
    </nav>
 </footer>

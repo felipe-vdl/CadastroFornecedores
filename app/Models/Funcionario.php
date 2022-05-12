@@ -28,4 +28,8 @@ class Funcionario extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
+    public function cadastros()
+    {
+    return $this->hasMany(Cadastro::class);
+    }
 }

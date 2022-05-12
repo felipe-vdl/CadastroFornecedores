@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cadastro extends Model
 {
-    protected $table = "cadastro";
+    protected $table = "cadastros";
 
     protected $fillable = [
         'razao_social',
@@ -17,6 +17,13 @@ class Cadastro extends Model
         'endereco',
         'email',
         'telefone',
+        'status',
+        'justificativa',
+        'avaliador',
+        'avaliador_id',
+        'data_avaliacao',
+        'envio_create',
+        'envio_avaliacao',
     ];
 
     public function doc_requerimentoinscricao()
@@ -88,5 +95,10 @@ class Cadastro extends Model
     {
     return $this->hasMany(DocCapacidadeTecnica::class);
     }
+
+    public function funcionario()
+   {
+      return $this->belongsTo(Funcionario::class);
+   }
 
 }

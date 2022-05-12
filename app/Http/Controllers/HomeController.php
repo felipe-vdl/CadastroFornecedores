@@ -28,17 +28,10 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        return view('cadastro.home');
+        return redirect('/cadastros');
     }
 
-    public function show(Request $request, $id)
-    { 
-    
-        $dados = Cadastro::with('doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
-        return view ('cadastro.show',compact('dados'));
-    }
-
-    public function dados()
+    /* public function dados()
     {
         $arr = Cadastro::all();
         //dd($arr);
@@ -67,6 +60,6 @@ class HomeController extends Controller
         return DataTables::of($colecao)
                 ->rawColumns(['acoes'])
                 ->make(true);
-    }
+    } */
     
 }

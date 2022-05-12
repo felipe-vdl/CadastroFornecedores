@@ -50,9 +50,9 @@
                 </div>
                 <ul class="nav">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/home">
-                    <i class="material-icons">dashboard</i>
-                    <p> Empresas </p>
+                    <a class="nav-link" href="/cadastros">
+                    <i class="material-icons">summarize</i>
+                    <p> Cadastros </p>
                     </a>
                 </li>
                 @if (Auth::user()->nivel == "Super-Admin")
