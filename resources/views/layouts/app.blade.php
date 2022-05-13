@@ -86,35 +86,19 @@
 </head>
 <body>
    <div id="app">
-      <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+      <nav class="navbar navbar-expand navbar-light navbar-laravel">
          <div class="container-fluid">
             <img src="{{ asset('img/logo.png')}}" height="55"/>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-               <!-- Right Side Of Navbar -->
-               <ul class="navbar-nav ml-auto">
-                  <!-- Authentication Links -->
-                  @guest
-                     <!-- VAZIO -->
-                  @else    
-                     {{-- <div class="caralhodown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #000000; font-weight: bold;">
-                           <i class="fa fa-cog" aria-hidden="true"></i>
-                        </a>
-                        <div class="caralhodown-content">
-                           @if (Auth::user()->nivel == "Super-Admin")
-                              <a href="{{ url('/register') }}" style="color:black;">
-                                 <i class="fa fa-fw fa-user-plus"></i>Registrar Usuário
-                              </a>
-                           @endif
-                           <a href="{{ url('/alterasenha') }}" >
-                              <i class="fas fa-lock"></i> Alterar Senha
-                           </a>
-                           <a href="{{ url('/logout') }}" style="color:black;">
-                              <i class="fa fa-fw fa-power-off"></i>Sair
-                           </a>
-                        </div>
-                     </div> --}}
-                  @endguest
+               <ul class="navbar-nav ml-5 mr-sm-auto">
+                  <li class="nav-link">
+                     <a href="{{ url('/') }}">Formulário de Cadastro</a>
+                  </li>
+               </ul>
+               <ul class="navbar-nav ml-auto mr-5">
+                  <li class="nav-link">
+                     <a href="{{ url('/consultar') }}">Página de Consulta</a>
+                  </li>
                </ul>
             </div>
          </div>

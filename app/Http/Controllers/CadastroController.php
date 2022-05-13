@@ -87,7 +87,8 @@ class CadastroController extends Controller
                     DocRequerimentoInscricao::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
                 // 2) Ato Constitutivo
@@ -97,7 +98,8 @@ class CadastroController extends Controller
                     DocAtoConstitutivo::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
                 // 3) Procuração ou Carta de Credenciamento
@@ -107,7 +109,8 @@ class CadastroController extends Controller
                     DocProcuracaoCarta::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
                 // 4) Cédula de Identidade (RG) e CPF dos Representantes Legais
@@ -117,7 +120,8 @@ class CadastroController extends Controller
                     DocCedulaIdentidade::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
                 // 5) Registro Entidade
@@ -127,7 +131,8 @@ class CadastroController extends Controller
                     DocRegistroEntidade::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
                 // 6) Inscrição Cnpj
@@ -137,7 +142,8 @@ class CadastroController extends Controller
                     DocInscricaoCnpj::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
                 // 7) Balanço Patrimonial
@@ -147,7 +153,8 @@ class CadastroController extends Controller
                     DocBalancoPatrimonial::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
                 // 8) Regularidade Fiscal
@@ -157,7 +164,8 @@ class CadastroController extends Controller
                     DocRegularidadeFiscal::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
 
@@ -168,7 +176,8 @@ class CadastroController extends Controller
                     DocCreditoTributario::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
 
@@ -179,7 +188,8 @@ class CadastroController extends Controller
                     DocDebitoEstadual::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
 
@@ -190,7 +200,8 @@ class CadastroController extends Controller
                     DocDebitoMunicipal::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
 
@@ -201,7 +212,8 @@ class CadastroController extends Controller
                     DocFalenciaConcordata::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
 
@@ -212,7 +224,8 @@ class CadastroController extends Controller
                     DocDebitoTrabalhista::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
 
@@ -223,7 +236,8 @@ class CadastroController extends Controller
                     DocCapacidadeTecnica::create([
                         'cadastro_id' => $cadastro->id,
                         'filename' => substr($filename, 18),
-                        'extensao' => $arquivo->extension()
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
                     ]);
                 }
 
@@ -247,7 +261,8 @@ class CadastroController extends Controller
             DB::commit();
 
             /* return redirect()->action('CadastroController@sucesso'); */
-            return view('cadastro.sucesso', compact('cadastro'));
+            /* return view('cadastro.sucesso', compact('cadastro')); */
+            return redirect()->route('cadastros.sucesso', ['chave' => $cadastro->chave]);
 
         } catch (\Throwable $th) {
             DB::rollback();
@@ -259,6 +274,12 @@ class CadastroController extends Controller
 
             return redirect('/')->with('error', 'Houve um erro ao criar o cadastro, tente novamente.');
         }
+    }
+
+    /* Tela de Sucesso após cadastro. */
+    public function sucesso ($chave) {
+        $cadastro = Cadastro::where('chave', '=', $chave)->first();
+        return view('cadastro.sucesso', compact('cadastro'));
     }
     
     public function show(Request $request, $id)
@@ -274,14 +295,32 @@ class CadastroController extends Controller
         return view ('cadastro.edit',compact('cadastro'));
     }
 
+    /* TODO: Avaliação */
     public function update(Request $request, $id)
     {
         
     }
 
-    public function sucesso()
+    public function consultar()
+    { 
+        return view ('cadastro.consultar');
+    }
+
+    public function visualizacao(Request $request)
     {
-        return view('cadastro.sucesso');
+        if (Cadastro::where('chave', '=', $request->chave)->count() === 0) {
+            return redirect('/confirmar')->with('error', 'Certifique-se de que a chave inserida esteja correta.');
+        }
+
+        $query = Cadastro::where('chave', $request->chave)->get();
+        $cadastro = Cadastro::with('doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($query[0]->id);
+        return view ('cadastro.visualizacao',compact('cadastro'));
+    }
+
+    /* TODO: Reenvio de Arquivos Indeferidos */
+    public function corrigir(Request $request, $id)
+    {
+        
     }
 
 }

@@ -3,6 +3,10 @@
 /* Rotas Cadastro públicas */
 Route::get('/', 'CadastroController@create')->name('cadastros.create');
 Route::post('/', 'CadastroController@store')->name('cadastros.store');
+Route::get('/sucesso/{chave}', 'CadastroController@sucesso')->name('cadastros.sucesso');
+Route::get('/consultar', 'CadastroController@consultar')->name('cadastros.consultar');
+Route::post('/consultar', 'CadastroController@visualizacao')->name('cadastros.visualizacao');
+Route::patch('/consultar/{id}', 'CadastroController@corrigir')->name('cadastros.corrigir');
 /* Rotas Cadastro Dashboard (Middleware Auth) */
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('cadastros', 'CadastroController')->except(['create', 'store']);

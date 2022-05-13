@@ -2,63 +2,80 @@
 
 @section('content')
 	<div class="container" style="padding-bottom: 150px;">
-		<form method="POST" action="{{url('/')}}" enctype="multipart/form-data" id="form_cadastro">
+		<form method="POST" action="{{ route('cadastros.corrigir', $cadastro->id) }}" enctype="multipart/form-data" id="form_cadastro">
+            @method('patch')
 			{{ csrf_field() }}
 			<div class="card bg-light">
 				<div class="card-header">
-					<h2 class="card-title m-0 text-center">Cadastro de Fornecedores</h2>
+					<h3 class="card-title text-center m-0">Cadastro: {{ $cadastro->chave }}</h3>
+                    <h3 class="card-title mt-2 m-0">Status:
+                        @switch($cadastro->status)
+                            @case(0)
+                              Em Análise
+                              @break
+                            @case(1)
+                              Aprovado
+                              @break
+                            @case(2)
+                              Aguardando Documentos
+                              @break
+                            @case(3)
+                              Recusado
+                              @break
+                        @endswitch
+                    </h3>
 				</div>
 				<div class="card-body">
 					@if(session()->get('error'))
 					<div class="alert alert-danger m-0">
-						<h5 class="alert-heading">Erro ao criar o cadastro.</h5>
+						<h5 class="alert-heading">Erro ao corrigir o cadastro.</h5>
 						{{ session()->get('error') }}
 					</div><br/>
 					@endif
 					<div class="row">
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold">Razão Social:</label>
-							<input id="razao_social" name="razao_social" class="form-control form-control-sm" type="text" placeholder="Nome Comercial, Firma Empresarial ou Denominação Social" required>
+							<input id="razao_social" {{-- name="razao_social" --}} disabled value="{{ $cadastro->razao_social }}" class="form-control form-control-sm" type="text" placeholder="Nome Comercial, Firma Empresarial ou Denominação Social" required>
 						</div>
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold">CNPJ:</label>
-							<input id="cnpj" name="cnpj" class="form-control form-control-sm" type="text" placeholder="11.111.111/1111-11" minlength="18" required>
+							<input id="cnpj" {{-- name="cnpj" --}} disabled value="{{ $cadastro->cnpj }}" class="form-control form-control-sm" type="text" placeholder="11.111.111/1111-11" minlength="18" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold">Porte da Empresa:</label>
-							<input id="porte_empresa" name="porte_empresa" class="form-control form-control-sm" type="text" placeholder="MEI, ME, EPP, etc." required>
+							<input id="porte_empresa" {{-- name="porte_empresa" --}} disabled value="{{ $cadastro->porte_empresa }}" class="form-control form-control-sm" type="text" placeholder="MEI, ME, EPP, etc." required>
 						</div>
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold">CNAE (Atividade Econômica):</label>
-							<input id="cnae" name="cnae" class="form-control form-control-sm" type="text" placeholder="Código ou Atividade">
+							<input id="cnae" {{-- name="cnae" --}} disabled value="{{ $cadastro->cnae }}" class="form-control form-control-sm" type="text" placeholder="Código ou Atividade">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-12">
 							<label class="form-label font-weight-bold">Produtos e Serviços Ofertados:</label>
-							<input id="produtos" name="produtos" class="form-control form-control-sm" type="text" placeholder="Produtos e Serviços Ofertados pelo Fornecedor." required>
+							<input id="produtos" {{-- name="produtos" --}} disabled value="{{ $cadastro->produtos }}" class="form-control form-control-sm" type="text" placeholder="Produtos e Serviços Ofertados pelo Fornecedor." required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-12">
 							<label class="form-label font-weight-bold">Endereço:</label>
-							<input id="endereco" name="endereco" class="form-control form-control-sm" type="text" placeholder="Ex.: R. Arthur Oliveira Vechi, 120 - Centro, Mesquita - RJ, 26553-080" required>
+							<input id="endereco" {{-- name="endereco" --}} disabled value="{{ $cadastro->endereco }}" class="form-control form-control-sm" type="text" placeholder="Ex.: R. Arthur Oliveira Vechi, 120 - Centro, Mesquita - RJ, 26553-080" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold">E-mail:</label>
-							<input id="email" name="email" class="form-control form-control-sm" type="text" placeholder="E-mail para Contato" required>
+							<input id="email" {{-- name="email" --}} disabled value="{{ $cadastro->email }}" class="form-control form-control-sm" type="text" placeholder="E-mail para Contato" required>
 						</div>
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold">Telefone:</label>
-							<input id="telefone" name="telefone" class="form-control form-control-sm" type="text" placeholder="Telefone para Contato" required>
+							<input id="telefone" {{-- name="telefone" --}} disabled value="{{ $cadastro->telefone }}" class="form-control form-control-sm" type="text" placeholder="Telefone para Contato" required>
 						</div>
 					</div>
 					<div class="mt-3">
-						<h4 class="card-title mb-0 mt-3 text-center">Documentos Necessários:</h4>
+						<h4 class="card-title mb-0 mt-3 text-center">Documentos:</h4>
 						<p style="font-size: 14px;" class="text-danger font-weight-bold mb-0">Atenção:</p>
 						<ul class="text-danger">
 							<li><span class="font-weight-bold">Tipos de arquivo aceitos:</span> Imagem ou documento.</li>
@@ -89,6 +106,22 @@
 								<span id="requerimentoinscricao-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 1 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                              @foreach ($cadastro->doc_requerimentoinscricao as $doc)
+                                  @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                  <figure>
+                                      <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                      <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                  </figure>
+                                  @else
+                                      <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                  @endif
+                              @endforeach
+                            </div>
+                        </div>
 					</div>
 					{{-- Fim 1 --}}
 					{{-- 2) Ato Constitutivo (Contrato Social, Estatuto, Ata de Reunião) --}}
@@ -112,6 +145,22 @@
 								<span id="atoconstitutivo-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 2 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_atoconstitutivo as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
 					</div>
 					{{-- Fim 2 --}}
 					{{-- 3) Procuração ou Carta de Credenciamento--}}
@@ -135,6 +184,22 @@
 								<span id="procuracaocarta-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 3 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_procuracaocarta as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                        </div>
 					</div>
 					{{-- Fim 3 --}}
 					{{-- 4) Cédula de Identidade (RG) e CPF dos Reprentantes Legais --}}
@@ -158,6 +223,22 @@
 								<span id="cedulaidentidade-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 4 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_cedulaidentidade as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
 					</div>
 					{{-- Fim 4 --}}
 					{{-- 5) Registro ou Inscrição na Entidade Profissional Competente: --}}
@@ -181,6 +262,22 @@
 								<span id="registroentidade-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 5 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_registroentidade as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
 					</div>
 					{{-- Fim 5 --}}
 					{{-- 6) Registro ou Inscrição na Entidade Profissional Competente: --}}
@@ -204,6 +301,22 @@
 								<span id="inscricaocnpj-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 6 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_inscricaocnpj as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                        </div>
 					</div>
 					{{-- Fim 6 --}}
 					{{-- 7) Balanço Patrimonial: --}}
@@ -227,6 +340,22 @@
 								<span id="balancopatrimonial-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 7 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_balancopatrimonial as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
 					</div>
 					{{-- Fim 7 --}}
 					{{-- 8) Regularidade Fiscal: --}}
@@ -250,6 +379,22 @@
 								<span id="regularidadefiscal-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 8 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_regularidadefiscal as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
 					</div>
 					{{-- Fim 8 --}}
 					{{-- 9) Crédito Tributário: --}}
@@ -273,6 +418,23 @@
 								<span id="creditotributario-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 9 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_creditotributario as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
+                        
 					</div>
 					{{-- Fim 9 --}}
 					{{-- 10) Debito Estadual: --}}
@@ -296,6 +458,22 @@
 								<span id="debitoestadual-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 10 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_debitoestadual as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
 					</div>
 					{{-- Fim 10 --}}
 					{{-- 11) Debito Municipal: --}}
@@ -319,6 +497,22 @@
 								<span id="debitomunicipal-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 11 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_debitomunicipal as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
 					</div>
 					{{-- Fim 11 --}}
 					{{-- 12) Debito Municipal: --}}
@@ -342,6 +536,22 @@
 								<span id="falenciaconcordata-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 12 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_falenciaconcordata as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
 					</div>
 					{{-- Fim 12 --}}
 					{{-- 13) Debito Trabalhista: --}}
@@ -365,6 +575,22 @@
 								<span id="debitotrabalhista-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 13 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_debitotrabalhista as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
 					</div>
 					{{-- Fim 13 --}}
 					{{-- 14) Capacidade Técnica: --}}
@@ -388,6 +614,22 @@
 								<span id="capacidadetecnica-names"></span>
 							</span>
 						</p>
+                        {{-- Imagens/Documentos 14 --}}
+                        <div class="container mb-3 pt-2">
+                            <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
+                            <div style="display: flex; justify-content: start; align-items: start;">
+                            @foreach ($cadastro->doc_capacidadetecnica as $doc)
+                                @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+                                <figure>
+                                    <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                </figure>
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+                                @endif
+                            @endforeach
+                            </div>
+                          </div>
 					</div>
 					{{-- Fim 14 --}}
 				</div>
@@ -396,7 +638,7 @@
 						<div>
 							<button type="submit" id="form_cadastro" class="botoes-acao btn btn-round btn-success enviar-relatorio">
 								<span class="icone-botoes-acao mdi mdi-send"></span>
-								<span class="texto-botoes-acao">Enviar Cadastro</span>
+								<span class="texto-botoes-acao">Salvar Cadastro</span>
 								<div class="ripple-container"></div>
 							</button>
 						</div> 

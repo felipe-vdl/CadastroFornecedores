@@ -20,6 +20,9 @@ class CreateDocProcuracaoCartasTable extends Migration
             $table->string('filename');
             $table->string('extensao', 16);
 
+            $table->tinyInteger('status');
+            $table->string('justificativa')->nullable();
+
             $table->foreign('cadastro_id')->references('id')->on('cadastros')->onDelete('cascade');
         });
     }

@@ -11,9 +11,11 @@ class DocDebitoEstadual extends Model
     public $timestamps = false;
 
     protected $fillable = [
-    'cadastro_id',
-    'filename',
-    'extensao'
+        'cadastro_id',
+        'filename',
+        'extensao',
+        'status',
+        'justificativa'
     ];
 
     public function cadastro()
