@@ -298,7 +298,26 @@ class CadastroController extends Controller
     /* TODO: Avaliação */
     public function update(Request $request, $id)
     {
-        
+        DB::beginTransaction();
+        try {
+            $cadastro = Cadastro::with('doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
+            
+            $cadastro->status =     $request->direcionamento;
+            
+            if($request->justificativa) {
+                $cadastro->justificativa = $request->justificativa;
+            }
+
+            $cadastro->update();
+
+            DB::commit();
+            return redirect('/cadastros')->with('success', 'Cadastro avaliado com sucesso.');
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            dd($th);
+            return back()->with('error', 'Houve um erro ao tentar avaliar o cadastro, tente novamente.');
+        }
     }
 
     public function consultar()

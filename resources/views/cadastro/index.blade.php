@@ -4,6 +4,11 @@
     <div class="container-fluid">
       <div class="row">
           <div class="col-md-12">
+            @if(session()->get('success'))
+              <div class="alert alert-success m-0">
+                  {{ session()->get('success') }}
+              </div>
+			      @endif
             <div class="card ">
                 <div class="card-header card-header-success card-header-icon">
                   <div class="card-icon">

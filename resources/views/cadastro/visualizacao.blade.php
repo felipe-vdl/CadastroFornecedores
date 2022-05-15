@@ -8,7 +8,7 @@
 			<div class="card bg-light">
 				<div class="card-header">
 					<h3 class="card-title text-center m-0">Cadastro: {{ $cadastro->chave }}</h3>
-                    <h3 class="card-title mt-2 m-0">Status:
+                    <h3 class="card-title mt-2 m-0">Situação:
                         @switch($cadastro->status)
                             @case(0)
                               Em Análise

@@ -18,47 +18,67 @@
                                 <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Razão Social: </strong><small> {{$cadastro->razao_social}}</></h4>
+                                        <h4><strong>Situação: </strong><small>
+                                            @switch($cadastro->status)
+                                            @case(0)
+                                              Em Análise
+                                              @break
+                                            @case(1)
+                                              Aprovado
+                                              @break
+                                            @case(2)
+                                              Aguardando Documentos
+                                              @break
+                                            @case(3)
+                                              Recusado
+                                              @break
+                                            @endswitch
+                                        </small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>CNPJ: </strong><small> {{$cadastro->cnpj}}</></h4>
+                                        <h4><strong>Razão Social: </strong><small> {{$cadastro->razao_social}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Porte da empresa: </strong><small> {{$cadastro->porte_empresa}}</></h4>
+                                        <h4><strong>CNPJ: </strong><small> {{$cadastro->cnpj}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>CNAE: </strong><small> {{$cadastro->cnae}}</></h4>
+                                        <h4><strong>Porte da empresa: </strong><small> {{$cadastro->porte_empresa}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Produtos e Serviços : </strong><small> {{$cadastro->produtos}}</></h4>
+                                        <h4><strong>CNAE: </strong><small> {{$cadastro->cnae}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Endereço: </strong><small> {{$cadastro->endereco}}</></h4>
+                                        <h4><strong>Produtos e Serviços : </strong><small> {{$cadastro->produtos}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Email: </strong><small> {{$cadastro->email}}</></h4>
+                                        <h4><strong>Endereço: </strong><small> {{$cadastro->endereco}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Telefone:</strong><small> {{$cadastro->telefone}}</></h4>
+                                        <h4><strong>Email: </strong><small> {{$cadastro->email}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Data do Cadastro:</strong><small> {{ date('d/m/Y', strtotime($cadastro->created_at))}}</></h4>
+                                        <h4><strong>Telefone:</strong><small> {{$cadastro->telefone}}</small></h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 col-lg-12">
+                                        <h4><strong>Data do Cadastro:</strong><small> {{ date('d/m/Y', strtotime($cadastro->created_at))}}</small></h4>
                                     </div>
                                 </div>
                                 <hr>

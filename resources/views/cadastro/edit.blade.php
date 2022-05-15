@@ -4,17 +4,41 @@
   <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
+            @if(session()->get('error'))
+                <div class="alert alert-danger m-0">
+                    {{ session()->get('error') }}
+                </div>
+			@endif
             <div class="card">
-                <form action="{{ route('cadastros.update', $cadastro->id ) }}">
+                <form action="{{ route('cadastros.update', $cadastro->id ) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
                     <div class="card-header card-header-warning card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons"></i>
                         </div>
-                        <h4 class="card-title">Avaliação de Cadastro</h4>
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title">Avaliação de Cadastro</h4>
+                            <button class="btn btn-success btn-sm" type="submit">Enviar Avaliação</button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="content">
                             <div class="container-fluid">
+                                <div class="row mt-3 justify-content-around">
+                                    <div class="col-12 col-md-4 text-center">
+                                        <label for="direcionamento" class="text-dark"><strong>Direcionamento</strong></label>
+                                        <select class="form-control text-center" name="direcionamento" id="direcionamento" required>
+                                            <option value="" selected disabled hidden>Selecione a opção</option>
+                                            <option value="1">Deferido</option>
+                                            <option value="2">Indeferido</option>
+                                        </select>
+                                    </div>
+                                    <div id="justificativa-div" class="col-12 mt-3 mt-md-0 col-md-4 text-center" style="display: none;">
+                                        <label for="justificativa" class="text-dark"><strong>Justificativa</strong></label>
+                                        <input class="form-control text-center" type="text" {{-- name="justificativa" --}} id="justificativa" placeholder="Descreva o motivo da indeferição">
+                                    </div>
+                                </div>
                             <div class="card card-plain mb-0">
                                 <div class="card-body">
                                 <div class="row">
@@ -315,4 +339,21 @@
 </div>
 @endsection
 @push('scripts')
+<script>
+    const direcionamento = document.querySelector('#direcionamento');
+    const justificativaDiv = document.querySelector('#justificativa-div');
+    const justificativa = document.querySelector('#justificativa');
+
+    direcionamento.addEventListener('change', function () {
+        if (this.value == 2) {
+            justificativaDiv.style.display = 'block';
+            justificativa.setAttribute('required', 'required');
+            justificativa.setAttribute('name', 'justificativa');
+        } else {
+            justificativaDiv.style.display = 'none';
+            justificativa.removeAttribute('required');
+            justificativa.removeAttribute('name');
+        };
+    });
+</script>
 @endpush
