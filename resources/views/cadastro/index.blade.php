@@ -61,18 +61,18 @@
                                         <a style="color: blue">Aguardando Documentos</a>
                                         @break
                                       @case(3)
-                                        <a style="color: red">Recusado</a>
+                                        <a style="color: red">Inválido</a>
                                         @break
                                     @endswitch
                                   </td>
                                   <td class="text-right">
                                     <a  href="{{ url("/cadastros/$cadastro->id") }}" 
-                                        class="btn btn-info btn-sm"
+                                        class="btn btn-info btn-sm p-2"
                                         title="Detalhar cadastro.">
                                         <i class='material-icons'>search</i>
                                     </a>
                                     <a  href="{{ url("/cadastros/$cadastro->id/edit") }}" 
-                                        class="btn btn-warning btn-sm"
+                                        class="btn btn-warning btn-sm p-2"
                                         title="Avaliar cadastro.">
                                         <i class='material-icons'>edit</i>
                                     </a>

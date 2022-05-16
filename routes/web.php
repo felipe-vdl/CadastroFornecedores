@@ -10,6 +10,7 @@ Route::patch('/consultar/{id}', 'CadastroController@corrigir')->name('cadastros.
 /* Rotas Cadastro Dashboard (Middleware Auth) */
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('cadastros', 'CadastroController')->except(['create', 'store']);
+    Route::post('/documentos', 'DocumentosController@avaliar')->name('documentos.avaliar');
 });
 
 /* Rotas Auth */

@@ -36,7 +36,7 @@
                                 <td class="text-right">
                                   <a
                                     href="{{url("usuarios/$funcionario->id/edit")}}"
-                                    class="btn btn-warning btn-sm"
+                                    class="btn btn-warning btn-sm p-2"
                                     data-toggle="tooltip"
                                     data-placement="bottom"
                                     title="Editar usuário.">

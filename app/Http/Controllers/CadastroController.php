@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UploadRequest;
 use Illuminate\Http\Request;
+use App\Http\Requests\UploadRequest;
 use App\Models\Cadastro;
 use DB;
 use Config;
@@ -302,10 +302,44 @@ class CadastroController extends Controller
         try {
             $cadastro = Cadastro::with('doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
             
-            $cadastro->status =     $request->direcionamento;
-            
-            if($request->justificativa) {
-                $cadastro->justificativa = $request->justificativa;
+            /* Status 3: Cadastro Inválido */
+            if($request->direcionamento == 3) {
+                $cadastro->status         = $request->direcionamento;
+                $cadastro->justificativa  = $request->justificativa;
+            } else {
+                /* Status 2: Presença de documento indeferido */
+                if (DocRequerimentoInscricao::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocAtoConstitutivo::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocProcuracaoCarta::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocCedulaIdentidade::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocRegistroEntidade::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocInscricaoCnpj::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocBalancoPatrimonial::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocRegularidadeFiscal::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocCreditoTributario::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocDebitoEstadual::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocDebitoMunicipal::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocFalenciaConcordata::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (DocDebitoTrabalhista::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    $cadastro->status = 2;
+                } else if (Doc::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                    
+                } else {
+                    /* Status 1: Cadastro Válido com documentos deferidos. */
+                    $cadastro->status   = $request->direcionamento;
+                }
             }
 
             $cadastro->update();

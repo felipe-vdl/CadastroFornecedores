@@ -18,7 +18,7 @@
                                 <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Situação: </strong><small>
+                                        <h4 class="text-uppercase"><strong>Situação: </strong><small>
                                             @switch($cadastro->status)
                                             @case(0)
                                               Em Análise
@@ -30,7 +30,7 @@
                                               Aguardando Documentos
                                               @break
                                             @case(3)
-                                              Recusado
+                                              Inválido
                                               @break
                                             @endswitch
                                         </small></h4>
@@ -38,47 +38,47 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Razão Social: </strong><small> {{$cadastro->razao_social}}</small></h4>
+                                        <h4 class="text-uppercase"><strong>Razão Social: </strong><small> {{$cadastro->razao_social}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>CNPJ: </strong><small> {{$cadastro->cnpj}}</small></h4>
+                                        <h4 class="text-uppercase"><strong>CNPJ: </strong><small> {{$cadastro->cnpj}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Porte da empresa: </strong><small> {{$cadastro->porte_empresa}}</small></h4>
+                                        <h4 class="text-uppercase"><strong>Porte da empresa: </strong><small> {{$cadastro->porte_empresa}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>CNAE: </strong><small> {{$cadastro->cnae}}</small></h4>
+                                        <h4 class="text-uppercase"><strong>CNAE: </strong><small> {{$cadastro->cnae}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Produtos e Serviços : </strong><small> {{$cadastro->produtos}}</small></h4>
+                                        <h4 class="text-uppercase"><strong>Produtos e Serviços : </strong><small> {{$cadastro->produtos}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Endereço: </strong><small> {{$cadastro->endereco}}</small></h4>
+                                        <h4 class="text-uppercase"><strong>Endereço: </strong><small> {{$cadastro->endereco}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Email: </strong><small> {{$cadastro->email}}</small></h4>
+                                        <h4 class="text-uppercase"><strong>Email: </strong><small> {{$cadastro->email}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Telefone:</strong><small> {{$cadastro->telefone}}</small></h4>
+                                        <h4 class="text-uppercase"><strong>Telefone:</strong><small> {{$cadastro->telefone}}</small></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-12">
-                                        <h4><strong>Data do Cadastro:</strong><small> {{ date('d/m/Y', strtotime($cadastro->created_at))}}</small></h4>
+                                        <h4 class="text-uppercase"><strong>Data do Cadastro:</strong><small> {{ date('d/m/Y', strtotime($cadastro->created_at))}}</small></h4>
                                     </div>
                                 </div>
                                 <hr>
@@ -333,4 +333,7 @@
 </div>
 @endsection
 @push('scripts')
+<script>
+    document.querySelector('footer').style.display = 'none';
+</script>
 @endpush
