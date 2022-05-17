@@ -259,9 +259,6 @@ class CadastroController extends Controller
 
             $cadastro->update();
             DB::commit();
-
-            /* return redirect()->action('CadastroController@sucesso'); */
-            /* return view('cadastro.sucesso', compact('cadastro')); */
             return redirect()->route('cadastros.sucesso', ['chave' => $cadastro->chave]);
 
         } catch (\Throwable $th) {
@@ -334,7 +331,7 @@ class CadastroController extends Controller
                     $cadastro->status = 2;
                 } else if (DocDebitoTrabalhista::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (Doc::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocCapacidadeTecnica::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
                     
                 } else {
                     /* Status 1: Cadastro Válido com documentos deferidos. */

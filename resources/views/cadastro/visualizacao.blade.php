@@ -112,12 +112,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                               @foreach ($cadastro->doc_requerimentoinscricao as $doc)
                                   @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                  <figure>
+                                  <figure class="m-2 text-center">
                                       <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                      <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                      <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                   </figure>
                                   @else
+								  <div class="m-2">
                                       <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+									</div>
                                   @endif
                               @endforeach
                             </div>
@@ -151,12 +153,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_atoconstitutivo as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -190,12 +194,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_procuracaocarta as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -229,12 +235,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_cedulaidentidade as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -268,12 +276,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_registroentidade as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -307,12 +317,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_inscricaocnpj as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -346,12 +358,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_balancopatrimonial as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -385,12 +399,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_regularidadefiscal as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -424,12 +440,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_creditotributario as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -464,12 +482,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_debitoestadual as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -503,12 +523,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_debitomunicipal as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -542,12 +564,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_falenciaconcordata as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -581,12 +605,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_debitotrabalhista as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>
@@ -620,12 +646,14 @@
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_capacidadetecnica as $doc)
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
-                                <figure>
+                                <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
-                                    <img style="max-width: 25vw;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+                                    <img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
                                 </figure>
                                 @else
+								<div class="m-2">
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+								</div>
                                 @endif
                             @endforeach
                             </div>

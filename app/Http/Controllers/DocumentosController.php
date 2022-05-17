@@ -53,7 +53,7 @@ class DocumentosController extends Controller
                 $doc = DocFalenciaConcordata::where([['id','=', $request->doc_id], ['filename','=', $request->filename]])->first();
             } else if (DocDebitoTrabalhista::where([ ['id', '=', $request->doc_id], ['filename', '=', $request->filename] ])->count() > 0) {
                 $doc = DocDebitoTrabalhista::where([['id','=', $request->doc_id], ['filename','=', $request->filename]])->first();
-            } else if (Doc::where([ ['id', '=', $request->doc_id], ['filename', '=', $request->filename] ])->count() > 0) {
+            } else if (DocCapacidadeTecnica::where([ ['id', '=', $request->doc_id], ['filename', '=', $request->filename] ])->count() > 0) {
                 $doc = DocCapacidadeTecnica::where([['id','=', $request->doc_id], ['filename','=', $request->filename]])->first();
             }
             
