@@ -24,7 +24,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <h4 class="card-title">Avaliação de Cadastro</h4>
-                            <button id="enviador-cadastro" class="btn btn-success btn-sm" type="submit">Enviar Avaliação</button>
+                            <button id="enviador-cadastro" class="btn btn-success btn-sm" type="submit">Salvar Avaliação</button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -34,14 +34,14 @@
                                     <div class="col-12 col-md-4 text-center">
                                         <label for="direcionamento" class="text-dark"><strong>Validação dos Dados:</strong></label>
                                         <select class="form-control text-center" name="direcionamento" id="direcionamento" required>
-                                            <option value="" selected disabled hidden>Selecione uma opção</option>
-                                            <option value="1">Dados Válidos</option>
-                                            <option value="3">Dados Inválidos</option>
+                                            <option value="" @if($cadastro->status == 0) selected @endif disabled hidden>Selecione uma opção</option>
+                                            <option value="1" @if($cadastro->status == 1 OR $cadastro->status == 2) selected @endif>Dados Válidos</option>
+                                            <option value="3" @if($cadastro->status == 3) selected @endif>Dados Inválidos</option>
                                         </select>
                                     </div>
-                                    <div id="justificativa-div" class="col-12 mt-3 mt-md-0 col-md-4 text-center" style="display: none;">
+                                    <div id="justificativa-div" class="col-12 mt-3 mt-md-0 col-md-4 text-center" @if($cadastro->status != 3) style="display: none;" @endif>
                                         <label for="justificativa" class="text-dark"><strong>Justificativa:</strong></label>
-                                        <input class="form-control text-center" type="text" {{-- name="justificativa" --}} id="justificativa" placeholder="Descreva o motivo da invalidez dos dados.">
+                                        <input class="form-control text-center" type="text" {{-- name="justificativa" --}} id="justificativa" placeholder="Descreva o motivo da invalidez dos dados." @if($cadastro->status == 3) value="{{$cadastro->justificativa}}" @endif>
                                     </div>
                                 </div>
                 </form>
