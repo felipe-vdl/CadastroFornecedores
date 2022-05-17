@@ -65,9 +65,7 @@ class DocumentosController extends Controller
             DB::commit();
             return redirect()->back()->with('success', 'Documento avaliado com sucesso.');
 
-        } catch (\Throwable $th) {
-            dd($th);
-            
+        } catch (\Throwable $th) {            
             DB::rollback();
             return redirect()->back()->with('error', 'Houve um erro ao avaliar o documento, tente novamente.');
         }

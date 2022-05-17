@@ -8,7 +8,7 @@
       </div>
       <div class="card-body">
         <p>Os dados da sua empresa agora constam na base de dados da prefeitura.</p>
-        <p>O cadastro será analisado pelo nosso departamento, aguarde a resposta por e-mail, poderá se dar em até X horas úteis.</p>
+        <p>O cadastro será analisado pelo nosso departamento, aguarde a resposta por e-mail, poderá se dar em até 48 horas úteis.</p>
         <p class="mb-0">Você pode consultar o processo do cadastro em nossa página de consulta.</p>
         <p class="mb-0"><b>Chave de Acesso do Cadastro:</b> {{ $cadastro->chave }}</p>
       </div>

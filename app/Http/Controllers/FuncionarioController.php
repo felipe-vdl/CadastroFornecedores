@@ -51,7 +51,6 @@ class FuncionarioController extends Controller
 
 	public function AlteraSenha()
    	{
-        //dd("aqui");
       	$funcionario = Funcionario::find(Auth::user()->id);
     
       	return view('funcionarios.altera_senha',compact('funcionario'));
@@ -64,12 +63,10 @@ class FuncionarioController extends Controller
             'password'              => 'required|min:6|confirmed',
             'password_confirmation' => 'required|min:6'
         ]);
-        //dd($request);
         // Obter o usuário
         $funcionario = Funcionario::find(Auth::user()->id);
         // obter a senha atual - será usada para gaurdar no log
         // $senha_atual = bcrypt($request->password_atual);
-        //dd($senha_atual);
         if (Hash::check($request->password_atual, $funcionario->password))
         {  
 

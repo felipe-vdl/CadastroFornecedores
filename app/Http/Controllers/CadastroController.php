@@ -263,7 +263,6 @@ class CadastroController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollback();
-            dd($th);
             // Deletar arquivos.
             foreach($documentosEnviados as $documento) {
                 unlink(storage_path('app/public/documentos/'.$documento));
@@ -340,13 +339,11 @@ class CadastroController extends Controller
             }
 
             $cadastro->update();
-
             DB::commit();
             return redirect('/cadastros')->with('success', 'Cadastro avaliado com sucesso.');
 
         } catch (\Throwable $th) {
             DB::rollback();
-            dd($th);
             return back()->with('error', 'Houve um erro ao tentar avaliar o cadastro, tente novamente.');
         }
     }
@@ -358,8 +355,8 @@ class CadastroController extends Controller
 
     public function visualizacao(Request $request)
     {
-        if (Cadastro::where('chave', '=', $request->chave)->count() === 0) {
-            return redirect('/confirmar')->with('error', 'Certifique-se de que a chave inserida esteja correta.');
+        if (Cadastro::where('chave', '=', $request->chave)->count() < 1) {
+            return back()->with('error', 'Certifique-se de que a chave inserida esteja correta.');
         }
 
         $query = Cadastro::where('chave', $request->chave)->get();
@@ -368,9 +365,314 @@ class CadastroController extends Controller
     }
 
     /* TODO: Reenvio de Arquivos Indeferidos */
-    public function corrigir(Request $request, $id)
+    public function corrigir(Request $request)
     {
-        
+        DB::beginTransaction();
+        try {
+            $cadastro = Cadastro::where('id', '=', $request->id)->first();
+
+            // Array de Controle:
+            $documentosEnviados = [];
+
+            // 1) Requerimento de Inscrição
+            if (isset($request->requerimento_inscricao)) {
+                foreach ($request->requerimento_inscricao as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocRequerimentoInscricao::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocRequerimentoInscricao::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+            // 2) Ato Constitutivo
+            if (isset($request->ato_constitutivo)) {
+                foreach ($request->ato_constitutivo as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocAtoConstitutivo::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocAtoConstitutivo::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+            // 3) Procuração ou Carta de Credenciamento
+            if (isset($request->procuracao_carta)) {
+                foreach ($request->procuracao_carta as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocProcuracaoCarta::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocProcuracaoCarta::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+            // 4) Cédula de Identidade (RG) e CPF dos Representantes Legais
+            if (isset($request->cedula_identidade)) {
+                foreach ($request->cedula_identidade as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocCedulaIdentidade::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocCedulaIdentidade::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+            // 5) Registro Entidade
+            if (isset($request->registro_entidade)) {
+                foreach ($request->registro_entidade as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocRegistroEntidade::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocRegistroEntidade::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+            // 6) Inscrição Cnpj
+            if (isset($request->inscricao_cnpj)) {
+                foreach ($request->inscricao_cnpj as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocInscricaoCnpj::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocInscricaoCnpj::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+            // 7) Balanço Patrimonial
+            if (isset($request->balanco_patrimonial)) {
+                foreach ($request->balanco_patrimonial as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocBalancoPatrimonial::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocBalancoPatrimonial::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+            // 8) Regularidade Fiscal
+            if (isset($request->regularidade_fiscal)) {
+                foreach ($request->regularidade_fiscal as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocRegularidadeFiscal::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocRegularidadeFiscal::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+
+            // 9) Crédito Tributário
+            if (isset($request->credito_tributario)) {
+                foreach ($request->credito_tributario as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocCreditoTributario::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocCreditoTributario::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+
+            // 10) Débito Estadual
+            if (isset($request->debito_estadual)) {
+                foreach ($request->debito_estadual as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocDebitoEstadual::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocDebitoEstadual::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+
+            // 11) Débito Municipal
+            if (isset($request->debito_municipal)) {
+                foreach ($request->debito_municipal as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocDebitoMunicipal::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocDebitoMunicipal::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+
+            // 12) Falência Concordata
+            if (isset($request->falencia_concordata)) {
+                foreach ($request->falencia_concordata as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocFalenciaConcordata::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocFalenciaConcordata::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+
+            // 13) Débito Trabalhista
+            if (isset($request->debito_trabalhista)) {
+                foreach ($request->debito_trabalhista as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocDebitoTrabalhista::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocDebitoTrabalhista::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+            
+
+            // 14) Capacidade Técnica
+            if (isset($request->capacidade_tecnica)) {
+                foreach ($request->capacidade_tecnica as $arquivo) {
+                    $filename = $arquivo->store('public/documentos');
+                    array_push($documentosEnviados, substr($filename, 18));
+                    DocCapacidadeTecnica::create([
+                        'cadastro_id' => $cadastro->id,
+                        'filename' => substr($filename, 18),
+                        'extensao' => $arquivo->extension(),
+                        'status' => 0
+                    ]);
+                }
+                /* Deletar indeferidos */
+                $docs_indeferidos = DocCapacidadeTecnica::where([['cadastro_id','=',$request->id], ['status', '=', 2]])->get();
+                foreach ($docs_indeferidos as $doc) {
+                    unlink(storage_path('app/public/documentos/'.$doc->filename));
+                    $doc->delete();
+                }
+            }
+
+            $cadastro->status = 0;
+            $cadastro->update();
+            DB::commit();
+            return back()->with('success', 'Cadastro atualizado com sucesso.');
+
+        } catch (\Throwable $th) {
+            foreach($documentosEnviados as $documento) {
+                unlink(storage_path('app/public/documentos/'.$documento));
+            }
+            
+            DB::rollback();
+            return back()->with('error', 'Houve um erro ao atualizar o cadastro.');
+        }
     }
 
 }

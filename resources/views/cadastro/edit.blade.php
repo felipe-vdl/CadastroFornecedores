@@ -32,16 +32,16 @@
                             <div class="container-fluid">
                                 <div class="row mt-3 justify-content-around">
                                     <div class="col-12 col-md-4 text-center">
-                                        <label for="direcionamento" class="text-dark"><strong>Direcionamento</strong></label>
+                                        <label for="direcionamento" class="text-dark"><strong>Validação dos Dados:</strong></label>
                                         <select class="form-control text-center" name="direcionamento" id="direcionamento" required>
-                                            <option value="" selected disabled hidden>Selecione a opção</option>
-                                            <option value="1">Deferido</option>
-                                            <option value="3">Inválido</option>
+                                            <option value="" selected disabled hidden>Selecione uma opção</option>
+                                            <option value="1">Dados Válidos</option>
+                                            <option value="3">Dados Inválidos</option>
                                         </select>
                                     </div>
                                     <div id="justificativa-div" class="col-12 mt-3 mt-md-0 col-md-4 text-center" style="display: none;">
-                                        <label for="justificativa" class="text-dark"><strong>Justificativa</strong></label>
-                                        <input class="form-control text-center" type="text" {{-- name="justificativa" --}} id="justificativa" placeholder="Descreva o motivo da invalidez do cadastro.">
+                                        <label for="justificativa" class="text-dark"><strong>Justificativa:</strong></label>
+                                        <input class="form-control text-center" type="text" {{-- name="justificativa" --}} id="justificativa" placeholder="Descreva o motivo da invalidez dos dados.">
                                     </div>
                                 </div>
                 </form>
@@ -916,6 +916,17 @@
 @endsection
 @push('scripts')
 <script>
+    /* Loading após submit de qualquer form. */
+    const allForms = document.querySelectorAll('form');
+    if(allForms) {
+        for (let form of allForms) {
+            form.addEventListener('submit', (e) => {
+                $("#modaleventclick").modal("show");
+            });
+        }
+    }
+</script>
+<script>
     const direcionamento = document.querySelector('#direcionamento');
     const justificativaDiv = document.querySelector('#justificativa-div');
     const justificativa = document.querySelector('#justificativa');
@@ -1025,16 +1036,5 @@
                 formulario.reportValidity();
             }
         });
-
-    /* Loading após submit de qualquer form. */
-        const allForms = document.querySelectorAll('form');
-        for (let form of allForms) {
-            form.addEventListener('submit', (e) => {
-                $("#modaleventclick").modal("show");
-            });
-        }
-</script>
-<script>
-    
 </script>
 @endpush

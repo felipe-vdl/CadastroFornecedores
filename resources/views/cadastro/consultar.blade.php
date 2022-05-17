@@ -4,6 +4,20 @@
 <form action="{{ route('cadastros.visualizacao') }}" method="POST">
     {{ csrf_field() }}
     <div class="container">
+        @if(session()->get('error'))
+            <div class="alert alert-danger m-0">
+                {{ session()->get('error') }}
+            </div>
+            <br/>
+        @endif
+        @if(session()->get('success'))
+            <div class="alert alert-success m-0">
+                <h5 class="alert-heading">{{ session()->get('success') }}</h5>
+                <hr>
+                O cadastro será analisado pelo nosso departamento, aguarde a resposta por e-mail, poderá se dar em até 48 horas úteis.
+            </div>
+            <br/>
+        @endif
         <div class="row justify-content-center">
             <div class="card col-10 col-md-7 col-lg-6 p-0">
                 <div class="card-header">
