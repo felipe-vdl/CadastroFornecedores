@@ -112,6 +112,11 @@
                                             <h4 class="text-uppercase"><strong>Dia do cadastro: </strong><small> {{date('d/m/Y', strtotime($cadastro->created_at))}}</></h4>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-lg-12">
+                                            <h4 class="text-uppercase"><strong>Chave: </strong><small> {{$cadastro->chave}}</></h4>
+                                        </div>
+                                    </div>
                                     <hr>
                                     {{-- 1) Requerimento de Inscrição --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">

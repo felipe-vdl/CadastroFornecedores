@@ -107,10 +107,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 1 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                               @foreach ($cadastro->doc_requerimentoinscricao as $doc)
+							  <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                   @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                   <figure class="m-2 text-center">
                                       <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -121,6 +122,15 @@
                                       <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 									</div>
                                   @endif
+								  @if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                               @endforeach
                             </div>
                         </div>
@@ -148,10 +158,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 2 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_atoconstitutivo as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -162,6 +173,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
@@ -189,10 +209,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 3 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_procuracaocarta as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -203,6 +224,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                         </div>
@@ -230,10 +260,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 4 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_cedulaidentidade as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -244,6 +275,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
@@ -271,10 +311,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 5 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_registroentidade as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -285,6 +326,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
@@ -312,10 +362,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 6 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_inscricaocnpj as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -326,6 +377,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                         </div>
@@ -353,10 +413,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 7 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_balancopatrimonial as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -367,6 +428,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
@@ -394,10 +464,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 8 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_regularidadefiscal as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -408,6 +479,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
@@ -435,10 +515,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 9 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_creditotributario as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -449,6 +530,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
@@ -477,10 +567,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 10 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_debitoestadual as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -491,6 +582,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
@@ -518,10 +618,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 11 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_debitomunicipal as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -532,6 +633,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
@@ -559,10 +669,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 12 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_falenciaconcordata as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -573,6 +684,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
@@ -600,10 +720,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 13 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_debitotrabalhista as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -614,6 +735,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
@@ -641,10 +771,11 @@
 							</span>
 						</p>
                         {{-- Imagens/Documentos 14 --}}
-                        <div class="container mb-3 pt-2">
+                        <div class="container mb-3 pt-2 bg-light">
                             <h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Enviados</h6>
                             <div style="display: flex; justify-content: start; align-items: start;">
                             @foreach ($cadastro->doc_capacidadetecnica as $doc)
+							<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
                                 @if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
                                 <figure class="m-2 text-center">
                                     <figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
@@ -655,6 +786,15 @@
                                     <a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
 								</div>
                                 @endif
+								@if ($doc->status == 0)
+										<h6 class="bg-secondary text-white p-1">Em Análise</h6>
+									@elseif ($doc->status == 1)
+										<h6 class="bg-success text-white p-1">Deferido</h6>
+									@elseif ($doc->status == 2)
+										<h6 class="bg-danger text-white p-1">Indeferido</h6>
+										<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+									@endif
+							  </div>
                             @endforeach
                             </div>
                           </div>
