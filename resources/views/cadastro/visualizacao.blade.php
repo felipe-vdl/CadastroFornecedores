@@ -30,7 +30,7 @@
 							<span class="text-primary">Aguardando Documentos</span>
                               @break
                             @case(3)
-							<span class="text-danger">Inválido</span>
+							<span class="text-danger">Dados Inválidos</span>
                               @break
                         @endswitch
                     </h3>

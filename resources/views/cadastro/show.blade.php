@@ -30,7 +30,7 @@
                                               Aguardando Documentos
                                               @break
                                             @case(3)
-                                              Inválido
+                                              Dados Inválidos
                                               @break
                                             @endswitch
                                         </small></h4>

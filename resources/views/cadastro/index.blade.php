@@ -61,7 +61,7 @@
                                         <a style="color: blue">Aguardando Documentos</a>
                                         @break
                                       @case(3)
-                                        <a style="color: red">Inválido</a>
+                                        <a style="color: red">Dados Inválidos</a>
                                         @break
                                     @endswitch
                                   </td>
