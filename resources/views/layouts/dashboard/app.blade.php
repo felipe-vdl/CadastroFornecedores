@@ -70,7 +70,7 @@
             </div>
         </div>
         <!-- End Sidebar -->
-        <div id="mainpanel" class="main-panel">
+        <div id="mainpanel" class="main-panel" style="transition: none;">
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
                 <div class="container-fluid">
