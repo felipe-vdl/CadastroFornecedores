@@ -169,8 +169,6 @@
 <script src="{{ asset('assets/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
 <!--  Google Maps Plugin  -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<!--  Plugin for Date Time Picker and Full Calendar Plugin  -->
-<script src="{{ asset('assets/js/plugins/moment.min.js') }}"></script>
 <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
 <script src="{{ asset('assets/js/plugins/bootstrap-datetimepicker.min.js') }}"></script>
 <!--	Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
@@ -216,6 +214,9 @@
 <script src="{{ asset('assets/js/plugins/demo.js') }}"></script>
 <!-- Sweet Alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!--  Plugin for Date Time Picker and Full Calendar Plugin  -->
+<script src="{{ asset('assets/js/plugins/moment.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/datetime-moment.js') }}"></script>
 @stack('scripts')
 
 </html>

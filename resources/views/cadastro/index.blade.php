@@ -26,6 +26,7 @@
                             <th>CNPJ</th>
                             <th>Produtos/Serviços</th>
                             <th>Porte da Empresa</th>
+                            <th>Data de Criação</th>
                             <th>Status</th>
                             <th class="text-right">Ações</th>
                           </tr>
@@ -37,7 +38,8 @@
                             <th><input class="filter-input form-control" data-column="2" type="text" placeholder="Filtrar CNPJ"></input></th>
                             <th><input class="filter-input form-control" data-column="3" type="text" placeholder="Filtrar Produtos/Serviços"></input></th>
                             <th><input class="filter-input form-control" data-column="4" type="text" placeholder="Filtrar Porte da Empresa"></input></th>
-                            <th><input class="filter-input form-control" data-column="5" type="text" placeholder="Filtrar Status"></input></th>
+                            <th><input class="filter-input form-control" data-column="5" type="text" placeholder="Filtrar Data de Criação"></input></th>
+                            <th><input class="filter-input form-control" data-column="6" type="text" placeholder="Filtrar Status"></input></th>
                             <th class="text-right">Ações</th>
                           </tr>
                         </tfoot>
@@ -49,6 +51,7 @@
                                   <td>{{$cadastro->cnpj}}</td>
                                   <td>{{$cadastro->produtos}}</td>
                                   <td>{{$cadastro->porte_empresa}}</td>
+                                  <td>{{date('d/m/Y', strtotime($cadastro->created_at))}}</td>
                                   <td>
                                     @switch($cadastro->status)
                                       @case(0)
@@ -95,6 +98,7 @@
 <script type="text/javascript">
 // Tabela
   $(document).ready(function() {
+    $.fn.dataTable.moment('DD/MM/YYYY');
     // Configuração geral
     const table = $('#datatables').DataTable({
       language : {
@@ -109,9 +113,20 @@
       compact: true,
       processing: true,
       "columnDefs": [
-        {"targets": 6, "orderable": false},
-        { className: "text-center", "targets": [0, 1, 2, 3, 4, 5] },
-      ]
+        {"targets": 7, "orderable": false},
+        { className: "text-center", "targets": [0, 1, 2, 3, 4, 5, 6] },
+      ],
+      "aoColumns": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        { "sType": "date-uk" },
+        null
+      ],
+      "order": [[6, "desc"]]
     });
 
     //Filtro
