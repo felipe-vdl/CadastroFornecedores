@@ -101,4 +101,8 @@ class Cadastro extends Model
       return $this->belongsTo(Funcionario::class);
    }
 
+   public function doc_categorias()
+   {
+       return $this->hasOne(DocCategoria::class);
+   }
 }

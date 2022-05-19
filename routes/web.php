@@ -11,6 +11,7 @@ Route::patch('/consultar', 'CadastroController@corrigir')->name('cadastros.corri
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('cadastros', 'CadastroController')->except(['create', 'store']);
     Route::post('/documentos', 'DocumentosController@avaliar')->name('documentos.avaliar');
+    Route::post('/solicitar', 'DocumentosController@solicitar')->name('documentos.solicitar');
 });
 
 /* Rotas Auth */

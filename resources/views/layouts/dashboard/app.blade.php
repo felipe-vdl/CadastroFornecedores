@@ -46,7 +46,7 @@
                 <div class="user-info ">
                     <a data-toggle="collapse" class="username" >
                     <span>
-                        {{ Auth::user()->name }}
+                        {{ substr(Auth::user()->name, 0, strpos(Auth::user()->name, ' ')) }}
                     </span>
                     </a>
                 </div>

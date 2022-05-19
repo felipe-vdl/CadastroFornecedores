@@ -120,7 +120,40 @@
                                     <hr>
                                     {{-- 1) Requerimento de Inscrição --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">1. Requerimento de Inscrição</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">1. Requerimento de Inscrição</h4>
+                                            @if ($cadastro->doc_categorias->status_requerimento_inscricao == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_requerimento_inscricao == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" value="requerimento_inscricao" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="requerimento_inscricao">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_requerimento_inscricao)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_requerimento_inscricao }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_requerimentoinscricao as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -176,7 +209,40 @@
                                     {{-- Fim (1) --}}
                                     {{-- 2) Ato Constitutivo --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">2. Ato Constitutivo</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">2. Ato Constitutivo</h4>
+                                            @if ($cadastro->doc_categorias->status_ato_constitutivo == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_ato_constitutivo == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="ato_constitutivo">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_ato_constitutivo)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_ato_constitutivo }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_atoconstitutivo as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -232,7 +298,40 @@
                                     {{-- Fim (2) --}}
                                     {{-- 3) Procuração ou Carta de Credenciamento --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">3. Procuração ou Carta de Credenciamento</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">3. Procuração ou Carta de Credenciamento</h4>
+                                            @if ($cadastro->doc_categorias->status_procuracao_carta == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_procuracao_carta == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="procuracao_carta">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_procuracao_carta)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_procuracao_carta }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_procuracaocarta as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -288,7 +387,40 @@
                                     {{-- Fim (3) --}}
                                     {{-- 4) Cédula de Identidade --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">4. Cédula de Identidade (RG) e CPF dos Reprentantes Legais:</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">4. Cédula de Identidade (RG) e CPF dos Reprentantes Legais:</h4>
+                                            @if ($cadastro->doc_categorias->status_cedula_identidade == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_cedula_identidade == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="cedula_identidade">
+                                                    <div class="my-2 text-center">
+                                                        <label  class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_cedula_identidade)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_cedula_identidade }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_cedulaidentidade as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -344,7 +476,40 @@
                                     {{-- Fim (4) --}}
                                     {{-- 5) Registro Entidade --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">5. Registro ou Inscrição na Entidade Profissional Competente:</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">5. Registro ou Inscrição na Entidade Profissional Competente:</h4>
+                                            @if ($cadastro->doc_categorias->status_registro_entidade == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_registro_entidade == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="registro_entidade">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_registro_entidade)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_registro_entidade }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_registroentidade as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -400,7 +565,40 @@
                                     {{-- Fim (5) --}}
                                     {{-- 6) Registro Entidade --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">6. Documentação de Inscrição do CNPJ, Inscrição no Cadastro de Contribuinte Estadual e/ou Municipal:</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">6. Documentação de Inscrição do CNPJ, Inscrição no Cadastro de Contribuinte Estadual e/ou Municipal:</h4>
+                                            @if ($cadastro->doc_categorias->status_inscricao_cnpj == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_inscricao_cnpj == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="inscricao_cnpj">
+                                                    <div class="my-2 text-center">
+                                                        <label " class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_inscricao_cnpj)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_inscricao_cnpj }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_inscricaocnpj as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -456,7 +654,40 @@
                                     {{-- Fim (6) --}}
                                     {{-- 7) Balanço Patrimonial --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">7. Balanço Patrimonial e Demonstrativo do Último Exercício Social, Registrado na Forma Lei e Demonstrativo de Índice de Liquidez:</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">7. Balanço Patrimonial e Demonstrativo do Último Exercício Social, Registrado na Forma Lei e Demonstrativo de Índice de Liquidez:</h4>
+                                            @if ($cadastro->doc_categorias->status_balanco_patrimonial == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_balanco_patrimonial == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="balanco_patrimonial">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_balanco_patrimonial)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_balanco_patrimonial }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_balancopatrimonial as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -512,7 +743,40 @@
                                     {{-- Fim (7) --}}
                                     {{-- 8) Regularidade Fiscal --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">8. Certidão de Regularidade Fiscal do FGTS:</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">8. Certidão de Regularidade Fiscal do FGTS:</h4>
+                                            @if ($cadastro->doc_categorias->status_regularidade_fiscal == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_regularidade_fiscal == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="regularidade_fiscal">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_regularidade_fiscal)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_regularidade_fiscal }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_regularidadefiscal as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -568,7 +832,40 @@
                                     {{-- Fim (8) --}}
                                     {{-- 9) Regularidade Fiscal --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">9. Certidão de Débitos Relativos a Créditos Tributários Federais e a Dívida Ativa da União (Incluindo contribuições previdenciárias):</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">9. Certidão de Débitos Relativos a Créditos Tributários Federais e a Dívida Ativa da União (Incluindo contribuições previdenciárias):</h4>
+                                            @if ($cadastro->doc_categorias->status_credito_tributario == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_credito_tributario == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="credito_tributario">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_credito_tributario)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_credito_tributario }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_creditotributario as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -624,7 +921,40 @@
                                     {{-- Fim (9) --}}
                                     {{-- 10) Debito Estadual --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">10. Certidão Negativa de Débito com a Fazenda Estadual (ICMS) em conjunto com a Certidão de Dívida Ativa da Procuradoria Geral do Estado (PGE):</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">10. Certidão Negativa de Débito com a Fazenda Estadual (ICMS) em conjunto com a Certidão de Dívida Ativa da Procuradoria Geral do Estado (PGE):</h4>
+                                            @if ($cadastro->doc_categorias->status_debito_estadual == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_debito_estadual == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="debito_estadual">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_debito_estadual)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_debito_estadual }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_debitoestadual as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -680,7 +1010,40 @@
                                     {{-- Fim (10) --}}
                                     {{-- 11) Debito Municipal --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">11. Certidão Negativa de Débito com a Fazenda Municipal (ISSQN):</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">11. Certidão Negativa de Débito com a Fazenda Municipal (ISSQN):</h4>
+                                            @if ($cadastro->doc_categorias->status_debito_municipal == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_debito_municipal == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="debito_municipal">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_debito_municipal)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_debito_municipal }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_debitomunicipal as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -736,7 +1099,40 @@
                                     {{-- Fim (11) --}}
                                     {{-- 12) Falencia Concordata --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">12. Certidão Negativa de Falência e Concordatas e dos Distribuidores de Cartório:</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">12. Certidão Negativa de Falência e Concordatas e dos Distribuidores de Cartório:</h4>
+                                            @if ($cadastro->doc_categorias->status_falencia_concordata == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_falencia_concordata == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="falencia_concordata">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_falencia_concordata)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_falencia_concordata }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_falenciaconcordata as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -792,7 +1188,40 @@
                                     {{-- Fim (12) --}}
                                     {{-- 13) DebitoTrabalhista --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">13. Certidão Negativa de Débitos Trabalhistas (CNDT): <a target="_blank" href="http://www.tst.just.br">* www.tst.jus.br</a></h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">13. Certidão Negativa de Débitos Trabalhistas (CNDT): <a target="_blank" href="http://www.tst.just.br">* www.tst.jus.br</a></h4>
+                                            @if ($cadastro->doc_categorias->status_debito_trabalhista == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_debito_trabalhista == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="debito_trabalhista">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_debito_trabalhista)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_debito_trabalhista }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_debitotrabalhista as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -848,7 +1277,40 @@
                                     {{-- Fim (13) --}}
                                     {{-- 14) CapacidadeTecnica --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">
-                                        <h4 class="font-weight-bold">14. 01 (Um) Atestado de Capacidade Técnica:</h4>
+                                        <div class="d-flex align-items-center mb-1 justify-content-between">
+                                            <h4 class="font-weight-bold d-inline mr-2 m-0">14. 01 (Um) Atestado de Capacidade Técnica:</h4>
+                                            @if ($cadastro->doc_categorias->status_capacidade_tecnica == 2)
+                                                <h6 class="bg-danger text-white p-1 m-0">Aguardando Documentos</h6>
+                                            @endif
+                                            <button @if ($cadastro->doc_categorias->status_capacidade_tecnica == 2) style="display: none;" @endif class="solicitar btn btn-warning btn-sm" title="Solicitar mais documentos.">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder-plus" viewBox="0 0 16 16">
+                                                    <path d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z"/>
+                                                    <path d="M13.5 10a.5.5 0 0 1 .5.5V12h1.5a.5.5 0 1 1 0 1H14v1.5a.5.5 0 1 1-1 0V13h-1.5a.5.5 0 0 1 0-1H13v-1.5a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        {{-- Solicitação de Documentos --}}
+                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                            <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
+                                                <form method="POST" action="{{ route('documentos.solicitar') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                    <input type="hidden" name="categoria" value="capacidade_tecnica">
+                                                    <div class="my-2 text-center">
+                                                        <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
+                                                        <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
+                                                        <button class="enviador-solicitar btn btn-success btn-sm">Enviar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- Justificativa --}}
+                                        <div>
+                                            @if ($cadastro->doc_categorias->justificativa_capacidade_tecnica)
+                                                <h6 class="m-0">Justificativa da Solicitação Adicional: {{ $cadastro->doc_categorias->justificativa_capacidade_tecnica }}</h6>
+                                            @endif
+                                        </div>
+                                        {{-- Documentos --}}
                                         <div>
                                         @foreach ($cadastro->doc_capacidadetecnica as $doc)
                                             <div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mb-3 bg-white">
@@ -1036,5 +1498,59 @@
                 formulario.reportValidity();
             }
         });
+</script>
+<script>
+    const solicitarBtns = document.querySelectorAll('.solicitar');
+    const enviadorSolicitarBtns = document.querySelectorAll('.enviador-solicitar')
+
+    for (let btn of solicitarBtns) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            if(this.parentElement.nextElementSibling.style.display == 'none') {
+                this.parentElement.nextElementSibling.style.display = 'flex';
+                this.parentElement.nextElementSibling.firstElementChild.firstElementChild[3].setAttribute('required', 'required')
+                this.parentElement.nextElementSibling.firstElementChild.firstElementChild[3].setAttribute('name', 'justificativa')
+            } else {
+                this.parentElement.nextElementSibling.style.display = 'none';
+                this.parentElement.nextElementSibling.firstElementChild.firstElementChild[3].removeAttribute('required');
+                this.parentElement.nextElementSibling.firstElementChild.firstElementChild[3].removeAttribute('name');
+            }
+        })
+    }
+
+    for (let btn of enviadorSolicitarBtns) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            let formulario = this.form;
+            if(formulario.checkValidity()) {
+                swal({
+                    title: "Atenção!",
+                    text: `Você está prestes enviar a solicitação de mais documentos.`,
+                    icon: "warning",
+                    buttons: {
+                        cancel: {
+                            text: "Cancelar",
+                            value: "cancelar",
+                            visible: true,
+                            closeModal: true
+                        },
+                        ok: {
+                            text: "Confirmar",
+                            value: 'ok',
+                            visible: true,
+                            closeModal: true
+                        }
+                    }
+                }).then(function(resultado){
+                    if(resultado === 'ok'){
+                        formulario.submit();
+                    }
+                });
+            } else {
+                formulario.reportValidity();
+            }
+        });
+    }
 </script>
 @endpush

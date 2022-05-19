@@ -25,6 +25,7 @@ use App\Models\DocDebitoMunicipal;
 use App\Models\DocFalenciaConcordata;
 use App\Models\DocDebitoTrabalhista;
 use App\Models\DocCapacidadeTecnica;
+use App\Models\DocCategoria;
 
 class CadastroController extends Controller
 {
@@ -77,7 +78,7 @@ class CadastroController extends Controller
                 $cadastro->status   = 0;
 
                 $cadastro->save();
-
+                
             // Documentos Necessários:
                 $documentosEnviados = [];
                 // 1) Requerimento de Inscrição
@@ -256,6 +257,11 @@ class CadastroController extends Controller
                 } catch (\Throwable $th) {
                     $cadastro->envio_create = 0;
                 }
+            
+            // Status/Justificativas de cada categoria de documento:
+                $categorias = DocCategoria::create([
+                    'cadastro_id' => $cadastro->id
+                ]);
 
             $cadastro->update();
             DB::commit();
@@ -281,13 +287,14 @@ class CadastroController extends Controller
     public function show(Request $request, $id)
     { 
     
-        $cadastro = Cadastro::with('doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
+        $cadastro = Cadastro::with('doc_categorias', 'doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
         return view ('cadastro.show',compact('cadastro'));
     }
 
     public function edit(Request $request, $id)
     { 
-        $cadastro = Cadastro::with('doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
+        $cadastro = Cadastro::with('doc_categorias', 'doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
+        
         return view ('cadastro.edit',compact('cadastro'));
     }
 
@@ -296,47 +303,96 @@ class CadastroController extends Controller
     {
         DB::beginTransaction();
         try {
-            $cadastro = Cadastro::with('doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
-            
+            $cadastro = Cadastro::with('doc_categorias', 'doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
+            $categorias = DocCategoria::where('cadastro_id', '=', $id)->first();
+
             /* Status 3: Cadastro Inválido */
             if($request->direcionamento == 3) {
                 $cadastro->status         = $request->direcionamento;
                 $cadastro->justificativa  = $request->justificativa;
             } else {
                 /* Status 2: Presença de documento indeferido */
-                if (DocRequerimentoInscricao::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                if (DocRequerimentoInscricao::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocAtoConstitutivo::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocAtoConstitutivo::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocProcuracaoCarta::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocProcuracaoCarta::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocCedulaIdentidade::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocCedulaIdentidade::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocRegistroEntidade::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocRegistroEntidade::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocInscricaoCnpj::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocInscricaoCnpj::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocBalancoPatrimonial::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocBalancoPatrimonial::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocRegularidadeFiscal::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocRegularidadeFiscal::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocCreditoTributario::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocCreditoTributario::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocDebitoEstadual::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocDebitoEstadual::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocDebitoMunicipal::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocDebitoMunicipal::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocFalenciaConcordata::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocFalenciaConcordata::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocDebitoTrabalhista::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocDebitoTrabalhista::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     $cadastro->status = 2;
-                } else if (DocCapacidadeTecnica::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->orWhere([['cadastro_id','=',$cadastro->id],['status','=',0]])->count() > 0) {
+                } else if (DocCapacidadeTecnica::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 2] ])->count() > 0) {
                     
+                } else if (
+                    // Checar solicitação de documentos.
+                    $categorias->status_ato_constitutivo == 2
+                    OR $categorias->status_balanco_patrimonial == 2
+                    OR $categorias->status_capacidade_tecnica == 2
+                    OR $categorias->status_cedula_identidade == 2
+                    OR $categorias->status_credito_tributario == 2
+                    OR $categorias->status_debito_estadual == 2
+                    OR $categorias->status_debito_municipal == 2
+                    OR $categorias->status_debito_trabalhista == 2
+                    OR $categorias->status_falencia_concordata == 2
+                    OR $categorias->status_inscricao_cnpj == 2
+                    OR $categorias->status_procuracao_carta == 2
+                    OR $categorias->status_registro_entidade == 2
+                    OR $categorias->status_regularidade_fiscal == 2
+                    OR $categorias->status_requerimento_inscricao == 2
+                  ) {
+                    $cadastro->status = 2;
+                } else if (DocRequerimentoInscricao::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocAtoConstitutivo::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocProcuracaoCarta::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocCedulaIdentidade::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocRegistroEntidade::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocInscricaoCnpj::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocBalancoPatrimonial::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocRegularidadeFiscal::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocCreditoTributario::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocDebitoEstadual::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocDebitoMunicipal::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocFalenciaConcordata::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocDebitoTrabalhista::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
+                } else if (DocCapacidadeTecnica::where([ ['cadastro_id', '=', $cadastro->id], ['status', '=', 0] ])->count() > 0) {
+                    $cadastro->status = 0;
                 } else {
                     /* Status 1: Cadastro Válido com documentos deferidos. */
                     $cadastro->status   = $request->direcionamento;
                 }
             }
+
+            /* TODO: Enviar E-mail informando a atualização da avaliação do cadastro. */
 
             $cadastro->update();
             DB::commit();
@@ -360,7 +416,7 @@ class CadastroController extends Controller
         }
 
         $query = Cadastro::where('chave', $request->chave)->get();
-        $cadastro = Cadastro::with('doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($query[0]->id);
+        $cadastro = Cadastro::with('doc_categorias', 'doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($query[0]->id);
         return view ('cadastro.visualizacao',compact('cadastro'));
     }
 
@@ -370,6 +426,7 @@ class CadastroController extends Controller
         DB::beginTransaction();
         try {
             $cadastro = Cadastro::where('id', '=', $request->id)->first();
+            $categorias = DocCategoria::where('cadastro_id', '=', $cadastro->id)->first();
 
             // Array de Controle:
             $documentosEnviados = [];
@@ -659,6 +716,22 @@ class CadastroController extends Controller
                     $doc->delete();
                 }
             }
+
+            $categorias->status_ato_constitutivo = 0;
+            $categorias->status_balanco_patrimonial = 0;
+            $categorias->status_capacidade_tecnica = 0;
+            $categorias->status_cedula_identidade = 0;
+            $categorias->status_credito_tributario = 0;
+            $categorias->status_debito_estadual = 0;
+            $categorias->status_debito_municipal = 0;
+            $categorias->status_debito_trabalhista = 0;
+            $categorias->status_falencia_concordata = 0;
+            $categorias->status_inscricao_cnpj = 0;
+            $categorias->status_procuracao_carta = 0;
+            $categorias->status_registro_entidade = 0;
+            $categorias->status_regularidade_fiscal = 0;
+            $categorias->status_requerimento_inscricao = 0;
+            $categorias->update();
 
             $cadastro->status = 0;
             $cadastro->update();

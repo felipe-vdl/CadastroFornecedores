@@ -96,8 +96,8 @@
 							</ul>
 						</div>
 						{{-- 1) Requerimento de Inscrição --}}
-						@foreach ($cadastro->doc_requerimentoinscricao as $doc)
-							@if($doc->status == 2)
+						
+							@if($cadastro->doc_categorias->status_requerimento_inscricao == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">1. Requerimento de Inscrição:</label>
 									<p class="mb-2">
@@ -121,6 +121,10 @@
 									{{-- Imagens/Documentos 1 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_requerimento_inscricao == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_requerimento_inscricao }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_requerimentoinscricao as $doc)
 											@if ($doc->status == 2)
@@ -143,15 +147,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 1 --}}
 						{{-- 2) Ato Constitutivo (Contrato Social, Estatuto, Ata de Reunião) --}}
-						@foreach ($cadastro->doc_atoconstitutivo as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_ato_constitutivo == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">2. Ato Constitutivo (Contrato Social, Estatuto, Ata de Reunião):</label>
 									<p class="mb-2">
@@ -175,6 +174,10 @@
 									{{-- Imagens/Documentos 2 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_ato_constitutivo == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_ato_constitutivo }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_atoconstitutivo as $doc)
 											@if ($doc->status == 2)
@@ -197,15 +200,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 2 --}}
 						{{-- 3) Procuração ou Carta de Credenciamento--}}
-						@foreach ($cadastro->doc_procuracaocarta as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_procuracao_carta == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">3. Procuração ou Carta de Credenciamento:</label>
 									<p class="mb-2">
@@ -229,6 +227,10 @@
 									{{-- Imagens/Documentos 3 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_procuracao_carta == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_procuracao_carta }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_procuracaocarta as $doc)
 											@if ($doc->status == 2)
@@ -251,15 +253,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 3 --}}
 						{{-- 4) Cédula de Identidade (RG) e CPF dos Reprentantes Legais --}}
-						@foreach ($cadastro->doc_cedulaidentidade as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_cedula_identidade == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">4. Cédula de Identidade (RG) e CPF dos Reprentantes Legais:</label>
 									<p class="mb-2">
@@ -283,6 +280,10 @@
 									{{-- Imagens/Documentos 4 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_cedula_identidade == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_cedula_identidade }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_cedulaidentidade as $doc)
 											@if ($doc->status == 2)
@@ -305,15 +306,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 4 --}}
 						{{-- 5) Registro ou Inscrição na Entidade Profissional Competente: --}}
-						@foreach ($cadastro->doc_registroentidade as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_registro_entidade == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">5. Registro ou Inscrição na Entidade Profissional Competente:</label>
 									<p class="mb-2">
@@ -337,6 +333,10 @@
 									{{-- Imagens/Documentos 5 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_registro_entidade == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_registro_entidade }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_registroentidade as $doc)
 											@if ($doc->status == 2)
@@ -359,15 +359,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 5 --}}
 						{{-- 6) Registro ou Inscrição na Entidade Profissional Competente: --}}
-						@foreach ($cadastro->doc_inscricaocnpj as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_inscricao_cnpj == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">6. Documentação de Inscrição do CNPJ, Inscrição no Cadastro de Contribuinte Estadual e/ou Municipal: <a target="_blank" href="https://www.receita.fazenda.gov.br">* www.receita.fazenda.gov.br</a></label>
 									<p class="mb-2">
@@ -391,6 +386,10 @@
 									{{-- Imagens/Documentos 6 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_inscricao_cnpj == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_inscricao_cnpj }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_inscricaocnpj as $doc)
 											@if ($doc->status == 2)
@@ -413,15 +412,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 6 --}}
 						{{-- 7) Balanço Patrimonial: --}}
-						@foreach ($cadastro->doc_balancopatrimonial as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_balanco_patrimonial == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">7. Balanço Patrimonial e Demonstrativo do Último Exercício Social, Registrado na Forma Lei e Demonstrativo de Índice de Liquidez:</label>
 									<p class="mb-2">
@@ -445,6 +439,10 @@
 									{{-- Imagens/Documentos 7 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_balanco_patrimonial == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_balanco_patrimonial }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_balancopatrimonial as $doc)
 											@if ($doc->status == 2)
@@ -467,15 +465,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 7 --}}
 						{{-- 8) Regularidade Fiscal: --}}
-						@foreach ($cadastro->doc_regularidadefiscal as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_regularidade_fiscal == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">8. Certidão de Regularidade Fiscal do FGTS: <a target="_blank" href="https://www.caixa.gov.br">* www.caixa.gov.br</a></label>
 									<p class="mb-2">
@@ -499,6 +492,10 @@
 									{{-- Imagens/Documentos 8 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_regularidade_fiscal == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_regularidade_fiscal }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_regularidadefiscal as $doc)
 											@if ($doc->status == 2)
@@ -521,15 +518,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 8 --}}
 						{{-- 9) Crédito Tributário: --}}
-						@foreach ($cadastro->doc_creditotributario as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_credito_tributario == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">9. Certidão de Débitos Relativos a Créditos Tributários Federais e a Dívida Ativa da União (Incluindo contribuições previdenciárias):</label>
 									<p class="mb-2">
@@ -553,6 +545,10 @@
 									{{-- Imagens/Documentos 9 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_credito_tributario == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_credito_tributario }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_creditotributario as $doc)
 											@if ($doc->status == 2)
@@ -575,15 +571,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 9 --}}
 						{{-- 10) Debito Estadual: --}}
-						@foreach ($cadastro->doc_debitoestadual as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_debito_estadual == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">10. Certidão Negativa de Débito com a Fazenda Estadual (ICMS) em conjunto com a Certidão de Dívida Ativa da Procuradoria Geral do Estado (PGE):</label>
 									<p class="mb-2">
@@ -607,6 +598,10 @@
 									{{-- Imagens/Documentos 10 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_debito_estadual == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_debito_estadual }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_debitoestadual as $doc)
 											@if ($doc->status == 2)
@@ -629,15 +624,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 10 --}}
 						{{-- 11) Debito Municipal: --}}
-						@foreach ($cadastro->doc_debitomunicipal as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_debito_municipal == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">11. Certidão Negativa de Débito com a Fazenda Municipal (ISSQN):</label>
 									<p class="mb-2">
@@ -661,6 +651,10 @@
 									{{-- Imagens/Documentos 11 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_debito_municipal == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_debito_municipal }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_debitomunicipal as $doc)
 											@if ($doc->status == 2)
@@ -683,15 +677,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 11 --}}
 						{{-- 12) Falência Concordatas: --}}
-						@foreach ($cadastro->doc_falenciaconcordata as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_falencia_concordata == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">12. Certidão Negativa de Falência e Concordatas e dos Distribuidores de Cartório:</label>
 									<p class="mb-2">
@@ -715,6 +704,10 @@
 									{{-- Imagens/Documentos 12 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_falencia_concordata == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_falencia_concordata }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_falenciaconcordata as $doc)
 											@if ($doc->status == 2)
@@ -737,15 +730,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 12 --}}
 						{{-- 13) Debito Trabalhista: --}}
-						@foreach ($cadastro->doc_debitotrabalhista as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_debito_trabalhista == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">13. Certidão Negativa de Débitos Trabalhistas (CNDT): <a target="_blank" href="http://www.tst.just.br">* www.tst.jus.br</a></label>
 									<p class="mb-2">
@@ -769,6 +757,10 @@
 									{{-- Imagens/Documentos 13 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_debito_trabalhista == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_debito_trabalhista }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_debitotrabalhista as $doc)
 											@if ($doc->status == 2)
@@ -791,15 +783,10 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 13 --}}
 						{{-- 14) Capacidade Técnica: --}}
-						@foreach ($cadastro->doc_capacidadetecnica as $doc)
-							@if($doc->status == 2)
+							@if($cadastro->doc_categorias->status_capacidade_tecnica == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">14. 01 (Um) Atestado de Capacidade Ténica:</label>
 									<p class="mb-2">
@@ -823,6 +810,10 @@
 									{{-- Imagens/Documentos 14 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_capacidade_tecnica == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_capacidade_tecnica }}</p>
+										@endif
 										<div style="display: flex; justify-content: start; align-items: start;">
 										@foreach ($cadastro->doc_capacidadetecnica as $doc)
 											@if ($doc->status == 2)
@@ -845,11 +836,7 @@
 										</div>
 									</div>
 								</div>
-								@break
-							@else
-								@continue
 							@endif
-						@endforeach
 						{{-- Fim 14 --}}
 					@endif
 				</div>

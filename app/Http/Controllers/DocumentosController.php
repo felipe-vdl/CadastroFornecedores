@@ -19,6 +19,7 @@ use App\Models\DocDebitoMunicipal;
 use App\Models\DocFalenciaConcordata;
 use App\Models\DocDebitoTrabalhista;
 use App\Models\DocCapacidadeTecnica;
+use App\Models\DocCategoria;
 
 class DocumentosController extends Controller
 {
@@ -68,6 +69,80 @@ class DocumentosController extends Controller
         } catch (\Throwable $th) {            
             DB::rollback();
             return redirect()->back()->with('error', 'Houve um erro ao avaliar o documento, tente novamente.');
+        }
+    }
+
+    public function solicitar(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $categorias = DocCategoria::where([['cadastro_id', '=', $request->cadastro_id]])->first();
+
+            if ($request->categoria == 'ato_constitutivo') {
+                $categorias->status_ato_constitutivo = 2;
+                $categorias->justificativa_ato_constitutivo = $request->justificativa;
+
+            } else if ($request->categoria == 'balanco_patrimonial') {
+                $categorias->status_balanco_patrimonial = 2;
+                $categorias->justificativa_balanco_patrimonial = $request->justificativa;
+
+            } else if ($request->categoria == 'capacidade_tecnica') {
+                $categorias->status_capacidade_tecnica = 2;
+                $categorias->justificativa_capacidade_tecnica = $request->justificativa;
+
+            } else if ($request->categoria == 'cedula_identidade') {
+                $categorias->status_cedula_identidade = 2;
+                $categorias->justificativa_cedula_identidade = $request->justificativa;
+
+            } else if ($request->categoria == 'credito_tributario') {
+                $categorias->status_credito_tributario = 2;
+                $categorias->justificativa_credito_tributario = $request->justificativa;
+
+            } else if ($request->categoria == 'debito_estadual') {
+                $categorias->status_debito_estadual = 2;
+                $categorias->justificativa_debito_estadual = $request->justificativa;
+
+            } else if ($request->categoria == 'debito_municipal') {
+                $categorias->status_debito_municipal = 2;
+                $categorias->justificativa_debito_municipal = $request->justificativa;
+
+            } else if ($request->categoria == 'debito_trabalhista') {
+                $categorias->status_debito_trabalhista = 2;
+                $categorias->justificativa_debito_trabalhista = $request->justificativa;
+
+            } else if ($request->categoria == 'falencia_concordata') {
+                $categorias->status_falencia_concordata = 2;
+                $categorias->justificativa_falencia_concordata = $request->justificativa;
+
+            } else if ($request->categoria == 'inscricao_cnpj') {
+                $categorias->status_inscricao_cnpj = 2;
+                $categorias->justificativa_inscricao_cnpj = $request->justificativa;
+
+            } else if ($request->categoria == 'procuracao_carta') {
+                $categorias->status_procuracao_carta = 2;
+                $categorias->justificativa_procuracao_carta = $request->justificativa;
+
+            } else if ($request->categoria == 'registro_entidade') {
+                $categorias->status_registro_entidade = 2;
+                $categorias->justificativa_registro_entidade = $request->justificativa;
+
+            } else if ($request->categoria == 'regularidade_fiscal') {
+                $categorias->status_regularidade_fiscal = 2;
+                $categorias->justificativa_regularidade_fiscal = $request->justificativa;
+
+            } else if ($request->categoria == 'requerimento_inscricao') {
+                $categorias->status_requerimento_inscricao = 2;
+                $categorias->justificativa_requerimento_inscricao = $request->justificativa;
+
+            }
+
+            $categorias->update();
+            DB::commit();
+            return redirect()->back()->with('success', 'Solicitação marcada com sucesso.');
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Houve um erro ao marcar a solicitação, tente novamente.');
         }
     }
 }
