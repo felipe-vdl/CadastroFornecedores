@@ -37,6 +37,8 @@ class CreateDocCategoriasTable extends Migration
             $table->text('justificativa_falencia_concordata')->nullable();
             $table->tinyInteger('status_inscricao_cnpj')->default(0);
             $table->text('justificativa_inscricao_cnpj')->nullable();
+            $table->tinyInteger('status_cadastro_contribuinte')->default(0);
+            $table->text('justificativa_cadastro_contribuinte')->nullable();
             $table->tinyInteger('status_procuracao_carta')->default(0);
             $table->text('justificativa_procuracao_carta')->nullable();
             $table->tinyInteger('status_registro_entidade')->default(0);

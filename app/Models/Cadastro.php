@@ -13,11 +13,14 @@ class Cadastro extends Model
         'cnpj',
         'porte_empresa',
         'cnae',
+        'inscricao_municipal',
+        'inscricao_estadual',
         'produtos',
         'endereco',
         'email',
         'telefone',
         'status',
+        'dados',
         'justificativa',
         'avaliador',
         'avaliador_id',
@@ -54,6 +57,11 @@ class Cadastro extends Model
     public function doc_inscricaocnpj()
     {
     return $this->hasMany(DocInscricaoCnpj::class);
+    }
+
+    public function doc_cadastrocontribuinte()
+    {
+    return $this->hasMany(DocCadastroContribuinte::class);
     }
 
     public function doc_balancopatrimonial()

@@ -741,7 +741,130 @@ if (inscricaoCnpjInput) {
     });
 }
 
-/* INPUT 7: BalancoPatrimonial */
+/* INPUT 7: CadastroContribuinte */
+const dtCadastroContribuinte = new DataTransfer(); // Allows you to manipulate the files of the input file
+const cadastroContribuinteInput = document.querySelector('#cadastro_contribuinte');
+const cadastroContribuinteArea = document.querySelector('#cadastrocontribuinte-area');
+const cadastroContribuinteInvalido = document.querySelector('#cadastrocontribuinte-invalido');
+const erroCadastroContribuinte = document.querySelector('#erro-cadastrocontribuinte');
+const cadastroContribuinteVermelho = document.querySelector('#cadastrocontribuinte-vermelho');
+const erroCadastroContribuinteGrande = document.querySelector('#erro-cadastrocontribuinte-grande');
+const cadastroContribuinteGrandeSpan = document.querySelector('#cadastrocontribuinte-grande');
+
+if (cadastroContribuinteInput) {
+    cadastroContribuinteInput.addEventListener('change', function(e) {
+        // Limpa os nomes de arquivo do último input feito pelo usuário.
+        let cadastroContribuinteInvalidos = [];
+        let verifyCadastroContribuinte = null;
+        cadastroContribuinteInvalido.innerHTML = '';
+        let cadastroContribuinteGrandesArr = [];
+        let verifyCadastroContribuinteGrande = null;
+        cadastroContribuinteGrandeSpan.innerHTML = '';
+        // Nome do arquivo e botão de deletar.
+        for(let i = 0; i < this.files.length; i++) {
+            let fileBlock = document.createElement('span');
+            fileBlock.classList.add('file-block');
+            
+            let fileName = document.createElement('span');
+            fileName.classList.add('name');
+            fileName.innerHTML = `${this.files.item(i).name}`;
+            
+            let fileDelete = document.createElement('span');
+            fileDelete.classList.add('file-delete');
+            fileDelete.innerHTML = '<span>X</span>';
+            // Checa a validez do tipo do arquivo inserido.
+            if (!fileTypes.some(el => this.files[i].type.includes(el))) {
+                // Caso exista um arquivo inválido, insere nome dos arquivos inválidos na array e atribui true para a presença de atestados inválidos.
+                cadastroContribuinteInvalidos.push(this.files[i].name);
+                fileName.classList.add('text-danger');
+                fileDelete.classList.add('text-danger');
+                verifyCadastroContribuinte = true;
+                cadastroContribuinteVermelho.style.display = 'block';
+            } else if (this.files[i].size > tamanhoMaximo) {
+                cadastroContribuinteGrandesArr.push(this.files[i].name);
+                fileName.classList.add('text-danger');
+                fileDelete.classList.add('text-danger');
+                verifyCadastroContribuinteGrande = true;
+                cadastroContribuinteVermelho.style.display = 'block';
+            }
+            fileBlock.append(fileDelete, fileName);
+            cadastroContribuinteArea.append(fileBlock);
+        }
+        // Checa a existência de atestados inválidos.
+        if (cadastroContribuinteInvalidos.length === 0) {
+            // Caso todos os arquivos sejam válidos, esconde a mensagem de erro e atribui false para presença de atestados inválidos.
+            erroCadastroContribuinte.style.display = 'none';
+            verifyCadastroContribuinte = false;
+        }
+        // Checa a existência de atestados com tamanho maior que o permitido.
+        if (cadastroContribuinteGrandesArr.length === 0) {
+            // Caso todos os arquivos sejam válidos, esconde a mensagem de erro e atribui false para presença de atestados inválidos.
+            erroCadastroContribuinteGrande.style.display = 'none';
+            verifyCadastroContribuinteGrande = false;
+        }
+        // Guarda os arquivos no objeto de DataTransfer.
+        for (let file of this.files) {
+            // Checa validez do tipo de arquivo antes de inserir.
+            if (fileTypes.some(el => file.type.includes(el))) {
+                if (file.size < tamanhoMaximo) {
+                    dtCadastroContribuinte.items.add(file);
+                }
+            }
+        }
+        // Checa o status de presença de arquivos inválidos.
+        let i = 1; // Variável de controle da formatação.
+        if (verifyCadastroContribuinte) {
+            // Caso existam arquivos inválidos, insere o nome de cada arquivo inválido no alerta de erro da view.
+            for (let cadastroContribuinte of cadastroContribuinteInvalidos) {
+                if (i < cadastroContribuinteInvalidos.length) {
+                    cadastroContribuinteInvalido.append(`${cadastroContribuinte}, `);
+                } else {
+                    cadastroContribuinteInvalido.append(`${cadastroContribuinte}.`)
+                }
+                i++;
+            }
+            erroCadastroContribuinte.style.display = 'block';
+            this.value = '';
+        }
+        // Checa o status de presença de arquivos maiores que o tamanho máximo.
+        let j = 1; // Variável de controle da formatação.
+        if (verifyCadastroContribuinteGrande) {
+            // Caso existam arquivos inválidos, insere o nome de cada arquivo inválido no alerta de erro da view.
+            for (let cadastroContribuinte of cadastroContribuinteGrandesArr) {
+                if (j < cadastroContribuinteGrandesArr.length) {
+                    cadastroContribuinteGrandeSpan.append(`${cadastroContribuinte}, `);
+                } else {
+                    cadastroContribuinteGrandeSpan.append(`${cadastroContribuinte}.`)
+                }
+                j++;
+            }
+            erroCadastroContribuinteGrande.style.display = 'block';
+            this.value = '';
+        }
+        // Atualiza os arquivos do input.
+        cadastroContribuinteInput.files = dtCadastroContribuinte.files;
+        // Atribui evento no botão de deletar arquivo.
+        let deleteButtons = document.querySelectorAll('.file-delete');
+        for (let button of deleteButtons) {
+            button.addEventListener('click', function (e) {
+                let name = this.nextElementSibling.innerHTML;
+                // Remove o nome do arquivo da página.
+                this.parentElement.remove();
+                
+                for(let i = 0; i < dtCadastroContribuinte.items.length; i++) {
+                    if (name === dtCadastroContribuinte.items[i].getAsFile().name) {
+                    // Delete file on DataTransfer Object.
+                    dtCadastroContribuinte.items.remove(i);
+                    continue;
+                    }
+                }
+                cadastroContribuinteInput.files = dtCadastroContribuinte.files;
+            });
+        }
+    });
+}
+
+/* INPUT 8: BalancoPatrimonial */
 const dtBalancoPatrimonial = new DataTransfer(); // Allows you to manipulate the files of the input file
 const balancoPatrimonialInput = document.querySelector('#balanco_patrimonial');
 const balancoPatrimonialArea = document.querySelector('#balancopatrimonial-area');
@@ -864,7 +987,7 @@ if (balancoPatrimonialInput) {
     });
 }
 
-/* INPUT 8: RegularidadeFiscal */
+/* INPUT 9: RegularidadeFiscal */
 const dtRegularidadeFiscal = new DataTransfer(); // Allows you to manipulate the files of the input file
 const regularidadeFiscalInput = document.querySelector('#regularidade_fiscal');
 const regularidadeFiscalArea = document.querySelector('#regularidadefiscal-area');
@@ -987,7 +1110,7 @@ if (regularidadeFiscalInput) {
     });
 }
 
-/* INPUT 9: CreditoTributario */
+/* INPUT 10: CreditoTributario */
 const dtCreditoTributario = new DataTransfer(); // Allows you to manipulate the files of the input file
 const creditoTributarioInput = document.querySelector('#credito_tributario');
 const creditoTributarioArea = document.querySelector('#creditotributario-area');
@@ -1110,7 +1233,7 @@ if (creditoTributarioInput) {
     });
 }
 
-/* INPUT 10: DebitoEstadual */
+/* INPUT 11: DebitoEstadual */
 const dtDebitoEstadual = new DataTransfer(); // Allows you to manipulate the files of the input file
 const debitoEstadualInput = document.querySelector('#debito_estadual');
 const debitoEstadualArea = document.querySelector('#debitoestadual-area');
@@ -1233,7 +1356,7 @@ if (debitoEstadualInput) {
     });
 }
 
-/* INPUT 11: DebitoMunicipal */
+/* INPUT 12: DebitoMunicipal */
 const dtDebitoMunicipal = new DataTransfer(); // Allows you to manipulate the files of the input file
 const debitoMunicipalInput = document.querySelector('#debito_municipal');
 const debitoMunicipalArea = document.querySelector('#debitomunicipal-area');
@@ -1356,7 +1479,7 @@ if (debitoMunicipalInput) {
     });
 }
 
-/* INPUT 12: FalenciaConcordata */
+/* INPUT 13: FalenciaConcordata */
 const dtFalenciaConcordata = new DataTransfer(); // Allows you to manipulate the files of the input file
 const falenciaConcordataInput = document.querySelector('#falencia_concordata');
 const falenciaConcordataArea = document.querySelector('#falenciaconcordata-area');
@@ -1479,7 +1602,7 @@ if (falenciaConcordataInput) {
     });
 }
 
-/* INPUT 13: DebitoTrabalhista */
+/* INPUT 14: DebitoTrabalhista */
 const dtDebitoTrabalhista = new DataTransfer(); // Allows you to manipulate the files of the input file
 const debitoTrabalhistaInput = document.querySelector('#debito_trabalhista');
 const debitoTrabalhistaArea = document.querySelector('#debitotrabalhista-area');
@@ -1602,7 +1725,7 @@ if (debitoTrabalhistaInput) {
     });
 }
 
-/* INPUT 13: CapacidadeTecnica */
+/* INPUT 15: CapacidadeTecnica */
 const dtCapacidadeTecnica = new DataTransfer(); // Allows you to manipulate the files of the input file
 const capacidadeTecnicaInput = document.querySelector('#capacidade_tecnica');
 const capacidadeTecnicaArea = document.querySelector('#capacidadetecnica-area');

@@ -11,6 +11,7 @@ use App\Models\DocProcuracaoCarta;
 use App\Models\DocCedulaIdentidade;
 use App\Models\DocRegistroEntidade;
 use App\Models\DocInscricaoCnpj;
+use App\Models\DocCadastroContribuinte;
 use App\Models\DocBalancoPatrimonial;
 use App\Models\DocRegularidadeFiscal;
 use App\Models\DocCreditoTributario;
@@ -40,6 +41,8 @@ class DocumentosController extends Controller
                 $doc = DocRegistroEntidade::where([['id','=', $request->doc_id], ['filename','=', $request->filename]])->first();
             } else if (DocInscricaoCnpj::where([ ['id', '=', $request->doc_id], ['filename', '=', $request->filename] ])->count() > 0) {
                 $doc = DocInscricaoCnpj::where([['id','=', $request->doc_id], ['filename','=', $request->filename]])->first();
+            } else if (DocCadastroContribuinte::where([ ['id', '=', $request->doc_id], ['filename', '=', $request->filename] ])->count() > 0) {
+                $doc = DocCadastroContribuinte::where([['id','=', $request->doc_id], ['filename','=', $request->filename]])->first();
             } else if (DocBalancoPatrimonial::where([ ['id', '=', $request->doc_id], ['filename', '=', $request->filename] ])->count() > 0) {
                 $doc = DocBalancoPatrimonial::where([['id','=', $request->doc_id], ['filename','=', $request->filename]])->first();
             } else if (DocRegularidadeFiscal::where([ ['id', '=', $request->doc_id], ['filename', '=', $request->filename] ])->count() > 0) {
@@ -117,6 +120,10 @@ class DocumentosController extends Controller
             } else if ($request->categoria == 'inscricao_cnpj') {
                 $categorias->status_inscricao_cnpj = 2;
                 $categorias->justificativa_inscricao_cnpj = $request->justificativa;
+
+            } else if ($request->categoria == 'cadastro_contribuinte') {
+                $categorias->status_cadastro_contribuinte = 2;
+                $categorias->justificativa_cadastro_contribuinte = $request->justificativa;
 
             } else if ($request->categoria == 'procuracao_carta') {
                 $categorias->status_procuracao_carta = 2;

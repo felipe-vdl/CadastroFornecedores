@@ -17,48 +17,58 @@
 					@endif
 					<div class="row">
 						<div class="form-group col-12 col-md-6">
-							<label class="form-label font-weight-bold">Razão Social:</label>
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">Razão Social: *</label>
 							<input id="razao_social" name="razao_social" class="form-control form-control-sm" type="text" placeholder="Nome Comercial, Firma Empresarial ou Denominação Social" required>
 						</div>
 						<div class="form-group col-12 col-md-6">
-							<label class="form-label font-weight-bold">CNPJ:</label>
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">CNPJ: *</label>
 							<input id="cnpj" name="cnpj" class="form-control form-control-sm" type="text" placeholder="11.111.111/1111-11" minlength="18" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-12 col-md-6">
-							<label class="form-label font-weight-bold">Porte da Empresa:</label>
+							<label class="form-label font-weight-bold" title="Campo opcional.">Inscrição Municipal:</label>
+							<input id="inscricao_municipal" name="inscricao_municipal" class="form-control form-control-sm" type="text" placeholder="N° da Inscrição Municipal">
+						</div>
+						<div class="form-group col-12 col-md-6">
+							<label class="form-label font-weight-bold" title="Campo opcional.">Inscrição Estadual:</label>
+							<input id="inscricao_estadual" name="inscricao_estadual" class="form-control form-control-sm" type="text" placeholder="N° da Inscrição Estadual">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-12 col-md-6">
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">Porte da Empresa: *</label>
 							<input id="porte_empresa" name="porte_empresa" class="form-control form-control-sm" type="text" placeholder="MEI, ME, EPP, etc." required>
 						</div>
 						<div class="form-group col-12 col-md-6">
-							<label class="form-label font-weight-bold">CNAE (Atividade Econômica):</label>
+							<label class="form-label font-weight-bold" title="Campo opcional.">CNAE (Atividade Econômica):</label>
 							<input id="cnae" name="cnae" class="form-control form-control-sm" type="text" placeholder="Código ou Atividade">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-12">
-							<label class="form-label font-weight-bold">Produtos e Serviços Ofertados:</label>
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">Produtos e Serviços Ofertados: *</label>
 							<input id="produtos" name="produtos" class="form-control form-control-sm" type="text" placeholder="Produtos e Serviços Ofertados pelo Fornecedor." required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-12">
-							<label class="form-label font-weight-bold">Endereço:</label>
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">Endereço: *</label>
 							<input id="endereco" name="endereco" class="form-control form-control-sm" type="text" placeholder="Ex.: R. Arthur Oliveira Vechi, 120 - Centro, Mesquita - RJ, 26553-080" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-12 col-md-6">
-							<label class="form-label font-weight-bold">E-mail:</label>
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">E-mail: *</label>
 							<input id="email" name="email" class="form-control form-control-sm" type="text" placeholder="E-mail para Contato" required>
 						</div>
 						<div class="form-group col-12 col-md-6">
-							<label class="form-label font-weight-bold">Telefone:</label>
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">Telefone: *</label>
 							<input id="telefone" name="telefone" class="form-control form-control-sm" type="text" placeholder="Telefone para Contato" required>
 						</div>
 					</div>
 					<div class="mt-3">
-						<h4 class="card-title mb-0 mt-3 text-center">Documentos Necessários:</h4>
+						<h4 class="card-title mb-0 mt-3 text-center" title="Campos obrigatórios.">Documentos Necessários: *</h4>
 						<p style="font-size: 14px;" class="text-danger font-weight-bold mb-0">Atenção:</p>
 						<ul class="text-danger">
 							<li><span class="font-weight-bold">Tipos de arquivo aceitos:</span> Imagem ou documento.</li>
@@ -185,7 +195,7 @@
 					{{-- Fim 5 --}}
 					{{-- 6) Registro ou Inscrição na Entidade Profissional Competente: --}}
 					<div class="col-12 mt-3 border border-secondary pt-2">
-						<label class="form-label font-weight-bold">6. Documentação de Inscrição do CNPJ, Inscrição no Cadastro de Contribuinte Estadual e/ou Municipal: <a target="_blank" href="https://www.receita.fazenda.gov.br">* www.receita.fazenda.gov.br</a></label>
+						<label class="form-label font-weight-bold">6. Documentação de Inscrição do CNPJ: <a target="_blank" href="https://www.receita.fazenda.gov.br">* www.receita.fazenda.gov.br</a></label>
 						<p class="mb-2">
 							<label for="inscricao_cnpj">
 								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -206,9 +216,32 @@
 						</p>
 					</div>
 					{{-- Fim 6 --}}
-					{{-- 7) Balanço Patrimonial: --}}
+					{{-- 7) Cadastro Contribuinte: --}}
 					<div class="col-12 mt-3 border border-secondary pt-2">
-						<label class="form-label font-weight-bold">7. Balanço Patrimonial e Demonstrativo do Último Exercício Social, Registrado na Forma Lei e Demonstrativo de Índice de Liquidez:</label>
+						<label class="form-label font-weight-bold">7. Inscrição no Cadastro de Contribuinte Estadual e/ou Municipal:</label>
+						<p class="mb-2">
+							<label for="cadastro_contribuinte">
+								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+							</label>
+							<input id="cadastro_contribuinte" class="form-control" name="cadastro_contribuinte[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+						</p>
+						<div id="erro-cadastrocontribuinte" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="cadastrocontribuinte-invalido"></span></p>
+						</div>
+						<div id="erro-cadastrocontribuinte-grande" class="alert alert-danger mb-2" style="display: none;">
+							<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="cadastrocontribuinte-grande"></span></p>
+						</div>
+						<p id="cadastrocontribuinte-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+						<p id="cadastrocontribuinte-area">
+							<span id="cadastrocontribuinte-list">
+								<span id="cadastrocontribuinte-names"></span>
+							</span>
+						</p>
+					</div>
+					{{-- Fim 7 --}}
+					{{-- 8) Balanço Patrimonial: --}}
+					<div class="col-12 mt-3 border border-secondary pt-2">
+						<label class="form-label font-weight-bold">8. Balanço Patrimonial e Demonstrativo do Último Exercício Social, Registrado na Forma Lei e Demonstrativo de Índice de Liquidez:</label>
 						<p class="mb-2">
 							<label for="balanco_patrimonial">
 								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -228,10 +261,10 @@
 							</span>
 						</p>
 					</div>
-					{{-- Fim 7 --}}
-					{{-- 8) Regularidade Fiscal: --}}
+					{{-- Fim 8 --}}
+					{{-- 9) Regularidade Fiscal: --}}
 					<div class="col-12 mt-3 border border-secondary pt-2">
-						<label class="form-label font-weight-bold">8. Certidão de Regularidade Fiscal do FGTS: <a target="_blank" href="https://www.caixa.gov.br">* www.caixa.gov.br</a></label>
+						<label class="form-label font-weight-bold">9. Certidão de Regularidade Fiscal do FGTS: <a target="_blank" href="https://www.caixa.gov.br">* www.caixa.gov.br</a></label>
 						<p class="mb-2">
 							<label for="regularidade_fiscal">
 								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -251,10 +284,10 @@
 							</span>
 						</p>
 					</div>
-					{{-- Fim 8 --}}
-					{{-- 9) Crédito Tributário: --}}
+					{{-- Fim 9 --}}
+					{{-- 10) Crédito Tributário: --}}
 					<div class="col-12 mt-3 border border-secondary pt-2">
-						<label class="form-label font-weight-bold">9. Certidão de Débitos Relativos a Créditos Tributários Federais e a Dívida Ativa da União (Incluindo contribuições previdenciárias):</label>
+						<label class="form-label font-weight-bold">10. Certidão de Débitos Relativos a Créditos Tributários Federais e a Dívida Ativa da União (Incluindo contribuições previdenciárias):</label>
 						<p class="mb-2">
 							<label for="credito_tributario">
 								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -274,10 +307,10 @@
 							</span>
 						</p>
 					</div>
-					{{-- Fim 9 --}}
-					{{-- 10) Debito Estadual: --}}
+					{{-- Fim 10 --}}
+					{{-- 11) Debito Estadual: --}}
 					<div class="col-12 mt-3 border border-secondary pt-2">
-						<label class="form-label font-weight-bold">10. Certidão Negativa de Débito com a Fazenda Estadual (ICMS) em conjunto com a Certidão de Dívida Ativa da Procuradoria Geral do Estado (PGE):</label>
+						<label class="form-label font-weight-bold">11. Certidão Negativa de Débito com a Fazenda Estadual (ICMS) em conjunto com a Certidão de Dívida Ativa da Procuradoria Geral do Estado (PGE):</label>
 						<p class="mb-2">
 							<label for="debito_estadual">
 								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -297,10 +330,10 @@
 							</span>
 						</p>
 					</div>
-					{{-- Fim 10 --}}
-					{{-- 11) Debito Municipal: --}}
+					{{-- Fim 11 --}}
+					{{-- 12) Debito Municipal: --}}
 					<div class="col-12 mt-3 border border-secondary pt-2">
-						<label class="form-label font-weight-bold">11. Certidão Negativa de Débito com a Fazenda Municipal (ISSQN):</label>
+						<label class="form-label font-weight-bold">12. Certidão Negativa de Débito com a Fazenda Municipal (ISSQN):</label>
 						<p class="mb-2">
 							<label for="debito_municipal">
 								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -320,10 +353,10 @@
 							</span>
 						</p>
 					</div>
-					{{-- Fim 11 --}}
-					{{-- 12) Debito Municipal: --}}
+					{{-- Fim 12 --}}
+					{{-- 13) Debito Municipal: --}}
 					<div class="col-12 mt-3 border border-secondary pt-2">
-						<label class="form-label font-weight-bold">12. Certidão Negativa de Falência e Concordatas e dos Distribuidores de Cartório:</label>
+						<label class="form-label font-weight-bold">13. Certidão Negativa de Falência e Concordatas e dos Distribuidores de Cartório:</label>
 						<p class="mb-2">
 							<label for="falencia_concordata">
 								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -343,10 +376,10 @@
 							</span>
 						</p>
 					</div>
-					{{-- Fim 12 --}}
-					{{-- 13) Debito Trabalhista: --}}
+					{{-- Fim 13 --}}
+					{{-- 14) Debito Trabalhista: --}}
 					<div class="col-12 mt-3 border border-secondary pt-2">
-						<label class="form-label font-weight-bold">13. Certidão Negativa de Débitos Trabalhistas (CNDT): <a target="_blank" href="http://www.tst.just.br">* www.tst.jus.br</a></label>
+						<label class="form-label font-weight-bold">14. Certidão Negativa de Débitos Trabalhistas (CNDT): <a target="_blank" href="http://www.tst.just.br">* www.tst.jus.br</a></label>
 						<p class="mb-2">
 							<label for="debito_trabalhista">
 								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -366,10 +399,10 @@
 							</span>
 						</p>
 					</div>
-					{{-- Fim 13 --}}
-					{{-- 14) Capacidade Técnica: --}}
+					{{-- Fim 14 --}}
+					{{-- 15) Capacidade Técnica: --}}
 					<div class="col-12 mt-3 border border-secondary pt-2">
-						<label class="form-label font-weight-bold">14. 01 (Um) Atestado de Capacidade Ténica:</label>
+						<label class="form-label font-weight-bold">15. 01 (Um) Atestado de Capacidade Ténica:</label>
 						<p class="mb-2">
 							<label for="capacidade_tecnica">
 								<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -389,7 +422,7 @@
 							</span>
 						</p>
 					</div>
-					{{-- Fim 14 --}}
+					{{-- Fim 15 --}}
 				</div>
 				<div class="card-footer">
 					<center>

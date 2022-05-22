@@ -19,12 +19,15 @@ class CreateCadastroTable extends Migration
             $table->string('cnpj',20);
             $table->string('porte_empresa');
             $table->string('cnae')->nullable();
+            $table->string('inscricao_municipal')->nullable();
+            $table->string('inscricao_estadual')->nullable();
             $table->string('produtos');
             $table->string('endereco');
             $table->string('email');
             $table->string('telefone');
             $table->string('chave');
             $table->tinyInteger('status');
+            $table->tinyInteger('dados');
             $table->string('justificativa')->nullable();
             $table->string('avaliador')->nullable();
             $table->date('data_avaliacao')->nullable();

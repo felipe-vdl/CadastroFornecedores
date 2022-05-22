@@ -33,6 +33,8 @@ class DocCategoria extends Model
         'justificativa_falencia_concordata',
         'status_inscricao_cnpj',
         'justificativa_inscricao_cnpj',
+        'status_cadastro_contribuinte',
+        'justificativa_cadastro_contribuinte',
         'status_procuracao_carta',
         'justificativa_procuracao_carta',
         'status_registro_entidade',

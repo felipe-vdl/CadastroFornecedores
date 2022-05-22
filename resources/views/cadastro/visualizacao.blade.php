@@ -56,13 +56,29 @@
 							<p class="m-0"><span class="font-weight-bold">CNPJ:</span> {{$cadastro->cnpj}}</p>
 						</div>
 					</div>
+					@if ($cadastro->inscricao_municipal OR $cadastro->inscricao_estadual)
+						<div class="row">
+							@if ($cadastro->inscricao_municipal)
+							<div class="form-group col-12 m-0">
+								<p class="m-0"><span class="font-weight-bold">Inscrição Municipal:</span> {{ $cadastro->inscricao_municipal }}</p>
+							</div>
+							@endif
+							@if ($cadastro->inscricao_estadual)
+							<div class="form-group col-12 m-0">
+								<p class="m-0"><span class="font-weight-bold">Inscrição Estadual:</span> {{ $cadastro->inscricao_estadual }}</p>
+							</div>
+							@endif
+						</div>
+					@endif
 					<div class="row">
 						<div class="form-group col-12 m-0">
 							<p class="m-0"><span class="font-weight-bold">Porte da Empresa:</span> {{ $cadastro->porte_empresa }}</p>
 						</div>
-						<div class="form-group col-12 m-0">
-							<p class="m-0"><span class="font-weight-bold">CNAE (Atividade Econômica):</span> {{$cadastro->cnae}}</p>
-						</div>
+						@if ($cadastro->cnae)
+							<div class="form-group col-12 m-0">
+								<p class="m-0"><span class="font-weight-bold">CNAE (Atividade Econômica):</span> {{$cadastro->cnae}}</p>
+							</div>
+						@endif
 					</div>
 					<div class="row">
 						<div class="form-group col-12 m-0">
@@ -91,8 +107,8 @@
 								<li><span class="font-weight-bold">Tamanho limite por arquivo:</span> 10MB.</li>
 								<li><span class="font-weight-bold">Certifique-se de que as fotos/documentos são legíveis.</span></li>
 								<li><span class="font-weight-bold">Insira os documentos de acordo com a categoria.</span></li> --}}
-								<li><span class="font-weight-bold">Para dar seguimento ao processo, os documentos sinalizados como indeferidos devem ser reenviados ou substituídos, conforme a necessidade.</span></li>
-								<li><span class="font-weight-bold">As categorias de documento sinalizadas com "Ausência de Documentos" devem ser munidas com documentos adicionais, conforme a solicitação.</span></li>
+								<li><span class="font-weight-bold">Para dar seguimento ao processo, os documentos sinalizados como indeferidos devem ser reenviados ou substituídos, conforme a necessidade da justificativa.</span></li>
+								<li><span class="font-weight-bold">As categorias de documento sinalizadas com "Aguardando Documentos" devem ser munidas com documentos adicionais, conforme a justificativa/solicitação.</span></li>
 							</ul>
 						</div>
 						{{-- 1) Requerimento de Inscrição --}}
@@ -361,10 +377,10 @@
 								</div>
 							@endif
 						{{-- Fim 5 --}}
-						{{-- 6) Registro ou Inscrição na Entidade Profissional Competente: --}}
+						{{-- 6) Inscrição CNPJ --}}
 							@if($cadastro->doc_categorias->status_inscricao_cnpj == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
-									<label class="form-label font-weight-bold">6. Documentação de Inscrição do CNPJ, Inscrição no Cadastro de Contribuinte Estadual e/ou Municipal: <a target="_blank" href="https://www.receita.fazenda.gov.br">* www.receita.fazenda.gov.br</a></label>
+									<label class="form-label font-weight-bold">6. Documentação de Inscrição do CNPJ: <a target="_blank" href="https://www.receita.fazenda.gov.br">* www.receita.fazenda.gov.br</a></label>
 									<p class="mb-2">
 										<label for="inscricao_cnpj">
 											<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -414,10 +430,63 @@
 								</div>
 							@endif
 						{{-- Fim 6 --}}
-						{{-- 7) Balanço Patrimonial: --}}
+						{{-- 7) Cadastro Contribuinte --}}
+							@if($cadastro->doc_categorias->status_cadastro_contribuinte == 2)
+								<div class="col-12 mt-3 border border-secondary pt-2">
+									<label class="form-label font-weight-bold">7. Inscrição no Cadastro de Contribuinte Estadual e/ou Municipal:</label>
+									<p class="mb-2">
+										<label for="cadastro_contribuinte">
+											<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
+										</label>
+										<input id="cadastro_contribuinte" class="form-control" name="cadastro_contribuinte[]" type="file" required multiple="multiple" style="visibility: hidden; position: absolute;" accept=".png, .jpg, .jpeg,image/*,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf">
+									</p>
+									<div id="erro-cadastrocontribuinte" class="alert alert-danger mb-2" style="display: none;">
+										<p class="m-0">Tipo de arquivo inválido, insira apenas imagem ou documento: <span id="cadastrocontribuinte-invalido"></span></p>
+									</div>
+									<div id="erro-cadastrocontribuinte-grande" class="alert alert-danger mb-2" style="display: none;">
+										<p class="m-0">Arquivo ultrapassa o limite de tamanho permitido: <span id="cadastrocontribuinte-grande"></span></p>
+									</div>
+									<p id="cadastrocontribuinte-vermelho" style="font-size: 13px; color: red; display: none;" class="mb-2">* Atenção: Os arquivos destacados em vermelho não serão enviados.</p>
+									<p id="cadastrocontribuinte-area">
+										<span id="cadastrocontribuinte-list">
+											<span id="cadastrocontribuinte-names"></span>
+										</span>
+									</p>
+									{{-- Imagens/Documentos 7 --}}
+									<div class="container mb-3 pt-2 bg-light">
+										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
+										@if($cadastro->doc_categorias->status_cadastro_contribuinte == 2)
+										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
+										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_cadastro_contribuinte }}</p>
+										@endif
+										<div style="display: flex; justify-content: start; align-items: start;">
+										@foreach ($cadastro->doc_cadastrocontribuinte as $doc)
+											@if ($doc->status == 2)
+												<div style="padding-bottom: 0.7rem; display: flex; flex-direction: column; justify-content: start; align-items: center;" class="border border-dark p-2 mx-2 my-1 bg-white">
+													@if ($doc->extensao === 'png' || $doc->extensao === 'jpg' || $doc->extensao === 'jpeg' || $doc->extensao === 'bmp' || $doc->extensao === 'gif' || $doc->extensao === 'jfif')
+													<figure class="m-2 text-center">
+														<figcaption style="text-align: center; padding-bottom: 0.7rem;"><a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Imagem</a></figcaption>
+														<img style="max-width: 100px;" src="{{ asset('storage/documentos/'.$doc->filename) }}" alt="">
+													</figure>
+													@else
+													<div class="m-2">
+														<a class="btn btn-sm btn-info" href="{{ asset('storage/documentos/'.$doc->filename) }}" target="_blank" rel="noopener noreferrer">Visualizar Documento</a>
+													</div>
+													@endif
+													<h6 class="bg-danger text-white p-1">Indeferido</h6>
+													<h6><strong>Motivo:</strong> {{$doc->justificativa}}</h6>
+												</div>
+											@endif
+										@endforeach
+										</div>
+									</div>
+								</div>
+							@endif
+						{{-- Fim 7 --}}
+						{{-- 8) Balanço Patrimonial: --}}
 							@if($cadastro->doc_categorias->status_balanco_patrimonial == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
-									<label class="form-label font-weight-bold">7. Balanço Patrimonial e Demonstrativo do Último Exercício Social, Registrado na Forma Lei e Demonstrativo de Índice de Liquidez:</label>
+									<label class="form-label font-weight-bold">8. Balanço Patrimonial e Demonstrativo do Último Exercício Social, Registrado na Forma Lei e Demonstrativo de Índice de Liquidez:</label>
 									<p class="mb-2">
 										<label for="balanco_patrimonial">
 											<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -436,7 +505,7 @@
 											<span id="balancopatrimonial-names"></span>
 										</span>
 									</p>
-									{{-- Imagens/Documentos 7 --}}
+									{{-- Imagens/Documentos 8 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
 										@if($cadastro->doc_categorias->status_balanco_patrimonial == 2)
@@ -466,11 +535,11 @@
 									</div>
 								</div>
 							@endif
-						{{-- Fim 7 --}}
-						{{-- 8) Regularidade Fiscal: --}}
+						{{-- Fim 8 --}}
+						{{-- 9) Regularidade Fiscal: --}}
 							@if($cadastro->doc_categorias->status_regularidade_fiscal == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
-									<label class="form-label font-weight-bold">8. Certidão de Regularidade Fiscal do FGTS: <a target="_blank" href="https://www.caixa.gov.br">* www.caixa.gov.br</a></label>
+									<label class="form-label font-weight-bold">9. Certidão de Regularidade Fiscal do FGTS: <a target="_blank" href="https://www.caixa.gov.br">* www.caixa.gov.br</a></label>
 									<p class="mb-2">
 										<label for="regularidade_fiscal">
 											<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -489,7 +558,7 @@
 											<span id="regularidadefiscal-names"></span>
 										</span>
 									</p>
-									{{-- Imagens/Documentos 8 --}}
+									{{-- Imagens/Documentos 9 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
 										@if($cadastro->doc_categorias->status_regularidade_fiscal == 2)
@@ -519,11 +588,11 @@
 									</div>
 								</div>
 							@endif
-						{{-- Fim 8 --}}
-						{{-- 9) Crédito Tributário: --}}
+						{{-- Fim 9 --}}
+						{{-- 10) Crédito Tributário: --}}
 							@if($cadastro->doc_categorias->status_credito_tributario == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
-									<label class="form-label font-weight-bold">9. Certidão de Débitos Relativos a Créditos Tributários Federais e a Dívida Ativa da União (Incluindo contribuições previdenciárias):</label>
+									<label class="form-label font-weight-bold">10. Certidão de Débitos Relativos a Créditos Tributários Federais e a Dívida Ativa da União (Incluindo contribuições previdenciárias):</label>
 									<p class="mb-2">
 										<label for="credito_tributario">
 											<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -542,7 +611,7 @@
 											<span id="creditotributario-names"></span>
 										</span>
 									</p>
-									{{-- Imagens/Documentos 9 --}}
+									{{-- Imagens/Documentos 10 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
 										@if($cadastro->doc_categorias->status_credito_tributario == 2)
@@ -572,11 +641,11 @@
 									</div>
 								</div>
 							@endif
-						{{-- Fim 9 --}}
-						{{-- 10) Debito Estadual: --}}
+						{{-- Fim 10 --}}
+						{{-- 11) Debito Estadual: --}}
 							@if($cadastro->doc_categorias->status_debito_estadual == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
-									<label class="form-label font-weight-bold">10. Certidão Negativa de Débito com a Fazenda Estadual (ICMS) em conjunto com a Certidão de Dívida Ativa da Procuradoria Geral do Estado (PGE):</label>
+									<label class="form-label font-weight-bold">11. Certidão Negativa de Débito com a Fazenda Estadual (ICMS) em conjunto com a Certidão de Dívida Ativa da Procuradoria Geral do Estado (PGE):</label>
 									<p class="mb-2">
 										<label for="debito_estadual">
 											<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -595,7 +664,7 @@
 											<span id="debitoestadual-names"></span>
 										</span>
 									</p>
-									{{-- Imagens/Documentos 10 --}}
+									{{-- Imagens/Documentos 11 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
 										@if($cadastro->doc_categorias->status_debito_estadual == 2)
@@ -625,11 +694,11 @@
 									</div>
 								</div>
 							@endif
-						{{-- Fim 10 --}}
-						{{-- 11) Debito Municipal: --}}
+						{{-- Fim 11 --}}
+						{{-- 12) Debito Municipal: --}}
 							@if($cadastro->doc_categorias->status_debito_municipal == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
-									<label class="form-label font-weight-bold">11. Certidão Negativa de Débito com a Fazenda Municipal (ISSQN):</label>
+									<label class="form-label font-weight-bold">12. Certidão Negativa de Débito com a Fazenda Municipal (ISSQN):</label>
 									<p class="mb-2">
 										<label for="debito_municipal">
 											<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -678,11 +747,11 @@
 									</div>
 								</div>
 							@endif
-						{{-- Fim 11 --}}
-						{{-- 12) Falência Concordatas: --}}
+						{{-- Fim 12 --}}
+						{{-- 13) Falência Concordatas: --}}
 							@if($cadastro->doc_categorias->status_falencia_concordata == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
-									<label class="form-label font-weight-bold">12. Certidão Negativa de Falência e Concordatas e dos Distribuidores de Cartório:</label>
+									<label class="form-label font-weight-bold">13. Certidão Negativa de Falência e Concordatas e dos Distribuidores de Cartório:</label>
 									<p class="mb-2">
 										<label for="falencia_concordata">
 											<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -731,11 +800,11 @@
 									</div>
 								</div>
 							@endif
-						{{-- Fim 12 --}}
-						{{-- 13) Debito Trabalhista: --}}
+						{{-- Fim 13 --}}
+						{{-- 14) Debito Trabalhista: --}}
 							@if($cadastro->doc_categorias->status_debito_trabalhista == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
-									<label class="form-label font-weight-bold">13. Certidão Negativa de Débitos Trabalhistas (CNDT): <a target="_blank" href="http://www.tst.just.br">* www.tst.jus.br</a></label>
+									<label class="form-label font-weight-bold">14. Certidão Negativa de Débitos Trabalhistas (CNDT): <a target="_blank" href="http://www.tst.just.br">* www.tst.jus.br</a></label>
 									<p class="mb-2">
 										<label for="debito_trabalhista">
 											<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -784,11 +853,11 @@
 									</div>
 								</div>
 							@endif
-						{{-- Fim 13 --}}
-						{{-- 14) Capacidade Técnica: --}}
+						{{-- Fim 14 --}}
+						{{-- 15) Capacidade Técnica: --}}
 							@if($cadastro->doc_categorias->status_capacidade_tecnica == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
-									<label class="form-label font-weight-bold">14. 01 (Um) Atestado de Capacidade Ténica:</label>
+									<label class="form-label font-weight-bold">15. 01 (Um) Atestado de Capacidade Ténica:</label>
 									<p class="mb-2">
 										<label for="capacidade_tecnica">
 											<a class="btn btn-primary text-light" type="button" role="button" aria-disabled="false">Adicionar Arquivo</a>
@@ -837,7 +906,7 @@
 									</div>
 								</div>
 							@endif
-						{{-- Fim 14 --}}
+						{{-- Fim 15 --}}
 					@endif
 				</div>
 				<div class="card-footer">
