@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\UploadRequest;
 use App\Models\Cadastro;
+use Auth;
 use DB;
+use PDF;
 use Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailNotify;
 use Carbon\Carbon;
+use App\Models\Funcionario;
 use App\Models\DocRequerimentoInscricao;
 use App\Models\DocAtoConstitutivo;
 use App\Models\DocProcuracaoCarta;
@@ -300,13 +303,13 @@ class CadastroController extends Controller
     public function show(Request $request, $id)
     { 
     
-        $cadastro = Cadastro::with('doc_categorias', 'doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_cadastrocontribuinte', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
+        $cadastro = Cadastro::with('funcionario', 'doc_categorias', 'doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_cadastrocontribuinte', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
         return view ('cadastro.show',compact('cadastro'));
     }
 
     public function edit(Request $request, $id)
     { 
-        $cadastro = Cadastro::with('doc_categorias', 'doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_cadastrocontribuinte', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
+        $cadastro = Cadastro::with('funcionario', 'doc_categorias', 'doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_cadastrocontribuinte', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
         
         return view ('cadastro.edit',compact('cadastro'));
     }
@@ -316,8 +319,9 @@ class CadastroController extends Controller
     {
         DB::beginTransaction();
         try {
-            $cadastro = Cadastro::with('doc_categorias', 'doc_requerimentoinscricao', 'doc_atoconstitutivo', 'doc_procuracaocarta', 'doc_registroentidade', 'doc_inscricaocnpj', 'doc_cadastrocontribuinte', 'doc_balancopatrimonial', 'doc_regularidadefiscal', 'doc_creditotributario', 'doc_debitoestadual', 'doc_debitomunicipal', 'doc_falenciaconcordata', 'doc_debitotrabalhista', 'doc_capacidadetecnica')->find($id);
+            $cadastro = Cadastro::find($id);
             $categorias = DocCategoria::where('cadastro_id', '=', $id)->first();
+            $data_atual = Carbon::now('America/Sao_Paulo')->format('Y-m-d H:i:s');
 
             $cadastro->dados          = $request->dados;
             /* Status 3: Cadastro Inválido */
@@ -425,6 +429,8 @@ class CadastroController extends Controller
                 } else {
                     /* Status 1: Cadastro Válido com documentos deferidos. */
                     $cadastro->status   = 1;
+                    $cadastro->data_certificado = $data_atual;
+                    $cadastro->validade_certificado = Carbon::now('America/Sao_Paulo')->addDays(60)->format('Y-m-d H:i:s');
                 }
             }
 
@@ -461,6 +467,9 @@ class CadastroController extends Controller
                 }
             }
 
+            $cadastro->avaliador_id = Auth::user()->id;
+            $cadastro->data_avaliacao = $data_atual;
+            
             /* TODO: Enviar E-mail informando a atualização da avaliação do cadastro. */
             $categorias->update();
             $cadastro->update();
@@ -838,4 +847,9 @@ class CadastroController extends Controller
         }
     }
 
+    public function certificado(Request $request) {
+        $cadastro = Cadastro::where([['id', '=', $request->cadastro_id], ['chave', '=', $request->chave]]);
+        $pdf = PDF::loadView('pdf.certificado', compact('cadastro'));
+        return $pdf->stream();
+    }
 }

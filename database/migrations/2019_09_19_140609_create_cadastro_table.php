@@ -29,8 +29,9 @@ class CreateCadastroTable extends Migration
             $table->tinyInteger('status');
             $table->tinyInteger('dados');
             $table->string('justificativa')->nullable();
-            $table->string('avaliador')->nullable();
             $table->date('data_avaliacao')->nullable();
+            $table->date('data_certificado')->nullable();
+            $table->date('validade_certificado')->nullable();
             $table->tinyInteger('envio_create')->nullable();
             $table->tinyInteger('envio_avaliacao')->nullable();
             $table->timestamps();

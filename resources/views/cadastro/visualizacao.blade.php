@@ -42,6 +42,13 @@
 						{{ session()->get('error') }}
 					</div><br/>
 					@endif
+					@if ($cadastro->status != 0)
+						<div class="row">
+							<div class="form-group col-12 m-0">
+								<p class="m-0"><span class="font-weight-bold">Data da Avaliação:</span> {{ date('d/m/Y', strtotime($cadastro->data_avaliacao)) }}</p>
+							</div>
+						</div>
+					@endif
 					<div class="row">
 						<div class="form-group col-12 mb-3">
 							<p class="m-0"><span class="font-weight-bold">Chave do Cadastro:</span> {{ $cadastro->chave }}</p>
@@ -98,6 +105,21 @@
 							<p class="m-0"><span class="font-weight-bold">Telefone: </span>{{ $cadastro->telefone }}</p>
 						</div>
 					</div>
+					@if ($cadastro->status == 1)
+					<div class="mt-3">
+						<h4 class="card-title mb-0 mt-3 text-center">Certificado</h4>
+						<div>
+							<h5><strong>Data da Certificação:</strong> {{ date('d/m/Y', strtotime($cadastro->data_certificado)) }}</h5>
+							<h5><strong>Validade do Certificado:</strong> {{ date('d/m/Y', strtotime($cadastro->validade_certificado)) }}</h5>
+						</div>
+						<form method="POST" action="{{ route('cadastros.certificado') }}">
+							@csrf
+							<input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+							<input type="hidden" name="chave" value="{{ $cadastro->chave }}">
+							<button type="submit" class="btn btn-success">Visualizar Certificado</button>
+						</form>
+					</div>
+					@endif
 					@if ($cadastro->status == 2)
 						<div class="mt-3">
 							<h4 class="card-title mb-0 mt-3 text-center">Documentos Necessários:</h4>

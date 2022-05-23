@@ -34,9 +34,9 @@
                                     <div class="col-12 col-md-4 text-center">
                                         <label for="dados" class="text-dark"><strong>Validação dos Dados:</strong></label>
                                         <select class="form-control text-center" name="dados" id="dados" required>
-                                            <option value="" @if($cadastro->status == 0) selected @endif disabled hidden>Selecione uma opção</option>
-                                            <option value="1" @if($cadastro->status == 1 OR $cadastro->status == 2) selected @endif>Dados Válidos</option>
-                                            <option value="3" @if($cadastro->status == 3) selected @endif>Dados Inválidos</option>
+                                            <option value="" @if($cadastro->dados == 0) selected @endif disabled hidden>Selecione uma opção</option>
+                                            <option value="1" @if($cadastro->dados == 1) selected @endif>Dados Válidos</option>
+                                            <option value="3" @if($cadastro->dados == 2) selected @endif>Dados Inválidos</option>
                                         </select>
                                     </div>
                                     <div id="justificativa-div" class="col-12 mt-3 mt-md-0 col-md-4 text-center" @if($cadastro->status != 3) style="display: none;" @endif>
@@ -67,6 +67,35 @@
                                             </small></h4>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-lg-12">
+                                            <h4 class="text-uppercase"><strong>Avaliação dos Dados: </strong><small>
+                                                @switch($cadastro->dados)
+                                                @case(0)
+                                                  Em Análise
+                                                  @break
+                                                @case(1)
+                                                  Dados Válidos
+                                                  @break
+                                                @case(2)
+                                                  Dados Inválidos
+                                                  @break
+                                                @endswitch
+                                            </small></h4>
+                                        </div>
+                                    </div>
+                                    @if($cadastro->status == 1)
+                                        <div class="row">
+                                            <div class="col-sm-6 col-lg-12">
+                                                <h4 class="text-uppercase"><strong>Data da Certificação: </strong> {{ date('d/m/Y', strtotime($cadastro->data_certificado)) }}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6 col-lg-12">
+                                                <h4 class="text-uppercase"><strong>Validade do Certificado: </strong> {{ date('d/m/Y', strtotime($cadastro->validade_certificado)) }}</h4>
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
                                             <h4 class="text-uppercase"><strong>Razão Social: </strong><small> {{$cadastro->razao_social}}</></h4>
@@ -133,6 +162,33 @@
                                             <h4 class="text-uppercase"><strong>Chave: </strong><small> {{$cadastro->chave}}</></h4>
                                         </div>
                                     </div>
+                                    @if ($cadastro->data_avaliacao)
+                                        <div class="row">
+                                            <div class="col-sm-6 col-lg-12">
+                                                <h4 class="text-uppercase"><strong>Data da Avaliação: </strong> {{ date('d/m/Y', strtotime($cadastro->data_avaliacao)) }}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6 col-lg-12">
+                                                <h4 class="text-uppercase"><strong>Avaliador: </strong> {{ $cadastro->funcionario->name }}</h4>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($cadastro->status == 1)
+                                        <div class="container border border-secondary pt-2 bg-light">
+                                            <h4 class="font-weight-bold mr-2 m-0 text-center">Certificado</h4>
+                                            <div>
+                                                <h5><strong>Data da Certificação:</strong> {{ date('d/m/Y', strtotime($cadastro->data_certificado)) }}</h5>
+                                                <h5><strong>Validade do Certificado:</strong> {{ date('d/m/Y', strtotime($cadastro->validade_certificado)) }}</h5>
+                                            </div>
+                                            <form method="POST" action="{{ route('cadastros.certificado') }}">
+                                                @csrf
+                                                <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+                                                <input type="hidden" name="chave" value="{{ $cadastro->chave }}">
+                                                <button type="submit" class="btn btn-success">Visualizar Certificado</button>
+                                            </form>
+                                        </div>
+                                    @endif
                                     <hr>
                                     {{-- 1) Requerimento de Inscrição --}}
                                     <div class="container mb-3 border border-secondary pt-2 bg-light">

@@ -11,7 +11,7 @@ class Funcionario extends Authenticatable
     protected $connection = "mysql2";
 
      protected $fillable = [
-        'password', 'nivel'
+        'name', 'email', 'password', 'nivel',
     ];
 
     /**
@@ -20,7 +20,7 @@ class Funcionario extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password'
+        'password', 'remember-token',
     ];
 
     public function setPasswordAttribute($password)
@@ -28,8 +28,8 @@ class Funcionario extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
-    public function cadastros()
+    /* public function cadastros()
     {
     return $this->hasMany(Cadastro::class);
-    }
+    } */
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Models\Funcionario;
 use App\Models\Cadastro;
 use App\Models\DocRequerimentoInscricao;
 use App\Models\DocAtoConstitutivo;

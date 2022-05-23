@@ -42,14 +42,14 @@
                 </a>
             </div>
             <div class="sidebar-wrapper" >
-                <div class="user" style="padding-left: 38px;" >
-                <div class="user-info ">
-                    <a data-toggle="collapse" class="username" >
-                    <span>
-                        {{ substr(Auth::user()->name, 0, strpos(Auth::user()->name, ' ')) }}
-                    </span>
-                    </a>
-                </div>
+                <div class="user">
+                    <div class="user-info ">
+                        <a data-toggle="collapse" class="username text-center">
+                            <span>
+                                {{ substr(Auth::user()->name, 0, strpos(Auth::user()->name, ' ')) }}
+                            </span>
+                        </a>
+                    </div>
                 </div>
                 <ul class="nav">
                 <li class="nav-item ">

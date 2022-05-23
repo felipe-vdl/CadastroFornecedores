@@ -7,6 +7,7 @@ Route::get('/sucesso/{chave}', 'CadastroController@sucesso')->name('cadastros.su
 Route::get('/consultar', 'CadastroController@consultar')->name('cadastros.consultar');
 Route::post('/consultar', 'CadastroController@visualizacao')->name('cadastros.visualizacao');
 Route::patch('/consultar', 'CadastroController@corrigir')->name('cadastros.corrigir');
+Route::post('/certificado', 'CadastroController@certificado')->name('cadastros.certificado');
 /* Rotas Cadastro Dashboard (Middleware Auth) */
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('cadastros', 'CadastroController')->except(['create', 'store']);

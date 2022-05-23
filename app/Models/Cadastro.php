@@ -22,9 +22,10 @@ class Cadastro extends Model
         'status',
         'dados',
         'justificativa',
-        'avaliador',
         'avaliador_id',
         'data_avaliacao',
+        'data_certificado',
+        'validade_certificado',
         'envio_create',
         'envio_avaliacao',
     ];
@@ -104,13 +105,13 @@ class Cadastro extends Model
     return $this->hasMany(DocCapacidadeTecnica::class);
     }
 
-    public function funcionario()
-   {
-      return $this->belongsTo(Funcionario::class);
-   }
-
    public function doc_categorias()
    {
        return $this->hasOne(DocCategoria::class);
+   }
+
+   public function funcionario()
+   {
+      return $this->belongsTo(Funcionario::class, 'avaliador_id');
    }
 }
