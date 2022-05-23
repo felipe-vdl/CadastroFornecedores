@@ -84,18 +84,6 @@
                                             </small></h4>
                                         </div>
                                     </div>
-                                    @if($cadastro->status == 1)
-                                        <div class="row">
-                                            <div class="col-sm-6 col-lg-12">
-                                                <h4 class="text-uppercase"><strong>Data da Certificação: </strong> {{ date('d/m/Y', strtotime($cadastro->data_certificado)) }}</h4>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6 col-lg-12">
-                                                <h4 class="text-uppercase"><strong>Validade do Certificado: </strong> {{ date('d/m/Y', strtotime($cadastro->validade_certificado)) }}</h4>
-                                            </div>
-                                        </div>
-                                    @endif
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
                                             <h4 class="text-uppercase"><strong>Razão Social: </strong><small> {{$cadastro->razao_social}}</></h4>
@@ -175,23 +163,23 @@
                                         </div>
                                     @endif
                                     @if ($cadastro->status == 1)
-                                        <div class="container border border-secondary pt-2 bg-light">
+                                        <div target="_blank" class="container border border-secondary pt-2 bg-light">
                                             <h4 class="font-weight-bold mr-2 m-0 text-center">Certificado</h4>
                                             <div>
                                                 <h5><strong>Data da Certificação:</strong> {{ date('d/m/Y', strtotime($cadastro->data_certificado)) }}</h5>
                                                 <h5><strong>Validade do Certificado:</strong> {{ date('d/m/Y', strtotime($cadastro->validade_certificado)) }}</h5>
                                             </div>
-                                            <form method="POST" action="{{ route('cadastros.certificado') }}">
+                                            <form target="_blank" method="POST" action="{{ route('cadastros.certificado') }}">
                                                 @csrf
                                                 <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                 <input type="hidden" name="chave" value="{{ $cadastro->chave }}">
-                                                <button type="submit" class="btn btn-success">Visualizar Certificado</button>
+                                                <button type="submit" class="mb-3 btn btn-success">Visualizar Certificado</button>
                                             </form>
                                         </div>
                                     @endif
                                     <hr>
                                     {{-- 1) Requerimento de Inscrição --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora1" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">1. Requerimento de Inscrição</h4>
                                             @if ($cadastro->doc_categorias->status_requerimento_inscricao == 2)
@@ -211,6 +199,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="requerimento_inscricao">
+                                                    <input type="hidden" name="ancora" value="#ancora1">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -243,6 +232,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora1">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -280,7 +270,7 @@
                                     </div>
                                     {{-- Fim (1) --}}
                                     {{-- 2) Ato Constitutivo --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora2" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">2. Ato Constitutivo</h4>
                                             @if ($cadastro->doc_categorias->status_ato_constitutivo == 2)
@@ -294,12 +284,13 @@
                                             </button>
                                         </div>
                                         {{-- Solicitação de Documentos --}}
-                                        <div class="solicitacao-div row justify-content-center mb-3" style="display: none;">
+                                        <div id="ancora2" class="solicitacao-div row justify-content-center mb-3" style="display: none;">
                                             <div class="col-12 mt-3 mt-md-0 col-md-5 justify-content-center">
                                                 <form method="POST" action="{{ route('documentos.solicitar') }}">
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="ato_constitutivo">
+                                                    <input type="hidden" name="ancora" value="#ancora2">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -332,6 +323,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora2">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -369,7 +361,7 @@
                                     </div>
                                     {{-- Fim (2) --}}
                                     {{-- 3) Procuração ou Carta de Credenciamento --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora3" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">3. Procuração ou Carta de Credenciamento</h4>
                                             @if ($cadastro->doc_categorias->status_procuracao_carta == 2)
@@ -389,6 +381,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="procuracao_carta">
+                                                    <input type="hidden" name="ancora" value="#ancora3">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -421,6 +414,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora3">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -458,7 +452,7 @@
                                     </div>
                                     {{-- Fim (3) --}}
                                     {{-- 4) Cédula de Identidade --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora4" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">4. Cédula de Identidade (RG) e CPF dos Reprentantes Legais:</h4>
                                             @if ($cadastro->doc_categorias->status_cedula_identidade == 2)
@@ -478,6 +472,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="cedula_identidade">
+                                                    <input type="hidden" name="ancora" value="#ancora4">
                                                     <div class="my-2 text-center">
                                                         <label  class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -510,6 +505,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora4">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -547,7 +543,7 @@
                                     </div>
                                     {{-- Fim (4) --}}
                                     {{-- 5) Registro Entidade --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora5" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">5. Registro ou Inscrição na Entidade Profissional Competente:</h4>
                                             @if ($cadastro->doc_categorias->status_registro_entidade == 2)
@@ -567,6 +563,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="registro_entidade">
+                                                    <input type="hidden" name="ancora" value="#ancora5">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -599,6 +596,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora5">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -636,7 +634,7 @@
                                     </div>
                                     {{-- Fim (5) --}}
                                     {{-- 6) Inscrição CNPJ --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora6" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">6. Documentação de Inscrição do CNPJ:</h4>
                                             @if ($cadastro->doc_categorias->status_inscricao_cnpj == 2)
@@ -656,6 +654,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="inscricao_cnpj">
+                                                    <input type="hidden" name="ancora" value="#ancora6">
                                                     <div class="my-2 text-center">
                                                         <label " class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -688,6 +687,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora6">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -725,7 +725,7 @@
                                     </div>
                                     {{-- Fim (6) --}}
                                     {{-- 7) Cadastro Contribuinte --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora7" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">7. Inscrição no Cadastro de Contribuinte Estadual e/ou Municipal:</h4>
                                             @if ($cadastro->doc_categorias->status_cadastro_contribuinte == 2)
@@ -744,7 +744,8 @@
                                                 <form method="POST" action="{{ route('documentos.solicitar') }}">
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
-                                                    <input type="hidden" name="categoria" value="inscricao_cnpj">
+                                                    <input type="hidden" name="categoria" value="cadastro_contribuinte">
+                                                    <input type="hidden" name="ancora" value="#ancora7">
                                                     <div class="my-2 text-center">
                                                         <label " class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -777,6 +778,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora7">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -814,7 +816,7 @@
                                     </div>
                                     {{-- Fim (7) --}}
                                     {{-- 8) Balanço Patrimonial --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora8" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">8. Balanço Patrimonial e Demonstrativo do Último Exercício Social, Registrado na Forma Lei e Demonstrativo de Índice de Liquidez:</h4>
                                             @if ($cadastro->doc_categorias->status_balanco_patrimonial == 2)
@@ -834,6 +836,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="balanco_patrimonial">
+                                                    <input type="hidden" name="ancora" value="#ancora8">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -866,6 +869,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora8">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -903,7 +907,7 @@
                                     </div>
                                     {{-- Fim (8) --}}
                                     {{-- 9) Regularidade Fiscal --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora9" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">9. Certidão de Regularidade Fiscal do FGTS:</h4>
                                             @if ($cadastro->doc_categorias->status_regularidade_fiscal == 2)
@@ -923,6 +927,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="regularidade_fiscal">
+                                                    <input type="hidden" name="ancora" value="#ancora9">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -955,6 +960,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora9">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -992,7 +998,7 @@
                                     </div>
                                     {{-- Fim (9) --}}
                                     {{-- 10) Regularidade Fiscal --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora10" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">10. Certidão de Débitos Relativos a Créditos Tributários Federais e a Dívida Ativa da União (Incluindo contribuições previdenciárias):</h4>
                                             @if ($cadastro->doc_categorias->status_credito_tributario == 2)
@@ -1012,6 +1018,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="credito_tributario">
+                                                    <input type="hidden" name="ancora" value="#ancora10">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -1044,6 +1051,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora10">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -1081,7 +1089,7 @@
                                     </div>
                                     {{-- Fim (10) --}}
                                     {{-- 11) Debito Estadual --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora11" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">11. Certidão Negativa de Débito com a Fazenda Estadual (ICMS) em conjunto com a Certidão de Dívida Ativa da Procuradoria Geral do Estado (PGE):</h4>
                                             @if ($cadastro->doc_categorias->status_debito_estadual == 2)
@@ -1101,6 +1109,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="debito_estadual">
+                                                    <input type="hidden" name="ancora" value="#ancora11">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -1133,6 +1142,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora11">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -1170,7 +1180,7 @@
                                     </div>
                                     {{-- Fim (11) --}}
                                     {{-- 12) Debito Municipal --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora12" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">12. Certidão Negativa de Débito com a Fazenda Municipal (ISSQN):</h4>
                                             @if ($cadastro->doc_categorias->status_debito_municipal == 2)
@@ -1190,6 +1200,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="debito_municipal">
+                                                    <input type="hidden" name="ancora" value="#ancora12">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -1222,6 +1233,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora12">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -1259,7 +1271,7 @@
                                     </div>
                                     {{-- Fim (12) --}}
                                     {{-- 13) Falencia Concordata --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora13" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">13. Certidão Negativa de Falência e Concordatas e dos Distribuidores de Cartório:</h4>
                                             @if ($cadastro->doc_categorias->status_falencia_concordata == 2)
@@ -1279,6 +1291,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="falencia_concordata">
+                                                    <input type="hidden" name="ancora" value="#ancora13">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -1311,6 +1324,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora13">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -1348,7 +1362,7 @@
                                     </div>
                                     {{-- Fim (13) --}}
                                     {{-- 14) DebitoTrabalhista --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora14" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">14. Certidão Negativa de Débitos Trabalhistas (CNDT): <a target="_blank" href="http://www.tst.just.br">* www.tst.jus.br</a></h4>
                                             @if ($cadastro->doc_categorias->status_debito_trabalhista == 2)
@@ -1368,6 +1382,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="debito_trabalhista">
+                                                    <input type="hidden" name="ancora" value="#ancora14">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -1400,6 +1415,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora14">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -1437,7 +1453,7 @@
                                     </div>
                                     {{-- Fim (14) --}}
                                     {{-- 15) CapacidadeTecnica --}}
-                                    <div class="container mb-3 border border-secondary pt-2 bg-light">
+                                    <div id="ancora15" class="container mb-3 border border-secondary pt-2 bg-light">
                                         <div class="d-flex align-items-center mb-1 justify-content-between">
                                             <h4 class="font-weight-bold d-inline mr-2 m-0">15. 01 (Um) Atestado de Capacidade Técnica:</h4>
                                             @if ($cadastro->doc_categorias->status_capacidade_tecnica == 2)
@@ -1457,6 +1473,7 @@
                                                     @csrf
                                                     <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                                     <input type="hidden" name="categoria" value="capacidade_tecnica">
+                                                    <input type="hidden" name="ancora" value="#ancora15">
                                                     <div class="my-2 text-center">
                                                         <label class="mb-0 form-label text-dark"><strong>Justificativa para solicitação:</strong></label>
                                                         <input {{-- name="justificativa" --}} class="mt-1 form-control text-center" type="text" placeholder="Descreva a justificativa e documentos solicitados." {{-- required --}}>
@@ -1489,6 +1506,7 @@
                                                         <div>
                                                             <input type="hidden" name="doc_id" value="{{$doc->id}}">
                                                             <input type="hidden" name="filename" value="{{$doc->filename}}">
+                                                            <input type="hidden" name="ancora" value="#ancora15">
                                                             <div class="input-group d-inline">
                                                                 <label class="label-deferido btn btn-outline-success" title="Documento deferido.">
                                                                     <input type="radio" class="deferido btn-check" name="doc_status" value="1" required>
@@ -1538,7 +1556,7 @@
 </div>
 @endsection
 @push('scripts')
-<script>
+{{-- <script>
     /* Loading após submit de qualquer form. */
     const allForms = document.querySelectorAll('form');
     if(allForms) {
@@ -1548,7 +1566,7 @@
             });
         }
     }
-</script>
+</script> --}}
 <script>
     const dados = document.querySelector('#dados');
     const justificativaDiv = document.querySelector('#justificativa-div');
@@ -1670,12 +1688,12 @@
 
             if(this.parentElement.nextElementSibling.style.display == 'none') {
                 this.parentElement.nextElementSibling.style.display = 'flex';
-                this.parentElement.nextElementSibling.firstElementChild.firstElementChild[3].setAttribute('required', 'required')
-                this.parentElement.nextElementSibling.firstElementChild.firstElementChild[3].setAttribute('name', 'justificativa')
+                this.parentElement.nextElementSibling.firstElementChild.firstElementChild.children[4].children[1].firstElementChild.setAttribute('required', 'required')
+                this.parentElement.nextElementSibling.firstElementChild.firstElementChild.children[4].children[1].firstElementChild.setAttribute('name', 'justificativa')
             } else {
                 this.parentElement.nextElementSibling.style.display = 'none';
-                this.parentElement.nextElementSibling.firstElementChild.firstElementChild[3].removeAttribute('required');
-                this.parentElement.nextElementSibling.firstElementChild.firstElementChild[3].removeAttribute('name');
+                this.parentElement.nextElementSibling.firstElementChild.firstElementChild.children[4].children[1].firstElementChild.removeAttribute('required');
+                this.parentElement.nextElementSibling.firstElementChild.firstElementChild.children[4].children[1].firstElementChild.removeAttribute('name');
             }
         })
     }

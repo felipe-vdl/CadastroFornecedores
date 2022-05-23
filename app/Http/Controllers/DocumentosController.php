@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 use DB;
 use App\Models\Funcionario;
 use App\Models\Cadastro;
@@ -29,7 +31,6 @@ class DocumentosController extends Controller
     {   
         DB::beginTransaction();
         try {
-
             if (DocRequerimentoInscricao::where([ ['id', '=', $request->doc_id], ['filename', '=', $request->filename] ])->count() > 0) {
                 $doc = DocRequerimentoInscricao::where([['id','=', $request->doc_id], ['filename','=', $request->filename]])->first();
             } else if (DocAtoConstitutivo::where([ ['id', '=', $request->doc_id], ['filename', '=', $request->filename] ])->count() > 0) {
@@ -61,14 +62,16 @@ class DocumentosController extends Controller
             } else if (DocCapacidadeTecnica::where([ ['id', '=', $request->doc_id], ['filename', '=', $request->filename] ])->count() > 0) {
                 $doc = DocCapacidadeTecnica::where([['id','=', $request->doc_id], ['filename','=', $request->filename]])->first();
             }
-            
+
             if ($request->doc_justificativa) {
                 $doc->justificativa = $request->doc_justificativa;
             }
+
             $doc->status = $request->doc_status;
             $doc->save();
             DB::commit();
-            return redirect()->back()->with('success', 'Documento avaliado com sucesso.');
+            /* return redirect()->back()->with('success', 'Documento avaliado com sucesso.'); */
+            return redirect()->to(URL::previous() . $request->ancora)->with('success', 'Documento avaliado com sucesso.');
 
         } catch (\Throwable $th) {            
             DB::rollback();
@@ -146,7 +149,7 @@ class DocumentosController extends Controller
 
             $categorias->update();
             DB::commit();
-            return redirect()->back()->with('success', 'Solicitação marcada com sucesso.');
+            return redirect()->to(URL::previous() . $request->ancora)->with('success', 'Solicitação marcada com sucesso.');
 
         } catch (\Throwable $th) {
             DB::rollback();

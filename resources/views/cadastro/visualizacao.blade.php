@@ -2,9 +2,6 @@
 
 @section('content')
 	<div class="container" style="padding-bottom: 150px;">
-		<form method="POST" action="{{ route('cadastros.corrigir') }}" enctype="multipart/form-data" id="form_cadastro">
-            @method('patch')
-			{{ csrf_field() }}
 			<input type="hidden" name="id" value="{{$cadastro->id}}">
 			@if(session()->get('error'))
 			<div class="alert alert-danger m-0">
@@ -106,21 +103,24 @@
 						</div>
 					</div>
 					@if ($cadastro->status == 1)
-					<div class="mt-3">
-						<h4 class="card-title mb-0 mt-3 text-center">Certificado</h4>
-						<div>
-							<h5><strong>Data da Certificação:</strong> {{ date('d/m/Y', strtotime($cadastro->data_certificado)) }}</h5>
-							<h5><strong>Validade do Certificado:</strong> {{ date('d/m/Y', strtotime($cadastro->validade_certificado)) }}</h5>
+						<div class="mt-5">
+							<h4 class="card-title mb-0 mt-3">Certificado</h4>
+							<div>
+								<p class="m-0"><strong>Data da Certificação:</strong> {{ date('d/m/Y', strtotime($cadastro->data_certificado)) }}</p>
+								<p class="m-0 mb-2"><strong>Validade do Certificado:</strong> {{ date('d/m/Y', strtotime($cadastro->validade_certificado)) }}</p>
+							</div>
+							<form target="_blank" method="POST" action="{{ route('cadastros.certificado') }}">
+								@csrf
+								<input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
+								<input type="hidden" name="chave" value="{{ $cadastro->chave }}">
+								<button type="submit" class="btn btn-sm btn-success">Visualizar Certificado</button>
+							</form>
 						</div>
-						<form method="POST" action="{{ route('cadastros.certificado') }}">
-							@csrf
-							<input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
-							<input type="hidden" name="chave" value="{{ $cadastro->chave }}">
-							<button type="submit" class="btn btn-success">Visualizar Certificado</button>
-						</form>
-					</div>
 					@endif
-					@if ($cadastro->status == 2)
+		@if ($cadastro->status == 2)
+		<form method="POST" action="{{ route('cadastros.corrigir') }}" enctype="multipart/form-data" id="form_cadastro">
+			@method('patch')
+			{{ csrf_field() }}
 						<div class="mt-3">
 							<h4 class="card-title mb-0 mt-3 text-center">Documentos Necessários:</h4>
 							<p style="font-size: 14px;" class="text-danger font-weight-bold mb-0">Atenção:</p>
@@ -953,6 +953,7 @@
 @endsection
 
 @push('scripts')
+	@if ($cadastro->status == 2)
 	<script>
 		$(function(){
 			$('body').submit(function(event){
@@ -966,16 +967,17 @@
 		});
 		});
 	</script>
+	@endif
 	<script src="{{ asset('js/fileInput.js') }}" defer></script>
-	<script>
+	<script defer>
 		/* Loading após submit de qualquer form. */
 		const allForms = document.querySelectorAll('form');
-		  if(allForms) {
-			  for (let form of allForms) {
-				  form.addEventListener('submit', (e) => {
-					  $("#modaleventclick").modal("show");
-				  });
-			  }
-		  }
-	 </script>
+		if(allForms) {
+			for (let form of allForms) {
+				form.addEventListener('submit', (e) => {
+					$("#modaleventclick").modal("show");
+				});
+			}
+		}
+	</script>
 @endpush

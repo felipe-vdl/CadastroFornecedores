@@ -848,8 +848,8 @@ class CadastroController extends Controller
     }
 
     public function certificado(Request $request) {
-        $cadastro = Cadastro::where([['id', '=', $request->cadastro_id], ['chave', '=', $request->chave]]);
-        $pdf = PDF::loadView('pdf.certificado', compact('cadastro'));
+        $cadastro = Cadastro::where([['id', '=', $request->cadastro_id], ['chave', '=', $request->chave]])->first();
+        $pdf = PDF::loadView('pdf.certificado', compact('cadastro'))->setPaper('a4', 'landscape');
         return $pdf->stream();
     }
 }

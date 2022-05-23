@@ -144,17 +144,17 @@
                                     </div>
                                 @endif
                                 @if ($cadastro->status == 1)
-                                    <div class="container border border-secondary pt-2 bg-light">
+                                    <div target="_blank" class="container border border-secondary pt-2 bg-light">
                                         <h4 class="font-weight-bold mr-2 m-0 text-center">Certificado</h4>
                                         <div>
                                             <h5><strong>Data da Certificação:</strong> {{ date('d/m/Y', strtotime($cadastro->data_certificado)) }}</h5>
                                             <h5><strong>Validade do Certificado:</strong> {{ date('d/m/Y', strtotime($cadastro->validade_certificado)) }}</h5>
                                         </div>
-                                        <form method="POST" action="{{ route('cadastros.certificado') }}">
+                                        <form target="_blank" method="POST" action="{{ route('cadastros.certificado') }}">
                                             @csrf
                                             <input type="hidden" name="cadastro_id" value="{{ $cadastro->id }}">
                                             <input type="hidden" name="chave" value="{{ $cadastro->chave }}">
-                                            <button type="submit" class="btn btn-success">Visualizar Certificado</button>
+                                            <button type="submit" class="mb-3 btn btn-success">Visualizar Certificado</button>
                                         </form>
                                     </div>
                                 @endif
