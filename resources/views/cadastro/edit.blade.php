@@ -47,9 +47,10 @@
                 </form>
                             <div class="card card-plain mb-0">
                                 <div class="card-body">
+                                    <h3 class="font-weight-bold mt-3 mr-2 m-0">Situação</h3>
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>Situação: </strong><small>
+                                            <h4 class="pl-3 text-uppercase"><strong>Status: </strong><small>
                                                 @switch($cadastro->status)
                                                 @case(0)
                                                     Em Análise
@@ -69,7 +70,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>Avaliação dos Dados: </strong><small>
+                                            <h4 class="pl-3 text-uppercase"><strong>Avaliação dos Dados: </strong><small>
                                                 @switch($cadastro->dados)
                                                 @case(0)
                                                   Em Análise
@@ -86,82 +87,100 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>Razão Social: </strong><small> {{$cadastro->razao_social}}</></h4>
+                                            <h4 class="pl-3 text-uppercase"><strong>Dia do cadastro: </strong><small> {{date('d/m/Y', strtotime($cadastro->created_at))}}</></h4>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>CNPJ: </strong><small> {{$cadastro->cnpj}}</></h4>
+                                            <h4 class="pl-3 text-uppercase"><strong>Chave: </strong><small> {{$cadastro->chave}}</></h4>
+                                        </div>
+                                    </div>
+                                    @if ($cadastro->data_avaliacao)
+                                        <div class="row">
+                                            <div class="col-sm-6 col-lg-12">
+                                                <h4 class="pl-3 text-uppercase"><strong>Data da Avaliação: </strong> {{ date('d/m/Y', strtotime($cadastro->data_avaliacao)) }}</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6 col-lg-12">
+                                                <h4 class="pl-3 text-uppercase"><strong>Avaliador: </strong> {{ $cadastro->funcionario->name }}</h4>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <h3 class="font-weight-bold mr-2 m-0">Dados da Empresa</h3>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-lg-12">
+                                            <h4 class="pl-3 text-uppercase"><strong>Razão Social: </strong><small> {{$cadastro->razao_social}}</></h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-lg-12">
+                                            <h4 class="pl-3 text-uppercase"><strong>CNPJ: </strong><small> {{$cadastro->cnpj}}</></h4>
                                         </div>
                                     </div>
                                     @if ($cadastro->inscricao_municipal)
                                         <div class="row">
                                             <div class="col-sm-6 col-lg-12">
-                                                <h4 class="text-uppercase"><strong>Inscrição Municipal: </strong><small> {{$cadastro->inscricao_municipal}}</></h4>
+                                                <h4 class="pl-3 text-uppercase"><strong>Inscrição Municipal: </strong><small> {{$cadastro->inscricao_municipal}}</></h4>
                                             </div>
                                         </div>
                                     @endif
                                     @if ($cadastro->inscricao_estadual)
                                         <div class="row">
                                             <div class="col-sm-6 col-lg-12">
-                                                <h4 class="text-uppercase"><strong>Inscrição Estadual: </strong><small> {{$cadastro->inscricao_estadual}}</></h4>
+                                                <h4 class="pl-3 text-uppercase"><strong>Inscrição Estadual: </strong><small> {{$cadastro->inscricao_estadual}}</></h4>
                                             </div>
                                         </div>
                                     @endif
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>Porte da empresa: </strong><small> {{$cadastro->porte_empresa}}</></h4>
+                                            <h4 class="pl-3 text-uppercase"><strong>Porte da empresa: </strong><small> {{$cadastro->porte_empresa}}</></h4>
                                         </div>
                                     </div>
                                     @if ($cadastro->cnae)
                                         <div class="row">
                                             <div class="col-sm-6 col-lg-12">
-                                                <h4 class="text-uppercase"><strong>CNAE: </strong><small> {{$cadastro->cnae}}</></h4>
+                                                <h4 class="pl-3 text-uppercase"><strong>CNAE: </strong><small> {{$cadastro->cnae}}</></h4>
                                             </div>
                                         </div>
                                     @endif
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>Produtos e Serviços: </strong><small> {{$cadastro->produtos}}</></h4>
+                                            <h4 class="pl-3 text-uppercase"><strong>Produtos e Serviços: </strong><small> {{$cadastro->produtos}}</></h4>
+                                        </div>
+                                    </div>
+                                    <h3 class="font-weight-bold mt-3 mr-2 m-0">Endereço</h3>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-lg-12">
+                                            <h4 class="pl-3 text-uppercase"><strong>CEP: </strong><small> {{$cadastro->cep}}</small></h4>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>Endereço: </strong><small> {{$cadastro->endereco}}</></h4>
+                                            <h4 class="pl-3 text-uppercase"><strong>Logradouro: </strong><small> {{$cadastro->rua.', nº '.$cadastro->numero_rua}}</small></h4>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>Email: </strong><small> {{$cadastro->email}}</></h4>
+                                            <h4 class="pl-3 text-uppercase"><strong>Bairro: </strong><small> {{$cadastro->bairro}}</small></h4>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>Telefone: </strong><small> {{$cadastro->telefone}}</></h4>
+                                            <h4 class="pl-3 text-uppercase"><strong>Município: </strong><small> {{$cadastro->municipio}}</small></h4>
+                                        </div>
+                                    </div>
+                                    <h3 class="font-weight-bold mt-3 mr-2 m-0">Contato</h3>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-lg-12">
+                                            <h4 class="pl-3 text-uppercase"><strong>Email: </strong><small> {{$cadastro->email}}</></h4>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>Dia do cadastro: </strong><small> {{date('d/m/Y', strtotime($cadastro->created_at))}}</></h4>
+                                            <h4 class="pl-3 text-uppercase"><strong>Telefone: </strong><small> {{$cadastro->telefone}}</></h4>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-6 col-lg-12">
-                                            <h4 class="text-uppercase"><strong>Chave: </strong><small> {{$cadastro->chave}}</></h4>
-                                        </div>
-                                    </div>
-                                    @if ($cadastro->data_avaliacao)
-                                        <div class="row">
-                                            <div class="col-sm-6 col-lg-12">
-                                                <h4 class="text-uppercase"><strong>Data da Avaliação: </strong> {{ date('d/m/Y', strtotime($cadastro->data_avaliacao)) }}</h4>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6 col-lg-12">
-                                                <h4 class="text-uppercase"><strong>Avaliador: </strong> {{ $cadastro->funcionario->name }}</h4>
-                                            </div>
-                                        </div>
-                                    @endif
                                     @if ($cadastro->status == 1)
                                         <div target="_blank" class="container border border-secondary pt-2 bg-light">
                                             <h4 class="font-weight-bold mr-2 m-0 text-center">Certificado</h4>

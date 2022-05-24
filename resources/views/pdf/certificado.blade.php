@@ -46,8 +46,8 @@
 <style type="text/css">
 @page {
 	margin: 2cm;
-	margin-top: 50px; 
-	margin-bottom: 110px;
+	margin-top: 160px;
+	margin-bottom: 0px;
 }
 body {
     font-family: 'Times New Roman', Times, serif;
@@ -121,7 +121,7 @@ td{
     font-size: 250px;
     position: fixed;
     left: 10%;
-    top: 10.5%;
+    top: -8%;
     transform: rotate(-45deg);
     opacity: .15;
 }
@@ -174,8 +174,13 @@ td{
             <tr>
                 <td>Empresa: {{$cadastro->razao_social}}</td>
             </tr>
-            <tr>
-                <td>Endereço: {{$cadastro->endereco}}</td>
+            <tr style="width: 100%">
+                <td style="width: 33%;">Logradouro: {{$cadastro->rua.', nº '.$cadastro->numero_rua}}</td>
+                <td style="width: 33%;">Bairro: {{$cadastro->bairro}}</td>
+                <td style="width: 33%;">Município: {{$cadastro->municipio}}</td>
+            </tr>
+            <tr style="width: 100%">
+                <td style="width: 25%;">CEP: {{$cadastro->cep}}</td>
             </tr>
             <tr style="width: 100%;">
                 <td style="width: 33%;">Telefone: {{ $cadastro->telefone }}</td>

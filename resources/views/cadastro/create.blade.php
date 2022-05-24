@@ -15,6 +15,7 @@
 						{{ session()->get('error') }}
 					</div><br/>
 					@endif
+					<h3 class="card-title mb-0 text-center" title="Campos obrigatórios.">Dados da Empresa</h3>
 					<div class="row">
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold" title="Campo obrigatório.">Razão Social: *</label>
@@ -51,13 +52,31 @@
 							<input id="produtos" name="produtos" class="form-control form-control-sm" type="text" placeholder="Produtos e Serviços Ofertados pelo Fornecedor." required>
 						</div>
 					</div>
-					<div class="row">
-						<div class="form-group col-12">
-							<label class="form-label font-weight-bold" title="Campo obrigatório.">Endereço: *</label>
-							<input id="endereco" name="endereco" class="form-control form-control-sm" type="text" placeholder="Ex.: R. Arthur Oliveira Vechi, 120 - Centro, Mesquita - RJ, 26553-080" required>
+					<h3 class="card-title mb-0 mt-4 text-center" title="Campos obrigatórios.">Endereço</h3>
+					<div class="row mt-3">
+						<div class="form-group col-12 col-md-2">
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">CEP: *</label>
+							<input id="cep" name="cep" onblur="pesquisacep(this.value);" class="form-control form-control-sm" type="text" placeholder="CEP" maxlength="9" required>
+						</div>
+						<div class="form-group col-12 col-md-3">
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">Logradouro: *</label>
+							<input id="rua" name="rua" class="form-control form-control-sm" type="text" placeholder="Rua/Avenida" required>
+						</div>
+						<div class="form-group col-12 col-md-2">
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">Nº: *</label>
+							<input id="numero_rua" name="numero_rua" class="form-control form-control-sm" type="text" placeholder="Número" required>
+						</div>
+						<div class="form-group col-12 col-md-3">
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">Bairro: *</label>
+							<input id="bairro" name="bairro" class="form-control form-control-sm" type="text" placeholder="Bairro" required>
+						</div>
+						<div class="form-group col-12 col-md-2">
+							<label class="form-label font-weight-bold" title="Campo obrigatório.">Município: *</label>
+							<input id="municipio" name="municipio" class="form-control form-control-sm" type="text" placeholder="Município" required>
 						</div>
 					</div>
-					<div class="row">
+					<h3 class="card-title mb-0 mt-4 text-center" title="Campos obrigatórios.">Contato</h3>
+					<div class="row mt-2">
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold" title="Campo obrigatório.">E-mail: *</label>
 							<input id="email" name="email" class="form-control form-control-sm" type="text" placeholder="E-mail para Contato" required>
@@ -67,8 +86,8 @@
 							<input id="telefone" name="telefone" class="form-control form-control-sm" type="text" placeholder="Telefone para Contato" required>
 						</div>
 					</div>
-					<div class="mt-3">
-						<h4 class="card-title mb-0 mt-3 text-center" title="Campos obrigatórios.">Documentos Necessários: *</h4>
+					<div class="mt-4">
+						<h3 class="card-title mb-0 mt-3 text-center" title="Campos obrigatórios.">Documentos Necessários</h3>
 						<p style="font-size: 14px;" class="text-danger font-weight-bold mb-0">Atenção:</p>
 						<ul class="text-danger">
 							<li><span class="font-weight-bold">Tipos de arquivo aceitos:</span> Imagem ou documento.</li>
@@ -448,6 +467,7 @@
 		$(document).ready(function(){
 			VMasker ($("#cnpj")).maskPattern("99.999.999/9999-99");
 			VMasker ($("#telefone")).maskPattern("(99)9999-99999");
+			VMasker ($("#cep")).maskPattern("99999-999");
 		});
 	</script>
 	<script>
@@ -463,5 +483,68 @@
 		});
 		});
 	</script>
+	<!-- Via CEP -->
+    <script>
+		function limpa_formulário_cep() {
+			//Limpa valores do formulário de cep.
+			document.getElementById('rua').value=("");
+			document.getElementById('bairro').value=("");
+			document.getElementById('municipio').value=("");
+		}
+	
+		function meu_callback(conteudo) {
+			if (!("erro" in conteudo)) {
+				//Atualiza os campos com os valores.
+				document.getElementById('rua').value=(conteudo.logradouro);
+				document.getElementById('bairro').value=(conteudo.bairro);
+				document.getElementById('municipio').value=(conteudo.localidade);
+			} //end if.
+			else {
+				//CEP não Encontrado.
+			}
+		}
+			
+		function pesquisacep(valor) {
+	
+			//Nova variável "cep" somente com dígitos.
+			let cep = valor.replace(/\D/g, '');
+	
+			//Verifica se campo cep possui valor informado.
+			if (cep != "") {
+	
+				//Expressão regular para validar o CEP.
+				var validacep = /^[0-9]{8}$/;
+	
+				//Valida o formato do CEP.
+				if(validacep.test(cep)) {
+	
+					//Preenche os campos com "..." enquanto consulta webservice.
+					document.getElementById('rua').value="...";
+					document.getElementById('bairro').value="...";
+					document.getElementById('municipio').value="...";
+
+					//Cria um elemento javascript.
+					let script = document.createElement('script');
+	
+					//Sincroniza com o callback.
+					script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+	
+					//Insere script no documento e carrega o conteúdo.
+					document.body.appendChild(script);
+	
+				} //end if.
+				else {
+					//cep é inválido.
+					limpa_formulário_cep();
+					alert("Formato de CEP inválido.");
+				}
+			} //end if.
+			else {
+				//cep sem valor, limpa formulário.
+				limpa_formulário_cep();
+			}
+		};
+	
+		</script>
 	<script src="{{ asset('js/fileInput.js') }}" defer></script>
 @endpush

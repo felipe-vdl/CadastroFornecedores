@@ -47,58 +47,72 @@
 						</div>
 					@endif
 					<div class="row">
-						<div class="form-group col-12 mb-3">
+						<div class="form-group pl-4 col-12 mb-3">
 							<p class="m-0"><span class="font-weight-bold">Chave do Cadastro:</span> {{ $cadastro->chave }}</p>
 							@if($cadastro->status == 3)
 								<p class="m-0"><span class="font-weight-bold text-danger">Motivo de Invalidez:</span> {{ $cadastro->justificativa }}</p>
 							@endif
 						</div>
-						<div class="form-group col-12 m-0">
+					</div>
+					<h3 class="card-title mb-0 mt-3">Dados da Empresa</h3>
+					<div class="row">
+						<div class="form-group pl-4 col-12 m-0">
 							<p class="m-0"><span class="font-weight-bold">Razão Social:</span> {{ $cadastro->razao_social }}</p>
 						</div>
-						<div class="form-group col-12 m-0">
+						<div class="form-group pl-4 col-12 m-0">
 							<p class="m-0"><span class="font-weight-bold">CNPJ:</span> {{$cadastro->cnpj}}</p>
 						</div>
 					</div>
 					@if ($cadastro->inscricao_municipal OR $cadastro->inscricao_estadual)
 						<div class="row">
 							@if ($cadastro->inscricao_municipal)
-							<div class="form-group col-12 m-0">
+							<div class="form-group pl-4 col-12 m-0">
 								<p class="m-0"><span class="font-weight-bold">Inscrição Municipal:</span> {{ $cadastro->inscricao_municipal }}</p>
 							</div>
 							@endif
 							@if ($cadastro->inscricao_estadual)
-							<div class="form-group col-12 m-0">
+							<div class="form-group pl-4 col-12 m-0">
 								<p class="m-0"><span class="font-weight-bold">Inscrição Estadual:</span> {{ $cadastro->inscricao_estadual }}</p>
 							</div>
 							@endif
 						</div>
 					@endif
 					<div class="row">
-						<div class="form-group col-12 m-0">
+						<div class="form-group pl-4 col-12 m-0">
 							<p class="m-0"><span class="font-weight-bold">Porte da Empresa:</span> {{ $cadastro->porte_empresa }}</p>
 						</div>
 						@if ($cadastro->cnae)
-							<div class="form-group col-12 m-0">
+							<div class="form-group pl-4 col-12 m-0">
 								<p class="m-0"><span class="font-weight-bold">CNAE (Atividade Econômica):</span> {{$cadastro->cnae}}</p>
 							</div>
 						@endif
 					</div>
 					<div class="row">
-						<div class="form-group col-12 m-0">
+						<div class="form-group pl-4 col-12 m-0">
 							<p class="m-0"><span class="font-weight-bold">Produtos e Serviços Ofertados: </span>{{ $cadastro->produtos }}</p>
 						</div>
 					</div>
+					<h3 class="card-title mb-0 mt-3">Endereço</h3>
 					<div class="row">
-						<div class="form-group col-12 m-0">
-							<p class="m-0"><span class="font-weight-bold">Endereço:</span> {{ $cadastro->endereco }}</p>
+						<div class="form-group pl-4 col-12 m-0">
+							<p class="m-0"><span class="font-weight-bold">CEP:</span> {{ $cadastro->cep }}</p>
+						</div>
+						<div class="form-group pl-4 col-12 m-0">
+							<p class="m-0"><span class="font-weight-bold">Logradouro:</span> {{ $cadastro->rua.', nº '.$cadastro->numero_rua }}</p>
+						</div>
+						<div class="form-group pl-4 col-12 m-0">
+							<p class="m-0"><span class="font-weight-bold">Bairro:</span> {{ $cadastro->bairro }}</p>
+						</div>
+						<div class="form-group pl-4 col-12 m-0">
+							<p class="m-0"><span class="font-weight-bold">Município:</span> {{ $cadastro->municipio }}</p>
 						</div>
 					</div>
+					<h3 class="card-title mb-0 mt-3">Contato</h3>
 					<div class="row">
-						<div class="form-group col-12 m-0">
+						<div class="form-group pl-4 col-12 m-0">
 							<p class="m-0"><span class="font-weight-bold">E-mail: </span>{{ $cadastro->email }}</p>
 						</div>
-						<div class="form-group col-12 m-0">
+						<div class="form-group pl-4 col-12 m-0">
 							<p class="m-0"><span class="font-weight-bold">Telefone: </span>{{ $cadastro->telefone }}</p>
 						</div>
 					</div>
@@ -122,7 +136,7 @@
 			@method('patch')
 			{{ csrf_field() }}
 						<div class="mt-3">
-							<h4 class="card-title mb-0 mt-3 text-center">Documentos Necessários:</h4>
+							<h4 class="card-title mb-0 mt-3 text-center">Documentos Necessários</h4>
 							<p style="font-size: 14px;" class="text-danger font-weight-bold mb-0">Atenção:</p>
 							<ul class="text-danger">
 								{{-- <li><span class="font-weight-bold">Tipos de arquivo aceitos:</span> Imagem ou documento.</li>

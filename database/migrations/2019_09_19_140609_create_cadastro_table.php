@@ -22,7 +22,11 @@ class CreateCadastroTable extends Migration
             $table->string('inscricao_municipal')->nullable();
             $table->string('inscricao_estadual')->nullable();
             $table->string('produtos');
-            $table->string('endereco');
+            $table->string('cep', 9);
+            $table->string('rua');
+            $table->string('numero_rua');
+            $table->string('bairro');
+            $table->string('municipio');
             $table->string('email');
             $table->string('telefone');
             $table->string('chave');

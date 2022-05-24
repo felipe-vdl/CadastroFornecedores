@@ -62,7 +62,11 @@ class CadastroController extends Controller
                     'inscricao_municipal' => 'nullable',
                     'inscricao_estadual' => 'nullable',
                     'produtos' => 'required',
-                    'endereco' => 'required',
+                    'cep' => 'required',
+                    'rua' => 'required',
+                    'numero_rua' => 'required',
+                    'bairro' => 'required',
+                    'municipio' => 'required',
                     'email' => 'required',
                     'telefone' => 'required'
                 ]);
