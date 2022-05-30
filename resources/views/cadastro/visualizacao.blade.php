@@ -54,7 +54,7 @@
 							@endif
 						</div>
 					</div>
-					<h3 class="card-title mb-0 mt-3">Dados da Empresa</h3>
+					<h3 class="card-title mb-1 mt-3">Dados da Empresa</h3>
 					<div class="row">
 						<div class="form-group pl-4 col-12 m-0">
 							<p class="m-0"><span class="font-weight-bold">Razão Social:</span> {{ $cadastro->razao_social }}</p>
@@ -92,7 +92,7 @@
 							<p class="m-0"><span class="font-weight-bold">Produtos e Serviços Ofertados: </span>{{ $cadastro->produtos }}</p>
 						</div>
 					</div>
-					<h3 class="card-title mb-0 mt-3">Endereço</h3>
+					<h3 class="card-title mb-1 mt-3">Endereço</h3>
 					<div class="row">
 						<div class="form-group pl-4 col-12 m-0">
 							<p class="m-0"><span class="font-weight-bold">CEP:</span> {{ $cadastro->cep }}</p>
@@ -107,7 +107,7 @@
 							<p class="m-0"><span class="font-weight-bold">Município:</span> {{ $cadastro->municipio }}</p>
 						</div>
 					</div>
-					<h3 class="card-title mb-0 mt-3">Contato</h3>
+					<h3 class="card-title mb-1 mt-3">Contato</h3>
 					<div class="row">
 						<div class="form-group pl-4 col-12 m-0">
 							<p class="m-0"><span class="font-weight-bold">E-mail: </span>{{ $cadastro->email }}</p>
@@ -118,7 +118,7 @@
 					</div>
 					@if ($cadastro->status == 1)
 						<div class="mt-5">
-							<h4 class="card-title mb-0 mt-3">Certificado</h4>
+							<h4 class="card-title mb-1 mt-3">Certificado</h4>
 							<div>
 								<p class="m-0"><strong>Data da Certificação:</strong> {{ date('d/m/Y', strtotime($cadastro->data_certificado)) }}</p>
 								<p class="m-0 mb-2"><strong>Validade do Certificado:</strong> {{ date('d/m/Y', strtotime($cadastro->validade_certificado)) }}</p>

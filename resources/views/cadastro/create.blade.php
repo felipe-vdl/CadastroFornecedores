@@ -15,7 +15,7 @@
 						{{ session()->get('error') }}
 					</div><br/>
 					@endif
-					<h3 class="card-title mb-0 text-center" title="Campos obrigatórios.">Dados da Empresa</h3>
+					<h3 class="card-title mb-1 text-center" title="Campos obrigatórios.">Dados da Empresa</h3>
 					<div class="row">
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold" title="Campo obrigatório.">Razão Social: *</label>
@@ -52,7 +52,7 @@
 							<input id="produtos" name="produtos" class="form-control form-control-sm" type="text" placeholder="Produtos e Serviços Ofertados pelo Fornecedor." required>
 						</div>
 					</div>
-					<h3 class="card-title mb-0 mt-4 text-center" title="Campos obrigatórios.">Endereço</h3>
+					<h3 class="card-title mb-1 mt-4 text-center" title="Campos obrigatórios.">Endereço</h3>
 					<div class="row mt-3">
 						<div class="form-group col-12 col-md-2">
 							<label class="form-label font-weight-bold" title="Campo obrigatório.">CEP: *</label>
@@ -75,7 +75,7 @@
 							<input id="municipio" name="municipio" class="form-control form-control-sm" type="text" placeholder="Município" required>
 						</div>
 					</div>
-					<h3 class="card-title mb-0 mt-4 text-center" title="Campos obrigatórios.">Contato</h3>
+					<h3 class="card-title mb-1 mt-4 text-center" title="Campos obrigatórios.">Contato</h3>
 					<div class="row mt-2">
 						<div class="form-group col-12 col-md-6">
 							<label class="form-label font-weight-bold" title="Campo obrigatório.">E-mail: *</label>
