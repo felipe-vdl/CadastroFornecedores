@@ -434,7 +434,7 @@ class CadastroController extends Controller
                     /* Status 1: Cadastro Válido com documentos deferidos. */
                     $cadastro->status   = 1;
                     $cadastro->data_certificado = $data_atual;
-                    $cadastro->validade_certificado = Carbon::now('America/Sao_Paulo')->addDays(60)->format('Y-m-d H:i:s');
+                    $cadastro->validade_certificado = Carbon::now('America/Sao_Paulo')->addDays(90)->format('Y-m-d H:i:s');
                 }
             }
 
@@ -842,6 +842,7 @@ class CadastroController extends Controller
             return back()->with('success', 'Cadastro atualizado com sucesso.');
 
         } catch (\Throwable $th) {
+            dd($th);
             foreach($documentosEnviados as $documento) {
                 unlink(storage_path('app/public/documentos/'.$documento));
             }

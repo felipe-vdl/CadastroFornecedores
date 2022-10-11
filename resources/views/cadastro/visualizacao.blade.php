@@ -2,10 +2,9 @@
 
 @section('content')
 	<div class="container" style="padding-bottom: 150px;">
-			<input type="hidden" name="id" value="{{$cadastro->id}}">
-			@if(session()->get('error'))
-			<div class="alert alert-danger m-0">
-				{{ session()->get('error') }}
+		@if(session()->get('error'))
+		<div class="alert alert-danger m-0">
+			{{ session()->get('error') }}
 			</div><br/>
 			@endif
 			@if(session()->get('success'))
@@ -14,6 +13,12 @@
 			</div><br/>
 			@endif
 			<div class="card bg-light">
+				@if ($cadastro->status == 2)
+				<form method="POST" action="{{ route('cadastros.corrigir') }}" enctype="multipart/form-data" id="form_cadastro">
+				<input type="hidden" name="id" value="{{$cadastro->id}}">
+				@method('patch')
+				{{ csrf_field() }}
+			@endif
 				<div class="card-header">
                     <h3 class="card-title mt-1 m-0">Situação:
                         @switch($cadastro->status)
@@ -132,9 +137,6 @@
 						</div>
 					@endif
 		@if ($cadastro->status == 2)
-		<form method="POST" action="{{ route('cadastros.corrigir') }}" enctype="multipart/form-data" id="form_cadastro">
-			@method('patch')
-			{{ csrf_field() }}
 						<div class="mt-3">
 							<h4 class="card-title mb-0 mt-3 text-center">Documentos Necessários</h4>
 							<p style="font-size: 14px;" class="text-danger font-weight-bold mb-0">Atenção:</p>
@@ -148,7 +150,6 @@
 							</ul>
 						</div>
 						{{-- 1) Requerimento de Inscrição --}}
-						
 							@if($cadastro->doc_categorias->status_requerimento_inscricao == 2)
 								<div class="col-12 mt-3 border border-secondary pt-2">
 									<label class="form-label font-weight-bold">1. Requerimento de Inscrição:</label>
@@ -173,7 +174,7 @@
 									{{-- Imagens/Documentos 1 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_requerimento_inscricao == 2)
+										@if($cadastro->doc_categorias->status_requerimento_inscricao == 2 AND $cadastro->doc_categorias->justificativa_requerimento_inscricao)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_requerimento_inscricao }}</p>
 										@endif
@@ -226,7 +227,7 @@
 									{{-- Imagens/Documentos 2 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_ato_constitutivo == 2)
+										@if($cadastro->doc_categorias->status_ato_constitutivo == 2 AND $cadastro->doc_categorias->justificativa_ato_constitutivo)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_ato_constitutivo }}</p>
 										@endif
@@ -279,7 +280,7 @@
 									{{-- Imagens/Documentos 3 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_procuracao_carta == 2)
+										@if($cadastro->doc_categorias->status_procuracao_carta == 2 AND $cadastro->doc_categorias->justificativa_procuracao_carta)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_procuracao_carta }}</p>
 										@endif
@@ -332,7 +333,7 @@
 									{{-- Imagens/Documentos 4 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_cedula_identidade == 2)
+										@if($cadastro->doc_categorias->status_cedula_identidade == 2 AND $cadastro->doc_categorias->justificativa_cedula_identidade)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_cedula_identidade }}</p>
 										@endif
@@ -385,7 +386,7 @@
 									{{-- Imagens/Documentos 5 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_registro_entidade == 2)
+										@if($cadastro->doc_categorias->status_registro_entidade == 2 AND $cadastro->doc_categorias->justificativa_registro_entidade)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_registro_entidade }}</p>
 										@endif
@@ -438,7 +439,7 @@
 									{{-- Imagens/Documentos 6 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_inscricao_cnpj == 2)
+										@if($cadastro->doc_categorias->status_inscricao_cnpj == 2 AND $cadastro->doc_categorias->justificativa_inscricao_cnpj)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_inscricao_cnpj }}</p>
 										@endif
@@ -491,7 +492,7 @@
 									{{-- Imagens/Documentos 7 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_cadastro_contribuinte == 2)
+										@if($cadastro->doc_categorias->status_cadastro_contribuinte == 2 AND $cadastro->doc_categorias->justificativa_cadastro_contribuinte)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_cadastro_contribuinte }}</p>
 										@endif
@@ -544,7 +545,7 @@
 									{{-- Imagens/Documentos 8 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_balanco_patrimonial == 2)
+										@if($cadastro->doc_categorias->status_balanco_patrimonial == 2 AND $cadastro->doc_categorias->justificativa_balanco_patrimonial)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_balanco_patrimonial }}</p>
 										@endif
@@ -597,7 +598,7 @@
 									{{-- Imagens/Documentos 9 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_regularidade_fiscal == 2)
+										@if($cadastro->doc_categorias->status_regularidade_fiscal == 2 AND $cadastro->doc_categorias->justificativa_regularidade_fiscal)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_regularidade_fiscal }}</p>
 										@endif
@@ -650,7 +651,7 @@
 									{{-- Imagens/Documentos 10 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_credito_tributario == 2)
+										@if($cadastro->doc_categorias->status_credito_tributario == 2 AND $cadastro->doc_categorias->justificativa_credito_tributario)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_credito_tributario }}</p>
 										@endif
@@ -703,7 +704,7 @@
 									{{-- Imagens/Documentos 11 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_debito_estadual == 2)
+										@if($cadastro->doc_categorias->status_debito_estadual == 2 AND $cadastro->doc_categorias->justificativa_debito_estadual)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_debito_estadual }}</p>
 										@endif
@@ -756,7 +757,7 @@
 									{{-- Imagens/Documentos 11 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_debito_municipal == 2)
+										@if($cadastro->doc_categorias->status_debito_municipal == 2 AND $cadastro->doc_categorias->justificativa_debito_municipal)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_debito_municipal }}</p>
 										@endif
@@ -809,7 +810,7 @@
 									{{-- Imagens/Documentos 12 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_falencia_concordata == 2)
+										@if($cadastro->doc_categorias->status_falencia_concordata == 2 AND $cadastro->doc_categorias->justificativa_falencia_concordata)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_falencia_concordata }}</p>
 										@endif
@@ -862,7 +863,7 @@
 									{{-- Imagens/Documentos 13 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_debito_trabalhista == 2)
+										@if($cadastro->doc_categorias->status_debito_trabalhista == 2 AND $cadastro->doc_categorias->justificativa_debito_trabalhista)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_debito_trabalhista }}</p>
 										@endif
@@ -915,7 +916,7 @@
 									{{-- Imagens/Documentos 14 --}}
 									<div class="container mb-3 pt-2 bg-light">
 										<h6 class="text-center border-bottom border-dark pb-2 mb-3">Documentos Indeferidos</h6>
-										@if($cadastro->doc_categorias->status_capacidade_tecnica == 2)
+										@if($cadastro->doc_categorias->status_capacidade_tecnica == 2 AND $cadastro->doc_categorias->justificativa_capacidade_tecnica)
 										<h6 class="d-inline p-1 bg-danger text-white">Aguardando Documentos</h6>
 										<p class="ml-2 d-inline m-0"><strong>Justificativa/Solicitação:</strong> {{ $cadastro->doc_categorias->justificativa_capacidade_tecnica }}</p>
 										@endif
@@ -943,23 +944,21 @@
 								</div>
 							@endif
 						{{-- Fim 15 --}}
-					@endif
-				</div>
-				<div class="card-footer">
-					@if ($cadastro->status == 2)
+					</div>
+					<div class="card-footer">
 						<center>
 							<div>
-								<button type="submit" id="form_cadastro" class="botoes-acao btn btn-round btn-success enviar-relatorio">
+								<button type="submit" class="botoes-acao btn btn-round btn-success enviar-relatorio">
 									<span class="icone-botoes-acao mdi mdi-send"></span>
 									<span class="texto-botoes-acao">Salvar Cadastro</span>
 									<div class="ripple-container"></div>
 								</button>
 							</div> 
 						</center>
-					@endif
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		@endif
 	</div>
 	<div class="container" style="padding-top: 30px">
 		@include('layouts.footer')
@@ -968,7 +967,7 @@
 
 @push('scripts')
 	@if ($cadastro->status == 2)
-	<script>
+	<script defer>
 		$(function(){
 			$('body').submit(function(event){
 			if ($(this).hasClass('enviar-relatorio')) {

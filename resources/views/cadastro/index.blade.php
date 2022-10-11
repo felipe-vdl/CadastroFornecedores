@@ -74,11 +74,13 @@
                                         title="Detalhar cadastro.">
                                         <i class='material-icons'>search</i>
                                     </a>
+                                    @if($cadastro->status === 0 OR $cadastro->status === 2)
                                     <a  href="{{ url("/cadastros/$cadastro->id/edit") }}" 
                                         class="btn btn-warning btn-sm p-2"
                                         title="Avaliar cadastro.">
                                         <i class='material-icons'>edit</i>
                                     </a>
+                                    @endif
                                   </td>
                               </tr>    
                             @endforeach
