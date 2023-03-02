@@ -4,7 +4,7 @@
 	<div class="container" style="padding-bottom: 150px;">
 		<form method="POST" action="{{url('/')}}" enctype="multipart/form-data" id="form_cadastro">
 			{{ csrf_field() }}
-			<div class="card bg-light">
+			<div class="card bg-light shadow-sm">
 				<div class="card-header">
 					<h2 class="card-title m-0 text-center">Cadastro de Fornecedores</h2>
 				</div>

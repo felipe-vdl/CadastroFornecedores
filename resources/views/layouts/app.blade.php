@@ -92,12 +92,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                <ul class="navbar-nav ml-5 mr-sm-auto">
                   <li class="nav-link">
-                     <a href="{{ url('/') }}">Formulário de Cadastro</a>
+                     <a href="{{ url('/') }}">Cadastro</a>
                   </li>
                </ul>
                <ul class="navbar-nav ml-auto mr-5">
                   <li class="nav-link">
-                     <a href="{{ url('/consultar') }}">Página de Consulta</a>
+                     <a href="{{ url('/consultar') }}">Consulta</a>
                   </li>
                </ul>
             </div>
